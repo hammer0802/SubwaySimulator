@@ -61,11 +61,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        var recyclerAdaptor = MyRecyclerAdaptor(this)
+        var recyclerAdaptor = MyRecyclerAdapter(this)
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = recyclerAdaptor
         recyclerAdaptor.reload()
-        recycler_view.adapter.notifyDataSetChanged()
+        recycler_view.adapter!!.notifyDataSetChanged()
     }
 
 }

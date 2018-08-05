@@ -11,15 +11,15 @@ import android.widget.TextView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class RecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecyclerViewHolder>() {
+class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecyclerViewHolder>() {
     private val preference: SharedPreferences by lazy { activity.getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
     var list: MutableList<Recipe> = mutableListOf<Recipe>()  //Jsonの設定
     fun reload(){
-        list = gson.fromJson<MutableList<Recipe>>(preference.getString("list", ""), object : TypeToken<MutableList<Recipe>>() {}.type)
+        list = gson.fromJson<MutableList<Recipe>>(preference.getString("list", "[]"), object : TypeToken<MutableList<Recipe>>() {}.type)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): MyRecyclerViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecyclerViewHolder {
 
         val view = LayoutInflater.from(parent!!.context).inflate(R.layout.list_recipe, parent,false)
         return MyRecyclerViewHolder(view)
@@ -29,7 +29,7 @@ class RecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycler
         return list?.size ?: 0
     }
 
-    override fun onBindViewHolder(holder: MyRecyclerViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: MyRecyclerViewHolder, position: Int) {
         holder!!.v.findViewById<TextView>(R.id.recipe_name).text=list[position].name
         holder!!.v.findViewById<TextView>(R.id.recipe_price).text=list[position].price.toString()
         //sharedpriferenceで保存されているpositionごとのcounter数値を、リストの右端に表示させる
@@ -42,3 +42,4 @@ class RecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycler
 }
 
 class MyRecyclerViewHolder(val v: View): RecyclerView.ViewHolder(v)
+
