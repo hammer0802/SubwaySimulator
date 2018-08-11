@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
 
         create.setOnClickListener (android.view.View.OnClickListener {
-            val intent1= Intent(this, MainActivity::class.java)
+            val intent1= Intent(this, CreateRecipe::class.java)
             val l= list?.size ?: 0
             intent1.putExtra("position",l)
             list += Recipe()

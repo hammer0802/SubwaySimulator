@@ -4,7 +4,7 @@ class Recipe {
     var name = ""  //レシピ名
     var price = 0  //合計金額
     var sandwich = "" //サンドウィッチの種類
-    var bread = 0  //パンの種類
+    var bread = ""  //パンの種類
     //トッピング
     var cheese = false
     var cream = false
