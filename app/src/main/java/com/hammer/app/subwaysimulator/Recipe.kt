@@ -20,16 +20,10 @@ class Recipe {
     var greenpepper = Amount.middle
     var redonion = Amount.middle
     var carrot = Amount.middle
-    var olive = Amount.middle
-    var pickles = Amount.middle
-    var hotpepper = Amount.middle
+    var olive = Amount.no
+    var pickles = Amount.no
+    var hotpepper = Amount.no
     var dressing = ""  //ドレッシングの種類
+}
 
-}
-enum class Amount {
-    no,
-    small,
-    middle,
-    large
-}
 

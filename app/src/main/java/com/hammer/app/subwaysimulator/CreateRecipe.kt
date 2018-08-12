@@ -3,7 +3,7 @@ package com.hammer.app.subwaysimulator
 import android.widget.AdapterView
 import android.widget.Toast
 import android.widget.Spinner
-import com.hammer.app.subwaysimulator.R.id.spinner
+import com.hammer.app.subwaysimulator.R.id.spinnerSand
 import android.widget.ArrayAdapter
 import android.os.Bundle
 import android.app.Activity
@@ -21,30 +21,29 @@ class CreateRecipe : Activity() {
     val intent1: Intent by lazy {this.intent}
     val position: Int by lazy { intent1.getIntExtra("position",0) }
 
+    //class SpinnerActivity : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_recipe)
 
-        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item)
+        val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, sandwiches)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        // アイテムを追加
-        adapter.add("red")
-        adapter.add("green")
-        adapter.add("blue")
-        val spinner = findViewById(R.id.spinner) as Spinner
+        val spinner = findViewById(R.id.spinnerSand) as Spinner
         // アダプターを設定
         spinner.adapter = adapter
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-           override fun onItemSelected(parent: AdapterView<*>, view: View,
-                               position: Int, id: Long) {
+            override fun onItemSelected(parent: AdapterView<*>, view: View,
+                                        position: Int, id: Long) {
                 val spinner = parent as Spinner
-                // 選択されたアイテムを取得
-                val item = spinner.selectedItem as String
-                Toast.makeText(this@CreateRecipe, item, Toast.LENGTH_LONG).show()
+
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
     }
+     //}
+
 }
+
+

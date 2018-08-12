@@ -8,18 +8,21 @@
 
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="●サンドウィッチの種類"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-
-    <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/textViewSand"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:layout_marginTop="8dp"
+        android:background="@color/colorPrimary"
+        android:text="1.サンドウィッチの種類"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerSand"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSand" />
 
 </android.support.constraint.ConstraintLayout>
