@@ -32,7 +32,6 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
     override fun onBindViewHolder(holder: MyRecyclerViewHolder, position: Int) {
         holder!!.v.findViewById<TextView>(R.id.recipe_name).text=list[position].name
         holder!!.v.findViewById<TextView>(R.id.recipe_price).text=list[position].price.toString()
-        //sharedpriferenceで保存されているpositionごとのcounter数値を、リストの右端に表示させる
         holder.v.setOnClickListener{v ->
             val intent1= Intent(activity,MainActivity::class.java)
             intent1.putExtra("position",position)

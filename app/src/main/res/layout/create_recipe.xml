@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
 
     <TextView
@@ -16,14 +16,12 @@
         android:text="1.サンドウィッチの種類"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/spinnerSand"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textViewSand" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/textViewBread"
@@ -34,14 +32,12 @@
         android:text="2.パンの種類"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerSand" />
+        android:textStyle="bold" />
 
     <Spinner
         android:id="@+id/spinnerBread"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBread" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/textViewTopping"
@@ -52,15 +48,13 @@
         android:text="3.トッピングの追加"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerBread" />
+        android:textStyle="bold" />
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTopping" />
+        android:text="CheckBox" />
 
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
