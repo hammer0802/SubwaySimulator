@@ -70,10 +70,3 @@ var amounts = arrayOf(
     "普通",
     "多め"
 )
-
-enum class Amount {
-    no,
-    small,
-    middle,
-    large
-}

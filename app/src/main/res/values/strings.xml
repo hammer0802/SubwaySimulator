@@ -1,4 +1,18 @@
 <resources>
     <string name="app_name">SUBWAYシミュレーター</string>
     <string name="action_settings">レシピを共有する</string>
+    <string name="step1">1.サンドウィッチの種類</string>
+    <string name="step2">2.パンの種類</string>
+    <string name="step3">3.トッピングの追加</string>
+    <string name="step4">4.野菜の増減</string>
+    <string name="step5">5.ドレッシングの種類</string>
+    <string name="lettuce">●レタス</string>
+    <string name="tomato">●トマト</string>
+    <string name="green_pepper">●ピーマン</string>
+    <string name="red_onion">●レッドオニオン</string>
+    <string name="carrot">●ニンジン</string>
+    <string name="olive">●オリーブ</string>
+    <string name="pickles">●ピクルス</string>
+    <string name="hot_pepper">●ホットペッパー</string>
+    <string name="name_edit">レシピの名前</string>
 </resources>

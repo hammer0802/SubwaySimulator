@@ -15,14 +15,14 @@ class Recipe {
     var shrimp = false
     var avocado = false
     //野菜
-    var lettuce = Amount.middle
-    var tomato = Amount.middle
-    var greenpepper = Amount.middle
-    var redonion = Amount.middle
-    var carrot = Amount.middle
-    var olive = Amount.no
-    var pickles = Amount.no
-    var hotpepper = Amount.no
+    var lettuce = ""
+    var tomato = ""
+    var greenpepper = ""
+    var redonion = ""
+    var carrot = ""
+    var olive = ""
+    var pickles = ""
+    var hotpepper = ""
     var dressing = ""  //ドレッシングの種類
 }
 
