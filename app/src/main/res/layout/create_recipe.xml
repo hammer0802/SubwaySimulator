@@ -104,13 +104,90 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/checkBox"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxCheese"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerBread" />
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/checkBoxCheese"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="CheckBox"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxCream"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTopping" />
+
+        <CheckBox
+            android:id="@+id/checkBoxCream"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="CheckBox"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxMascar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxCheese" />
+
+        <CheckBox
+            android:id="@+id/checkBoxMascar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="CheckBox"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxEgg"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxCream" />
+
+        <CheckBox
+            android:id="@+id/checkBoxEgg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="CheckBox"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxBacon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxMascar" />
+
+        <CheckBox
+            android:id="@+id/checkBoxBacon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="CheckBox"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxTuna"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxEgg" />
+
+        <CheckBox
+            android:id="@+id/checkBoxTuna"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="CheckBox"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxShrimp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxBacon" />
+
+        <CheckBox
+            android:id="@+id/checkBoxShrimp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="CheckBox"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxAvocado"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxTuna" />
+
+        <CheckBox
+            android:id="@+id/checkBoxAvocado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -118,7 +195,8 @@
             android:text="CheckBox"
             app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTopping" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxShrimp" />
+
 
         <TextView
             android:id="@+id/textViewVegetable"
@@ -133,7 +211,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textViewLettuce"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxAvocado" />
 
         <TextView
             android:id="@+id/textViewLettuce"
@@ -155,7 +233,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintBottom_toTopOf="@+id/textViewTomato"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewLettuce" />
 
@@ -346,7 +424,9 @@
             android:id="@+id/spinnerDressing"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
             android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDressing" />

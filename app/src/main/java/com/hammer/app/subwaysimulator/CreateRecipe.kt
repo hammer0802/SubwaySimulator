@@ -1,10 +1,6 @@
 package com.hammer.app.subwaysimulator
 
-import android.widget.AdapterView
-import android.widget.Toast
-import android.widget.Spinner
 import com.hammer.app.subwaysimulator.R.id.spinnerSand
-import android.widget.ArrayAdapter
 import android.os.Bundle
 import android.app.Activity
 import android.content.Context
@@ -12,12 +8,13 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.view.View
 import android.view.WindowId
+import android.widget.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.create_recipe.*
 
 class CreateRecipe : Activity() {
-    private val preference: SharedPreferences by lazy { getSharedPreferences("kazu", Context.MODE_PRIVATE) }
+    private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
     val list: MutableList<Recipe> by lazy { gson?.fromJson<MutableList<Recipe>>(preference!!.getString("list", ""), object : TypeToken<MutableList<Recipe>>() {}.type) ?: mutableListOf<Recipe>()}
     val intent1: Intent by lazy {this.intent}
@@ -64,6 +61,13 @@ class CreateRecipe : Activity() {
 
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
+        }
+
+        for (topping in toppings){
+            val viewId = resources.getIdentifier("checkBox"+ tmap[topping], "id", packageName)
+            val checkbox = findViewById<CheckBox>(viewId)
+            checkbox.isChecked = false
+            checkbox.setText(topping)
         }
 
         spinner(sandwiches, "spinnerSand")
