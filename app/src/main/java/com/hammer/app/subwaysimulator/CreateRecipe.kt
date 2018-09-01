@@ -1,8 +1,8 @@
 package com.hammer.app.subwaysimulator
 
-import com.hammer.app.subwaysimulator.R.id.spinnerSand
 import android.os.Bundle
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,8 +11,11 @@ import android.view.WindowId
 import android.widget.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.hammer.app.subwaysimulator.R.id.item_touch_helper_previous_elevation
+import com.hammer.app.subwaysimulator.R.id.*
 import kotlinx.android.synthetic.main.create_recipe.*
+import android.content.DialogInterface
+
+
 
 class CreateRecipe : Activity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
@@ -115,8 +118,14 @@ class CreateRecipe : Activity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-
+        val alertDialog = AlertDialog.Builder(this)
+                .setTitle("確認")
+                .setMessage("作成途中で終了するとレシピは保存されません。"+ "\n" +"終了しますか？")
+                .setPositiveButton("はい") { dialog, which ->
+                    super.onBackPressed()
+                }
+                .setNegativeButton("キャンセル", null)
+                .show()
     }
 }
 
