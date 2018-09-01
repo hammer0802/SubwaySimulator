@@ -16,4 +16,7 @@
     <string name="hot_pepper">●ホットペッパー</string>
     <string name="name_edit">レシピの名前</string>
     <string name="complete">レシピ完成！</string>
+    <string name="sumtext1">合計:</string>
+    <string name="sumtext2">円</string>
+
 </resources>

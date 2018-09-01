@@ -29,6 +29,7 @@ class CreateRecipe : Activity() {
         setContentView(R.layout.create_recipe)
         val r = Recipe()
 
+
         fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -46,6 +47,9 @@ class CreateRecipe : Activity() {
                                             posi: Int, id: Long) {
                     val spinner = parent as Spinner
                     val item = spinner.selectedItem as String
+                    if(itemName == "sandwich"){
+                         r.price = sandPrices[item].toString().toInt()
+                    }
                     val e = this@CreateRecipe.preference.edit()
                     when {
                         itemName == "sandwich" -> r.sandwich = item
@@ -55,8 +59,7 @@ class CreateRecipe : Activity() {
                         itemName == "hotpepper" -> r.hotpepper = item
                         itemName == "dressing" -> r.dressing = item
                     }
-                    e.putString("draft", gson.toJson(list))
-                    e.apply()
+                    e.putString("list", gson.toJson(list))
                 }
 
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -86,8 +89,7 @@ class CreateRecipe : Activity() {
                         itemName == "redonion" -> r.redonion = item
                         itemName == "carrot" -> r.carrot = item
                     }
-                    e.putString("draft", gson.toJson(list))
-                    e.apply()
+                    e.putString("list", gson.toJson(list))
                 }
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
@@ -99,6 +101,14 @@ class CreateRecipe : Activity() {
             val checkbox = findViewById<CheckBox>(viewId)
             checkbox.isChecked = false
             checkbox.setText(topping)
+            checkbox.setOnClickListener(View.OnClickListener{
+                if (checkbox.isChecked()) {
+                    r.price += toppingPrices[topping].toString().toInt()
+                } else {
+                    r.price -= toppingPrices[topping].toString().toInt()
+                }
+            }
+            )
         }
 
         spinner("sandwich", sandwiches, "spinnerSand")
@@ -113,12 +123,13 @@ class CreateRecipe : Activity() {
         spinner("hotpepper", amounts, "spinnerHotpepper")
         spinner("dressings", dressings, "spinnerDressing")
 
-
+        val sum = r.price.toString()
+        sumPrice.setText(sum)
 
     }
 
     override fun onBackPressed() {
-        val alertDialog = AlertDialog.Builder(this)
+        val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                 .setTitle("確認")
                 .setMessage("作成途中で終了するとレシピは保存されません。"+ "\n" +"終了しますか？")
                 .setPositiveButton("はい") { dialog, which ->
