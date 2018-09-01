@@ -31,7 +31,6 @@ class MainActivity : AppCompatActivity() {
             val intent1= Intent(this, CreateRecipe::class.java)
             val l= list?.size ?: 0
             intent1.putExtra("position",l)
-            list += Recipe()
 
             val e = preference!!.edit()
             e.putString("list", gson.toJson(list)) //gson.toJson(list)でlistのデータをjson形式で渡す。listは31行目で要素が追加されているため、新しいlistのデータが入る。

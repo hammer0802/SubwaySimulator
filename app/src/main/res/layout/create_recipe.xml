@@ -5,15 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerTomato"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerTomato"
+        app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
+        app:layout_constraintTop_toTopOf="@+id/textViewVegetable"
         tools:layout_editor_absoluteY="81dp">
 
         <TextView
@@ -22,6 +23,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/colorPrimary"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:text="@string/name_edit"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
@@ -30,7 +33,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <requestFocus />
+        </TextView>
+
 
         <EditText
             android:id="@+id/textViewName"
@@ -52,7 +59,7 @@
             android:text="@string/step1"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
-        android:textStyle="bold"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/spinnerSand"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -104,90 +111,90 @@
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxCheese"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxcheese"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/spinnerBread" />
 
         <CheckBox
-            android:id="@+id/checkBoxCheese"
+            android:id="@+id/checkBoxcheese"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:text="CheckBox"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxCream"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxcream"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewTopping" />
 
         <CheckBox
-            android:id="@+id/checkBoxCream"
+            android:id="@+id/checkBoxcream"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:text="CheckBox"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxMascar"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxmascar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxCheese" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxcheese" />
 
         <CheckBox
-            android:id="@+id/checkBoxMascar"
+            android:id="@+id/checkBoxmascar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:text="CheckBox"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxEgg"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxegg"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxCream" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxcream" />
 
         <CheckBox
-            android:id="@+id/checkBoxEgg"
+            android:id="@+id/checkBoxegg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:text="CheckBox"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxBacon"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxbacon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxMascar" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxmascar" />
 
         <CheckBox
-            android:id="@+id/checkBoxBacon"
+            android:id="@+id/checkBoxbacon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:text="CheckBox"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxTuna"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxtuna"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxEgg" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxegg" />
 
         <CheckBox
-            android:id="@+id/checkBoxTuna"
+            android:id="@+id/checkBoxtuna"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:text="CheckBox"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxShrimp"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxshrimp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxBacon" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxbacon" />
 
         <CheckBox
-            android:id="@+id/checkBoxShrimp"
+            android:id="@+id/checkBoxshrimp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:text="CheckBox"
-            app:layout_constraintBottom_toTopOf="@+id/checkBoxAvocado"
+            app:layout_constraintBottom_toTopOf="@+id/checkBoxavocado"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxTuna" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxtuna" />
 
         <CheckBox
-            android:id="@+id/checkBoxAvocado"
+            android:id="@+id/checkBoxavocado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -195,7 +202,7 @@
             android:text="CheckBox"
             app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxShrimp" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxshrimp" />
 
 
         <TextView
@@ -211,7 +218,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textViewLettuce"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxAvocado" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxavocado" />
 
         <TextView
             android:id="@+id/textViewLettuce"
@@ -431,6 +438,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewDressing" />
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:layout_marginStart="35dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="52dp"
+            android:layout_marginTop="28dp"
+            android:background="@color/colorAccent"
+            android:text="@string/complete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinnerDressing" />
 
 
     </android.support.constraint.ConstraintLayout>

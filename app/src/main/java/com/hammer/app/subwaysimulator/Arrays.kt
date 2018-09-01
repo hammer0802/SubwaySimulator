@@ -70,15 +70,15 @@ var toppingPrices = mapOf(
         "アボカド(+ ¥110)" to 110
 )
 
-var tmap = mapOf(
-        "ナチュラルスライスチーズ(+ ¥40)" to "Cheese",
-        "クリームタイプチーズ(+ ¥60)" to "Cream",
-        "マスカルポーネチーズ(+ ¥90)" to "Mascar",
-        "たまご(+ ¥60)" to "Egg",
-        "ベーコン(+ ¥60)" to "Bacon",
-        "ツナ(+ ¥80)" to "Tuna",
-        "えび(+ ¥100)" to "Shrimp",
-        "アボカド(+ ¥110)" to "Avocado"
+var toppingmap = mapOf(
+        "ナチュラルスライスチーズ(+ ¥40)" to "cheese",
+        "クリームタイプチーズ(+ ¥60)" to "cream",
+        "マスカルポーネチーズ(+ ¥90)" to "mascar",
+        "たまご(+ ¥60)" to "egg",
+        "ベーコン(+ ¥60)" to "bacon",
+        "ツナ(+ ¥80)" to "tuna",
+        "えび(+ ¥100)" to "shrimp",
+        "アボカド(+ ¥110)" to "avocado"
 )
 
 //var vegetables = arrayOf(
