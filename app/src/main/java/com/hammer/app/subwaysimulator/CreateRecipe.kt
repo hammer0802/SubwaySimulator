@@ -24,7 +24,7 @@ class CreateRecipe : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_recipe)
-
+        val r = Recipe()
 
         fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
@@ -45,14 +45,14 @@ class CreateRecipe : Activity() {
                     val item = spinner.selectedItem as String
                     val e = this@CreateRecipe.preference.edit()
                     when {
-                        itemName == "sandwich" -> list[position].sandwich = item
-                        itemName == "bread" -> list[position].bread = item
-                        itemName == "olive" -> list[position].olive = item
-                        itemName == "pickels" -> list[position].pickles = item
-                        itemName == "hotpepper" -> list[position].hotpepper = item
-                        itemName == "dressing" -> list[position].dressing = item
+                        itemName == "sandwich" -> r.sandwich = item
+                        itemName == "bread" -> r.bread = item
+                        itemName == "olive" -> r.olive = item
+                        itemName == "pickels" -> r.pickles = item
+                        itemName == "hotpepper" -> r.hotpepper = item
+                        itemName == "dressing" -> r.dressing = item
                     }
-                    e.putString("list", gson.toJson(list))
+                    e.putString("draft", gson.toJson(list))
                     e.apply()
                 }
 
@@ -77,15 +77,14 @@ class CreateRecipe : Activity() {
                     val item = spinner.selectedItem as String
                     val e = this@CreateRecipe.preference.edit()
                     when {
-                        itemName == "lettuce" -> list[position].lettuce = item
-                        itemName == "tomato" -> list[position].tomato = item
-                        itemName == "greenpepper" -> list[position].greenpepper = item
-                        itemName == "redonion" -> list[position].redonion = item
-                        itemName == "carrot" -> list[position].carrot = item
+                        itemName == "lettuce" -> r.lettuce = item
+                        itemName == "tomato" -> r.tomato = item
+                        itemName == "greenpepper" -> r.greenpepper = item
+                        itemName == "redonion" -> r.redonion = item
+                        itemName == "carrot" -> r.carrot = item
                     }
-                    e.putString("list", gson.toJson(list))
+                    e.putString("draft", gson.toJson(list))
                     e.apply()
-                    textViewName.clearFocus()
                 }
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
@@ -112,11 +111,11 @@ class CreateRecipe : Activity() {
         spinner("dressings", dressings, "spinnerDressing")
 
 
+
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        list.removeAt(index = position)
 
     }
 }
