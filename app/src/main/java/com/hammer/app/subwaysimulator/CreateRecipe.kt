@@ -23,6 +23,8 @@ class CreateRecipe : Activity() {
     val list: MutableList<Recipe> by lazy { gson?.fromJson<MutableList<Recipe>>(preference!!.getString("list", ""), object : TypeToken<MutableList<Recipe>>() {}.type) ?: mutableListOf()}
     val intent1: Intent by lazy {this.intent}
     val position: Int by lazy { intent1.getIntExtra("position",0) }
+    var sandPrice = 0
+    var toppingPrice = 0
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +41,7 @@ class CreateRecipe : Activity() {
             // アダプターを設定
             spinner.adapter = adapter
             // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録
+            spinner.setSelection(0)
             spinner.setOnTouchListener { view, motionEvent ->
                 textViewName.clearFocus()
                 false
@@ -48,28 +51,26 @@ class CreateRecipe : Activity() {
                                             posi: Int, id: Long) {
                     val spinner = parent as Spinner
                     val item = spinner.selectedItem as String
-                    if(itemName == "sandwich"){
-                        for (topping in toppings){
-                            val viewId = resources.getIdentifier("checkBox"+ toppingmap[topping], "id", packageName)
-                            val checkbox = findViewById<CheckBox>(viewId)
-                            checkbox.isChecked = false}
-                         r.price = sandPrices[item].toString().toInt()
-                         sumPrice.setText(r.price.toString())
+                    if (itemName == "sandwich") {
+                        for (topping in toppings) {
+                            sandPrice = sandPrices[item].toString().toInt()
+                            val sum = sandPrice + toppingPrice
+                            sumPrice.setText(sum.toString())
 
+                        }
+                        val e = this@CreateRecipe.preference.edit()
+                        when {
+                            itemName == "sandwich" -> r.sandwich = item
+                            itemName == "bread" -> r.bread = item
+                            itemName == "olive" -> r.olive = item
+                            itemName == "pickels" -> r.pickles = item
+                            itemName == "hotpepper" -> r.hotpepper = item
+                            itemName == "dressing" -> r.dressing = item
+                        }
+                        e.putString("list", gson.toJson(list))
+                        e.apply()
                     }
-                    val e = this@CreateRecipe.preference.edit()
-                    when {
-                        itemName == "sandwich" -> r.sandwich = item
-                        itemName == "bread" -> r.bread = item
-                        itemName == "olive" -> r.olive = item
-                        itemName == "pickels" -> r.pickles = item
-                        itemName == "hotpepper" -> r.hotpepper = item
-                        itemName == "dressing" -> r.dressing = item
-                    }
-                    e.putString("list", gson.toJson(list))
-                    e.apply()
                 }
-
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
         }
@@ -111,13 +112,16 @@ class CreateRecipe : Activity() {
             checkbox.isChecked = false
             checkbox.setText(topping)
             checkbox.setOnClickListener(View.OnClickListener{
-                if (checkbox.isChecked()) {
-                    r.price += toppingPrices[topping].toString().toInt()
-                    sumPrice.setText(r.price.toString())
-                } else {
-                    r.price -= toppingPrices[topping].toString().toInt()
-                    sumPrice.setText(r.price.toString())
+                toppingPrice = 0
+                for (topping in toppings){
+                    val viewId2 = resources.getIdentifier("checkBox"+ toppingmap[topping], "id", packageName)
+                    val checkbox2 = findViewById<CheckBox>(viewId2)
+                    if (checkbox2.isChecked == true){
+                        toppingPrice += toppingPrices[topping].toString().toInt()
+                    }
                 }
+                val sum = sandPrice + toppingPrice
+                sumPrice.setText(sum.toString())
                 val e = this@CreateRecipe.preference.edit()
                 when {
                     topping == "ナチュラルスライスチーズ(+ ¥40)" -> r.cheese = checkbox.isChecked
@@ -159,13 +163,13 @@ class CreateRecipe : Activity() {
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")
                         .setPositiveButton("はい") { dialog, which ->
-                            val intent2 = Intent(this, MainActivity::class.java)
                             val e = preference!!.edit()
                             r.name = textViewName.text.toString()
+                            r.price = sumPrice.text.toString().toInt()
                             list[position] = r
                             e.putString("list", gson.toJson(list))
                             e.apply()
-                            this.startActivity(intent2)
+                            finish()
                         }
                         .setNegativeButton("いいえ", null)
                         .show()
