@@ -163,6 +163,7 @@ class CreateRecipe : Activity() {
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")
                         .setPositiveButton("はい") { dialog, which ->
+                            list += r
                             val e = preference!!.edit()
                             r.name = textViewName.text.toString()
                             r.price = sumPrice.text.toString().toInt()

@@ -37,6 +37,11 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
             intent1.putExtra("position",position)
             activity.startActivity(intent1)
         }
+        holder.v.setOnLongClickListener{
+            list.removeAt(position)
+            notifyItemRemoved(position)
+            return@setOnLongClickListener true
+        }
     }
 }
 
