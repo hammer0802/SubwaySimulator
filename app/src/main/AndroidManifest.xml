@@ -24,6 +24,11 @@
             android:label="レシピ作成"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".RecipeResult"
+            android:label="レシピ作成"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

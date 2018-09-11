@@ -20,7 +20,9 @@ import android.os.PersistableBundle
 class CreateRecipe : Activity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
-    val list: MutableList<Recipe> by lazy { gson?.fromJson<MutableList<Recipe>>(preference!!.getString("list", ""), object : TypeToken<MutableList<Recipe>>() {}.type) ?: mutableListOf()}
+    //この下エラーが出るので修正する
+    //com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was NUMBER at line 1 column 2 path $
+    val recipe: Recipe by lazy { gson?.fromJson<Recipe>(preference!!.getString(position.toString(), "0"), object : TypeToken<Recipe>() {}.type) ?: Recipe()}
     val intent1: Intent by lazy {this.intent}
     val position: Int by lazy { intent1.getIntExtra("position",0) }
     var sandPrice = 0
@@ -29,9 +31,6 @@ class CreateRecipe : Activity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_recipe)
-        val r = Recipe()
-
-
 
         fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
@@ -58,17 +57,14 @@ class CreateRecipe : Activity() {
                             sumPrice.setText(sum.toString())
 
                         }
-                        val e = this@CreateRecipe.preference.edit()
                         when {
-                            itemName == "sandwich" -> r.sandwich = item
-                            itemName == "bread" -> r.bread = item
-                            itemName == "olive" -> r.olive = item
-                            itemName == "pickels" -> r.pickles = item
-                            itemName == "hotpepper" -> r.hotpepper = item
-                            itemName == "dressing" -> r.dressing = item
+                            itemName == "sandwich" -> recipe.sandwich = item
+                            itemName == "bread" -> recipe.bread = item
+                            itemName == "olive" -> recipe.olive = item
+                            itemName == "pickels" -> recipe.pickles = item
+                            itemName == "hotpepper" -> recipe.hotpepper = item
+                            itemName == "dressing" -> recipe.dressing = item
                         }
-                        e.putString("list", gson.toJson(list))
-                        e.apply()
                     }
                 }
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -90,16 +86,13 @@ class CreateRecipe : Activity() {
                                             posi: Int, id: Long) {
                     val spinner = parent as Spinner
                     val item = spinner.selectedItem as String
-                    val e = this@CreateRecipe.preference.edit()
                     when {
-                        itemName == "lettuce" -> r.lettuce = item
-                        itemName == "tomato" -> r.tomato = item
-                        itemName == "greenpepper" -> r.greenpepper = item
-                        itemName == "redonion" -> r.redonion = item
-                        itemName == "carrot" -> r.carrot = item
+                        itemName == "lettuce" -> recipe.lettuce = item
+                        itemName == "tomato" -> recipe.tomato = item
+                        itemName == "greenpepper" -> recipe.greenpepper = item
+                        itemName == "redonion" -> recipe.redonion = item
+                        itemName == "carrot" -> recipe.carrot = item
                     }
-                    e.putString("list", gson.toJson(list))
-                    e.apply()
                 }
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
@@ -122,19 +115,17 @@ class CreateRecipe : Activity() {
                 }
                 val sum = sandPrice + toppingPrice
                 sumPrice.setText(sum.toString())
-                val e = this@CreateRecipe.preference.edit()
                 when {
-                    topping == "ナチュラルスライスチーズ(+ ¥40)" -> r.cheese = checkbox.isChecked
-                    topping == "クリームタイプチーズ(+ ¥60)" -> r.cream = checkbox.isChecked
-                    topping == "マスカルポーネチーズ(+ ¥90)" -> r.mascar = checkbox.isChecked
-                    topping == "たまご(+ ¥60)" -> r.egg = checkbox.isChecked
-                    topping == "ベーコン(+ ¥60)" -> r.bacon = checkbox.isChecked
-                    topping == "ツナ(+ ¥80)" -> r.tuna = checkbox.isChecked
-                    topping == "えび(+ ¥100)" -> r.shrimp = checkbox.isChecked
-                    topping == "アボカド(+ ¥110)" -> r.avocado = checkbox.isChecked
+                    topping == "ナチュラルスライスチーズ(+ ¥40)" -> recipe.cheese = checkbox.isChecked
+                    topping == "クリームタイプチーズ(+ ¥60)" -> recipe.cream = checkbox.isChecked
+                    topping == "マスカルポーネチーズ(+ ¥90)" -> recipe.mascar = checkbox.isChecked
+                    topping == "たまご(+ ¥60)" -> recipe.egg = checkbox.isChecked
+                    topping == "ベーコン(+ ¥60)" -> recipe.bacon = checkbox.isChecked
+                    topping == "ツナ(+ ¥80)" -> recipe.tuna = checkbox.isChecked
+                    topping == "えび(+ ¥100)" -> recipe.shrimp = checkbox.isChecked
+                    topping == "アボカド(+ ¥110)" -> recipe.avocado = checkbox.isChecked
                 }
-                e.putString("list", gson.toJson(list))
-                e.apply()
+
             })
         }
         spinner("sandwich", sandwiches, "spinnerSand")
@@ -163,12 +154,10 @@ class CreateRecipe : Activity() {
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")
                         .setPositiveButton("はい") { dialog, which ->
-                            list += r
                             val e = preference!!.edit()
-                            r.name = textViewName.text.toString()
-                            r.price = sumPrice.text.toString().toInt()
-                            list[position] = r
-                            e.putString("list", gson.toJson(list))
+                            recipe.name = textViewName.text.toString()
+                            recipe.price = sumPrice.text.toString().toInt()
+                            e.putString(position.toString(), gson.toJson(recipe))
                             e.apply()
                             finish()
                         }

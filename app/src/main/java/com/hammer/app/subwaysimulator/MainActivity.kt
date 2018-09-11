@@ -12,19 +12,27 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hammer.app.subwaysimulator.R.attr.key
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-    val gson = Gson()
-    val list: MutableList<Recipe> by lazy { gson?.fromJson<MutableList<Recipe>>(preference!!.getString("list", ""), object : TypeToken<MutableList<Recipe>>() {}.type) ?: mutableListOf<Recipe>()}
+    private val gson = Gson()
+    val list: MutableList<Recipe> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        val allKeys = preference.all.keys
+        for (key in allKeys){
+            //この下エラーが出るので修正する
+            //com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was BEGIN_ARRAY at line 1 column 2 path $
+            list.add(gson.fromJson<Recipe>(preference!!.getString(key, "0"), object : TypeToken<Recipe>() {}.type))
+        }
 
 
         create.setOnClickListener (android.view.View.OnClickListener {
@@ -32,9 +40,9 @@ class MainActivity : AppCompatActivity() {
             val l= list?.size ?: 0
             intent1.putExtra("position",l)
 
-            val e = preference!!.edit()
-            e.putString("list", gson.toJson(list)) //gson.toJson(list)でlistのデータをjson形式で渡す。listは31行目で要素が追加されているため、新しいlistのデータが入る。
-            e.commit()
+//            val e = preference!!.edit()
+//            e.putString(l.toString(), gson.toJson(list))
+//            e.apply()
             this.startActivity(intent1)
         })
     }
@@ -60,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        var recyclerAdaptor = MyRecyclerAdapter(this)
+        val recyclerAdaptor = MyRecyclerAdapter(this)
         recycler_view.layoutManager = LinearLayoutManager(this)
         recycler_view.adapter = recyclerAdaptor
         recyclerAdaptor.reload()
