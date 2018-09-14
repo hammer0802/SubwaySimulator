@@ -15,16 +15,14 @@ import com.hammer.app.subwaysimulator.R.id.*
 import kotlinx.android.synthetic.main.create_recipe.*
 import android.content.DialogInterface
 import android.os.PersistableBundle
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class CreateRecipe : Activity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
-    //この下エラーが出るので修正する
-    //com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was NUMBER at line 1 column 2 path $
-    val recipe: Recipe by lazy { gson?.fromJson<Recipe>(preference!!.getString(position.toString(), "0"), object : TypeToken<Recipe>() {}.type) ?: Recipe()}
-    val intent1: Intent by lazy {this.intent}
-    val position: Int by lazy { intent1.getIntExtra("position",0) }
+    val recipe = Recipe()
     var sandPrice = 0
     var toppingPrice = 0
 
@@ -48,14 +46,13 @@ class CreateRecipe : Activity() {
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View,
                                             posi: Int, id: Long) {
-                    val spinner = parent as Spinner
-                    val item = spinner.selectedItem as String
+                    val spinner2 = parent as Spinner
+                    val item = spinner2.selectedItem as String
                     if (itemName == "sandwich") {
                         for (topping in toppings) {
                             sandPrice = sandPrices[item].toString().toInt()
                             val sum = sandPrice + toppingPrice
                             sumPrice.setText(sum.toString())
-
                         }
                         when {
                             itemName == "sandwich" -> recipe.sandwich = item
@@ -84,8 +81,8 @@ class CreateRecipe : Activity() {
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View,
                                             posi: Int, id: Long) {
-                    val spinner = parent as Spinner
-                    val item = spinner.selectedItem as String
+                    val spinner2 = parent as Spinner
+                    val item = spinner2.selectedItem as String
                     when {
                         itemName == "lettuce" -> recipe.lettuce = item
                         itemName == "tomato" -> recipe.tomato = item
@@ -106,11 +103,11 @@ class CreateRecipe : Activity() {
             checkbox.setText(topping)
             checkbox.setOnClickListener(View.OnClickListener{
                 toppingPrice = 0
-                for (topping in toppings){
+                for (topping2 in toppings){
                     val viewId2 = resources.getIdentifier("checkBox"+ toppingmap[topping], "id", packageName)
                     val checkbox2 = findViewById<CheckBox>(viewId2)
                     if (checkbox2.isChecked == true){
-                        toppingPrice += toppingPrices[topping].toString().toInt()
+                        toppingPrice += toppingPrices[topping2].toString().toInt()
                     }
                 }
                 val sum = sandPrice + toppingPrice
@@ -154,10 +151,14 @@ class CreateRecipe : Activity() {
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")
                         .setPositiveButton("はい") { dialog, which ->
+                            val uuid = UUID.randomUUID().toString()
                             val e = preference!!.edit()
                             recipe.name = textViewName.text.toString()
                             recipe.price = sumPrice.text.toString().toInt()
-                            e.putString(position.toString(), gson.toJson(recipe))
+                            val c = Calendar.getInstance()
+                            val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS")
+                            recipe.createTime = sdf.format(c.time)
+                            e.putString(uuid, gson.toJson(recipe))
                             e.apply()
                             finish()
                         }

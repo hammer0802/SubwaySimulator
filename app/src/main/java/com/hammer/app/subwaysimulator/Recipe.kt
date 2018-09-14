@@ -24,6 +24,8 @@ class Recipe {
     var pickles = ""
     var hotpepper = ""
     var dressing = ""  //ドレッシングの種類
+    var createTime = "" //作成日時
+    var editTime = "" //編集日時
 }
 
 

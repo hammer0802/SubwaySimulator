@@ -29,19 +29,17 @@ class MainActivity : AppCompatActivity() {
 
         val allKeys = preference.all.keys
         for (key in allKeys){
-            //この下エラーが出るので修正する
-            //com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was BEGIN_ARRAY at line 1 column 2 path $
-            list.add(gson.fromJson<Recipe>(preference!!.getString(key, "0"), object : TypeToken<Recipe>() {}.type))
+            list.add(gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java))
         }
-
+        list.sortBy{it.createTime}
 
         create.setOnClickListener (android.view.View.OnClickListener {
             val intent1= Intent(this, CreateRecipe::class.java)
-            val l= list?.size ?: 0
-            intent1.putExtra("position",l)
-
+//            val l= list?.size ?: 0
+//            intent1.putExtra("position",l)
+//
 //            val e = preference!!.edit()
-//            e.putString(l.toString(), gson.toJson(list))
+//            e.putString(l.toString(), "")
 //            e.apply()
             this.startActivity(intent1)
         })

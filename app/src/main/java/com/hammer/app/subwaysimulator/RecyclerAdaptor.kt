@@ -16,12 +16,11 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
     val gson = Gson()
     var list: MutableList<Recipe> = mutableListOf()
     fun reload(){
-        val allEntries = preference.all
-        for (entry in allEntries){
-            //この下エラーが出るので修正する
-            //com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was BEGIN_ARRAY at line 1 column 2 path $
-            list.add(gson.fromJson<Recipe>(preference!!.getString(entry.key, "0"), object : TypeToken<Recipe>() {}.type))
+        val allKeys = preference.all.keys
+        for (key in allKeys){
+            list.add(gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java))
         }
+        list.sortBy{it.createTime}
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecyclerViewHolder {
@@ -40,6 +39,12 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
         holder.v.setOnClickListener{v ->
             val intent2= Intent(activity,RecipeResult::class.java)
             intent2.putExtra("position",position)
+            val keys = preference.all.keys
+            for (key in keys){
+                if(list[position].name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name) {
+                    intent2.putExtra("key", key)
+                }
+            }
             activity.startActivity(intent2)
         }
         holder.v.setOnLongClickListener{
