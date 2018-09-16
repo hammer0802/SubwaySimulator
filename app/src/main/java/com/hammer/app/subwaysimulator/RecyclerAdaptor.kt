@@ -1,5 +1,6 @@
 package com.hammer.app.subwaysimulator
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -48,11 +49,23 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
             activity.startActivity(intent2)
         }
         holder.v.setOnLongClickListener{
-            val e = preference.edit()
-            list.removeAt(position)
-            notifyItemRemoved(position)
-            e.remove(position.toString())
-            e.apply()
+            val alertDialog = AlertDialog.Builder(activity, R.style.MyAlertDialogStyle)
+                    .setTitle("確認")
+                    .setMessage("1度削除したレシピは復元できません。"+ "\n" +"このレシピを削除しますか？")
+                    .setPositiveButton("はい") { dialog, which ->
+                        val e = preference.edit()
+                        val keys = preference.all.keys
+                        for (key in keys){
+                            if(list[position].name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name) {
+                                e.remove(key)
+                            }
+                        }
+                        e.apply()
+                        list.removeAt(position)
+                        notifyItemRemoved(position)
+                    }
+                    .setNegativeButton("キャンセル", null)
+                    .show()
             return@setOnLongClickListener true
         }
     }
