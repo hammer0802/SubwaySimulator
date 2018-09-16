@@ -23,7 +23,14 @@ class RecipeResult : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recipe_result)
 
-
+        val name = findViewById<TextView>(R.id.name)
+        name.setText(recipe.name)
+        val price = findViewById<TextView>(R.id.price)
+        price.setText(recipe.price.toString())
+        val sandwich = findViewById<TextView>(R.id.sandwich)
+        sandwich.setText(recipe.sandwich)
+        val bread = findViewById<TextView>(R.id.bread)
+        bread.setText(recipe.bread)
 
 
     }

@@ -18,5 +18,7 @@
     <string name="complete">レシピ完成！</string>
     <string name="sumtext1">合計:</string>
     <string name="sumtext2">円</string>
+    <string name="recommend">おすすめドレッシングを自動選択する</string>
+    <string name="toast">トーストする</string>
 
 </resources>

@@ -35,6 +35,8 @@ class CreateRecipe : Activity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             val viewId = resources.getIdentifier(spinnerName, "id", packageName)
             val spinner = findViewById<Spinner>(viewId)
+            val checkboxRecommend = findViewById<CheckBox>(R.id.checkBoxRecommend)
+            checkboxRecommend.isChecked = true
             // アダプターを設定
             spinner.adapter = adapter
             // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録
@@ -49,18 +51,20 @@ class CreateRecipe : Activity() {
                     val spinner2 = parent as Spinner
                     val item = spinner2.selectedItem as String
                     if (itemName == "sandwich") {
-                        for (topping in toppings) {
-                            sandPrice = sandPrices[item].toString().toInt()
-                            val sum = sandPrice + toppingPrice
-                            sumPrice.setText(sum.toString())
+                        sandPrice = sandPrices[item].toString().toInt()
+                        val sum = sandPrice + toppingPrice
+                        sumPrice.setText(sum.toString())
+                        if (checkboxRecommend.isChecked == true){
+                            val spinnerdressing = findViewById<Spinner>(R.id.spinnerDressing)
+                            spinnerdressing.setSelection(recommendDressing[item].toString().toInt())
                         }
-                        when {
-                            itemName == "sandwich" -> recipe.sandwich = item
-                            itemName == "bread" -> recipe.bread = item
-                            itemName == "olive" -> recipe.olive = item
-                            itemName == "pickels" -> recipe.pickles = item
-                            itemName == "hotpepper" -> recipe.hotpepper = item
-                            itemName == "dressing" -> recipe.dressing = item
+                    }
+                    if (itemName == "dressing") {
+                        val spinnerDressingAmount = findViewById<Spinner>(R.id.spinnerDressingAmount)
+                        if (spinner.selectedItem == "無し") {
+                            spinnerDressingAmount.visibility = View.INVISIBLE
+                        } else {
+                            spinnerDressingAmount.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -68,7 +72,7 @@ class CreateRecipe : Activity() {
             }
         }
 
-        fun spinnerDefaultVege(itemName: String, itemArray: Array<String>, spinnerName: String){
+        fun spinnerDefaultVege(itemArray: Array<String>, spinnerName: String){
             val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             val viewId = resources.getIdentifier(spinnerName, "id", packageName)
@@ -81,15 +85,7 @@ class CreateRecipe : Activity() {
             spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View,
                                             posi: Int, id: Long) {
-                    val spinner2 = parent as Spinner
-                    val item = spinner2.selectedItem as String
-                    when {
-                        itemName == "lettuce" -> recipe.lettuce = item
-                        itemName == "tomato" -> recipe.tomato = item
-                        itemName == "greenpepper" -> recipe.greenpepper = item
-                        itemName == "redonion" -> recipe.redonion = item
-                        itemName == "carrot" -> recipe.carrot = item
-                    }
+
                 }
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
@@ -104,7 +100,7 @@ class CreateRecipe : Activity() {
             checkbox.setOnClickListener(View.OnClickListener{
                 toppingPrice = 0
                 for (topping2 in toppings){
-                    val viewId2 = resources.getIdentifier("checkBox"+ toppingmap[topping], "id", packageName)
+                    val viewId2 = resources.getIdentifier("checkBox"+ toppingmap[topping2], "id", packageName)
                     val checkbox2 = findViewById<CheckBox>(viewId2)
                     if (checkbox2.isChecked == true){
                         toppingPrice += toppingPrices[topping2].toString().toInt()
@@ -112,30 +108,34 @@ class CreateRecipe : Activity() {
                 }
                 val sum = sandPrice + toppingPrice
                 sumPrice.setText(sum.toString())
-                when {
-                    topping == "ナチュラルスライスチーズ(+ ¥40)" -> recipe.cheese = checkbox.isChecked
-                    topping == "クリームタイプチーズ(+ ¥60)" -> recipe.cream = checkbox.isChecked
-                    topping == "マスカルポーネチーズ(+ ¥90)" -> recipe.mascar = checkbox.isChecked
-                    topping == "たまご(+ ¥60)" -> recipe.egg = checkbox.isChecked
-                    topping == "ベーコン(+ ¥60)" -> recipe.bacon = checkbox.isChecked
-                    topping == "ツナ(+ ¥80)" -> recipe.tuna = checkbox.isChecked
-                    topping == "えび(+ ¥100)" -> recipe.shrimp = checkbox.isChecked
-                    topping == "アボカド(+ ¥110)" -> recipe.avocado = checkbox.isChecked
-                }
 
             })
         }
+
+        val adapterDressingAmount = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, amountsDressing)
+        adapterDressingAmount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val spinnerDressingAmount = findViewById<Spinner>(R.id.spinnerDressingAmount)
+        spinnerDressingAmount.adapter = adapterDressingAmount
+        spinnerDressingAmount.setSelection(1)
+        spinnerDressingAmount.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View,
+                                        posi: Int, id: Long) {
+            }
+            override fun onNothingSelected(arg0: AdapterView<*>) {}
+        }
+
+
         spinner("sandwich", sandwiches, "spinnerSand")
         spinner("bread", breads, "spinnerBread")
-        spinnerDefaultVege("lettuce", amounts, "spinnerLettuce")
-        spinnerDefaultVege("tomato", amounts, "spinnerTomato")
-        spinnerDefaultVege("greenpepper", amounts, "spinnerGreenpepper")
-        spinnerDefaultVege("redonion", amounts, "spinnerRedonion")
-        spinnerDefaultVege("carrot", amounts, "spinnerCarrot")
+        spinnerDefaultVege(amounts, "spinnerLettuce")
+        spinnerDefaultVege(amounts, "spinnerTomato")
+        spinnerDefaultVege(amounts, "spinnerGreenpepper")
+        spinnerDefaultVege(amounts, "spinnerRedonion")
+        spinnerDefaultVege(amounts, "spinnerCarrot")
         spinner("pickles", amounts, "spinnerPickles")
         spinner("olive", amounts, "spinnerOlive")
         spinner("hotpepper", amounts, "spinnerHotpepper")
-        spinner("dressings", dressings, "spinnerDressing")
+        spinner("dressing", dressings, "spinnerDressing")
 
 
 
@@ -158,6 +158,27 @@ class CreateRecipe : Activity() {
                             val c = Calendar.getInstance()
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS")
                             recipe.createTime = sdf.format(c.time)
+                            recipe.sandwich = spinnerSand.selectedItem as String
+                            recipe.bread = spinnerBread.selectedItem as String
+                            recipe.toast = checkBoxToast.isChecked
+                            recipe.cheese = checkBoxcheese.isChecked
+                            recipe.cream = checkBoxcream.isChecked
+                            recipe.mascar = checkBoxmascar.isChecked
+                            recipe.egg = checkBoxegg.isChecked
+                            recipe.bacon = checkBoxbacon.isChecked
+                            recipe.tuna = checkBoxtuna.isChecked
+                            recipe.shrimp = checkBoxshrimp.isChecked
+                            recipe.avocado = checkBoxavocado.isChecked
+                            recipe.lettuce = spinnerLettuce.selectedItem as String
+                            recipe.tomato = spinnerTomato.selectedItem as String
+                            recipe.greenpepper = spinnerGreenpepper.selectedItem as String
+                            recipe.redonion = spinnerRedonion.selectedItem as String
+                            recipe.carrot = spinnerCarrot.selectedItem as String
+                            recipe.pickles = spinnerPickles.selectedItem as String
+                            recipe.olive = spinnerOlive.selectedItem as String
+                            recipe.hotpepper = spinnerHotpepper.selectedItem as String
+                            recipe.dressing = spinnerDressing.selectedItem as String
+                            recipe.dressingAmount = spinnerDressingAmount.selectedItem as String
                             e.putString(uuid, gson.toJson(recipe))
                             e.apply()
                             finish()

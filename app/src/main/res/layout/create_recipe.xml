@@ -91,10 +91,22 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:spinnerMode="dialog"
-                app:layout_constraintBottom_toTopOf="@+id/textViewBread"
+                app:layout_constraintBottom_toTopOf="@+id/checkBoxRecommend"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewSand" />
+
+            <CheckBox
+                android:id="@+id/checkBoxRecommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/recommend"
+                app:layout_constraintBottom_toTopOf="@+id/textViewBread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerSand" />
 
             <TextView
                 android:id="@+id/textViewBread"
@@ -112,7 +124,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/spinnerBread"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerSand" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxRecommend" />
 
             <Spinner
                 android:id="@+id/spinnerBread"
@@ -127,6 +139,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewBread" />
+
+            <CheckBox
+                android:id="@+id/checkBoxToast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/toast"
+                app:layout_constraintBottom_toTopOf="@+id/textViewTopping"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerBread" />
 
             <TextView
                 android:id="@+id/textViewTopping"
@@ -536,10 +560,24 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:spinnerMode="dialog"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/spinnerDressingAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDressing" />
+
+            <Spinner
+                android:id="@+id/spinnerDressingAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:spinnerMode="dialog"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerDressing" />
 
 
         </android.support.constraint.ConstraintLayout>

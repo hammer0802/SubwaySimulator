@@ -5,6 +5,7 @@ class Recipe {
     var price = 0  //合計金額
     var sandwich = "" //サンドウィッチの種類
     var bread = ""  //パンの種類
+    var toast = false //トーストの有無
     //トッピング
     var cheese = false
     var cream = false
@@ -24,6 +25,7 @@ class Recipe {
     var pickles = ""
     var hotpepper = ""
     var dressing = ""  //ドレッシングの種類
+    var dressingAmount = "" //ドレッシングの量
     var createTime = "" //作成日時
     var editTime = "" //編集日時
 }
