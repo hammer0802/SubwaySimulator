@@ -23,4 +23,9 @@
         <item name="android:textColorPrimary">@android:color/black</item>
     </style>
 
+    <style name="CustomWelcomeScreenTheme" parent="Wel_WelcomeScreenBaseTheme">
+        <item name="welcomeButtonSkipText">@string/skip</item>
+        <item name="welcomeButtonDoneText">@string/done</item>
+    </style>
+
 </resources>

@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        TutorialActivity.showIfNeeded(this, Bundle())
+
         val allKeys = preference.all.keys
         for (key in allKeys){
             list.add(gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java))
@@ -56,7 +58,9 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                TutorialActivity.showForcibly(this)
+                true}
             else -> super.onOptionsItemSelected(item)
         }
     }

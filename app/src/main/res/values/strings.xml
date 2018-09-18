@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SUBWAYシミュレーター</string>
-    <string name="action_settings">レシピを共有する</string>
+    <string name="action_settings">チュートリアルを見る</string>
     <string name="step1">1.サンドウィッチの種類</string>
     <string name="step2">2.パンの種類</string>
     <string name="step3">3.トッピングの追加</string>
@@ -20,5 +20,8 @@
     <string name="sumtext2">円</string>
     <string name="recommend">おすすめドレッシングを自動選択する</string>
     <string name="toast">トーストする</string>
+    <string name="skip">スキップする</string>
+    <string name="done">完了</string>
+
 
 </resources>
