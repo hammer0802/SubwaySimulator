@@ -8,8 +8,12 @@ import android.os.PersistableBundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.hammer.app.subwaysimulator.R.attr.key
@@ -28,6 +32,16 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         TutorialActivity.showIfNeeded(this, Bundle())
+
+        TapTargetSequence(this)
+                .target(
+                        TapTarget.forView(findViewById<Button>(R.id.create), "まずはこちらのボタンを押してレシピを作成しましょう！")
+                                .outerCircleColor(R.color.colorPrimary)
+                                .titleTextColor(android.R.color.white)
+                                .drawShadow(true)
+                                .outerCircleAlpha(0.95f)
+                                .cancelable(true)
+                )
 
         val allKeys = preference.all.keys
         for (key in allKeys){
