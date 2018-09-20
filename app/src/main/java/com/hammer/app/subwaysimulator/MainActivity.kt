@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.os.PersistableBundle
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
@@ -36,35 +37,37 @@ class MainActivity : AppCompatActivity() {
 
         TutorialActivity.showIfNeeded(this, Bundle())
 
-        val countPreference = getSharedPreferences("countpreference", Context.MODE_PRIVATE)
-        var count = countPreference.getInt("count", 0)
-        if (count == 0) {
-            val sequence = TapTargetSequence(this)
-                    .targets(
-                            TapTarget.forView(findViewById<View>(R.id.create), "まずはこちらのボタンを押してレシピを作成しましょう！")
-                                    .outerCircleColor(R.color.colorPrimary)
-                                    .titleTextColor(android.R.color.white)
-                                    .drawShadow(true)
-                                    .outerCircleAlpha(0.97f)
-                                    .cancelable(false)
-                                    .tintTarget(false)
-                                    .id(1),
-                            TapTarget.forToolbarOverflow(toolbar, "操作方法を忘れた場合はこちらをクリック！", "もう一度チュートリアルを見ることができます。")
-                                    .outerCircleColor(R.color.colorAccent)
-                                    .titleTextColor(android.R.color.white)
-                                    .descriptionTextColor(android.R.color.white)
-                                    .descriptionTextAlpha(1.0f)
-                                    .drawShadow(true)
-                                    .outerCircleAlpha(0.97f)
-                                    .cancelable(true)
-                                    .id(2)
-                    )
-            sequence.start()
-            count++
-            val e = countPreference.edit()
-            e.putInt("count", count)
-            e.apply()
-        }
+        Handler().postDelayed(Runnable {
+            val countPreference = getSharedPreferences("countpreference", Context.MODE_PRIVATE)
+            var count = countPreference.getInt("count", 0)
+            if (count == 0) {
+                val sequence = TapTargetSequence(this)
+                        .targets(
+                                TapTarget.forView(findViewById<View>(R.id.create), "まずはこちらのボタンを押してレシピを作成しましょう！")
+                                        .outerCircleColor(R.color.colorPrimary)
+                                        .titleTextColor(android.R.color.white)
+                                        .drawShadow(true)
+                                        .outerCircleAlpha(0.97f)
+                                        .cancelable(false)
+                                        .tintTarget(false)
+                                        .id(1),
+                                TapTarget.forToolbarOverflow(toolbar, "操作方法を忘れた場合はこちらをクリック！", "もう一度チュートリアルを見ることができます。")
+                                        .outerCircleColor(R.color.colorAccent)
+                                        .titleTextColor(android.R.color.white)
+                                        .descriptionTextColor(android.R.color.white)
+                                        .descriptionTextAlpha(1.0f)
+                                        .drawShadow(true)
+                                        .outerCircleAlpha(0.97f)
+                                        .cancelable(true)
+                                        .id(2)
+                        )
+                sequence.start()
+                count++
+                val e = countPreference.edit()
+                e.putInt("count", count)
+                e.apply()
+            }
+        }, 3000)
 
         val allKeys = preference.all.keys
         for (key in allKeys){
