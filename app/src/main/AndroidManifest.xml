@@ -24,15 +24,15 @@
             android:name=".CreateRecipe"
             android:configChanges="orientation|screenSize"
             android:label="レシピ作成"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RecipeResult"
             android:configChanges="orientation|screenSize"
-            android:label="レシピ作成"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="レシピ詳細"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TutorialActivity"
-            android:theme="@style/WelcomeScreenTheme"></activity>
+            android:theme="@style/WelcomeScreenTheme" />
     </application>
 
 </manifest>

@@ -1,37 +1,39 @@
 package com.hammer.app.subwaysimulator
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.TestLooperManager
-import android.widget.TextView
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.recipe_result.*
+import android.support.design.widget.Snackbar
+import android.support.v7.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
 
-class RecipeResult : Activity() {
-    private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-    val gson = Gson()
-    val intent2: Intent by lazy {this.intent}
-    val position: Int by lazy { intent2.getIntExtra("position",0) }
-    val key: String by lazy { intent2.getStringExtra("key") }
-    val recipe: Recipe by lazy { gson?.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java) ?: Recipe()}
+import kotlinx.android.synthetic.main.activity_recipe_result.*
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+class RecipeResult : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.recipe_result)
+        setContentView(R.layout.activity_recipe_result)
+        setSupportActionBar(toolbar)
 
-        val name = findViewById<TextView>(R.id.name)
-        name.setText(recipe.name)
-        val price = findViewById<TextView>(R.id.price)
-        price.setText(recipe.price.toString())
-        val sandwich = findViewById<TextView>(R.id.sandwich)
-        sandwich.setText(recipe.sandwich)
-        val bread = findViewById<TextView>(R.id.bread)
-        bread.setText(recipe.bread)
+    }
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_recipe, menu)
+        return true
+    }
 
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        return when (item.itemId) {
+            R.id.action_edit -> {
+                true
+            }
+            R.id.action_sns ->{
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

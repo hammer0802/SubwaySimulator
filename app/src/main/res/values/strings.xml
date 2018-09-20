@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">SUBWAYシミュレーター</string>
     <string name="action_settings">チュートリアルを見る</string>
-    <string name="step1">1.サンドウィッチの種類</string>
-    <string name="step2">2.パンの種類</string>
-    <string name="step3">3.トッピングの追加</string>
-    <string name="step4">4.野菜の増減</string>
-    <string name="step5">5.ドレッシングの種類</string>
+    <string name="step1">1.サンドウィッチ</string>
+    <string name="step2">2.パン</string>
+    <string name="step3">3.トッピング</string>
+    <string name="step4">4.野菜</string>
+    <string name="step5">5.ドレッシング</string>
     <string name="lettuce">●レタス</string>
     <string name="tomato">●トマト</string>
     <string name="green_pepper">●ピーマン</string>
@@ -22,6 +22,11 @@
     <string name="toast">トーストする</string>
     <string name="skip">スキップする</string>
     <string name="done">完了</string>
+    <string name="title_activity_recipe_result">RecipeResult</string>
+    <string name="action_edit">レシピを編集する</string>
+    <string name="action_sns">SNSで共有する</string>
+    <string name="recipe_name">レシピ名</string>
+    <string name="recipe_price">金額</string>
 
 
 </resources>
