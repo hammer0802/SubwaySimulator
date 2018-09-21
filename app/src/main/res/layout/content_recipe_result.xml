@@ -18,7 +18,6 @@
         android:layout_marginTop="8dp"
         android:text="@string/recipe_name"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
-        app:layout_constraintE_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/recipePrice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
