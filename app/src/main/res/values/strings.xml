@@ -27,6 +27,8 @@
     <string name="action_sns">SNSで共有する</string>
     <string name="recipe_name">レシピ名</string>
     <string name="recipe_price">金額</string>
+    <string name="dressing_type">●ドレッシングの種類</string>
+    <string name="dressing_amount">●ドレッシングの量</string>
 
 
 </resources>

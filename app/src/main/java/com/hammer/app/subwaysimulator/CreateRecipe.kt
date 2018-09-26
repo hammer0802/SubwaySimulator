@@ -178,7 +178,11 @@ class CreateRecipe : Activity() {
                             recipe.olive = spinnerOlive.selectedItem as String
                             recipe.hotpepper = spinnerHotpepper.selectedItem as String
                             recipe.dressing = spinnerDressing.selectedItem as String
-                            recipe.dressingAmount = spinnerDressingAmount.selectedItem as String
+                            if(recipe.dressing == "無し") {
+                                recipe.dressingAmount = "-"
+                            }else {
+                                recipe.dressingAmount = spinnerDressingAmount.selectedItem as String
+                            }
                             e.putString(uuid, gson.toJson(recipe))
                             e.apply()
                             finish()

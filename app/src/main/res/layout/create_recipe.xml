@@ -31,7 +31,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="50dp"
                 android:background="@color/colorPrimary"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -552,6 +552,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerHotpepper" />
 
+            <TextView
+                android:id="@+id/textViewDressingType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/dressing_type"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/spinnerDressing"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDressing" />
+
             <Spinner
                 android:id="@+id/spinnerDressing"
                 android:layout_width="0dp"
@@ -561,10 +577,26 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:spinnerMode="dialog"
-                app:layout_constraintBottom_toBottomOf="@id/spinnerDressingAmount"
+                app:layout_constraintBottom_toBottomOf="@id/textViewDressingAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDressing" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewDressingType" />
+
+            <TextView
+                android:id="@+id/textViewDressingAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/dressing_amount"
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@+id/spinnerDressingAmount"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerDressing" />
 
             <Spinner
                 android:id="@+id/spinnerDressingAmount"
@@ -578,7 +610,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerDressing" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewDressingAmount" />
 
 
         </android.support.constraint.ConstraintLayout>
