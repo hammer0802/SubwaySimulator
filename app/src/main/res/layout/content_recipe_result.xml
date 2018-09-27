@@ -13,10 +13,12 @@
         android:id="@+id/recipeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/recipe_name"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
         app:layout_constraintEnd_toStartOf="@+id/recipePrice"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,11 +28,13 @@
         android:id="@+id/recipePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/recipe_price"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recipeName"
@@ -38,11 +42,11 @@
 
     <TableLayout
         android:id="@+id/tableLayout3"
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipeName">
@@ -53,9 +57,9 @@
             android:background="@color/colorPrimary">
 
             <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/textViewSand"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
                 android:text="@string/step1"
                 android:textColor="#FFFFFF"
@@ -68,10 +72,9 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:id="@+id/textViewSandType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
         </TableRow>
 
@@ -81,9 +84,9 @@
             android:background="@color/colorPrimary">
 
             <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/textViewBread"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="@string/step2"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp"
@@ -95,10 +98,36 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:id="@+id/textViewBreadType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/textViewTopping"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/step3"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewToppingSelect"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
         </TableRow>
     </TableLayout>
 
