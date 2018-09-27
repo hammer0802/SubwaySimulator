@@ -1,9 +1,9 @@
 package com.hammer.app.subwaysimulator
 
 import android.app.Activity
-import android.graphics.Color
 import android.net.IpSecTransform
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import com.stephentuso.welcome.*
 
 class TutorialActivity : WelcomeActivity() {
@@ -29,23 +29,23 @@ class TutorialActivity : WelcomeActivity() {
      */
     override fun configuration(): WelcomeConfiguration {
         return WelcomeConfiguration.Builder(this)
-                .defaultBackgroundColor(BackgroundColor(resources.getColor(R.color.colorPrimary)))
+                .defaultBackgroundColor(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary)))
                 .page(TitlePage(R.drawable.icon, "SUBWAYシミュレーターへ"+ "\n" +"ようこそ！"))
                 .page(BasicPage(
                         R.drawable.capture1,
                         "お気に入りのサンドウィッチを忘れないように…",
                         "このアプリではSUBWAYのサンドウィッチ・レシピを作成・保存することができます。")
-                        .background(BackgroundColor(resources.getColor(R.color.colorPrimary))))
+                        .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
                 .page(BasicPage(
                         R.drawable.capture2,
                         "あなたのご要望を叶えます",
                         "野菜の増減やパン無し・ドレッシング無しなどの細かいご指定も、タップするだけで簡単にできます。")
-                        .background(BackgroundColor(resources.getColor(R.color.colorPrimary))))
+                        .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
                 .page(BasicPage(
                         R.drawable.capture3,
                         "あなたのお気に入りレシピを友人に教えてあげましょう！",
                         "SNS連携機能を使って、作成したレシピを共有することができます。")
-                        .background(BackgroundColor(resources.getColor(R.color.colorPrimary)))
+                        .background(BackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary)))
                 )
                 .swipeToDismiss(true)
                 .build()

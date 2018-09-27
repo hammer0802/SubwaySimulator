@@ -4,25 +4,18 @@ import android.os.Bundle
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.view.View
-import android.view.WindowId
 import android.widget.*
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.hammer.app.subwaysimulator.R.id.*
 import kotlinx.android.synthetic.main.create_recipe.*
-import android.content.DialogInterface
-import android.os.PersistableBundle
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class CreateRecipe : Activity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
-    val recipe = Recipe()
+    private val recipe = Recipe()
     var sandPrice = 0
     var toppingPrice = 0
 
@@ -41,7 +34,7 @@ class CreateRecipe : Activity() {
             spinner.adapter = adapter
             // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録
             spinner.setSelection(0)
-            spinner.setOnTouchListener { view, motionEvent ->
+            spinner.setOnTouchListener { _, _ ->
                 textViewName.clearFocus()
                 false
             }
@@ -53,18 +46,29 @@ class CreateRecipe : Activity() {
                     if (itemName == "sandwich") {
                         sandPrice = sandPrices[item].toString().toInt()
                         val sum = sandPrice + toppingPrice
-                        sumPrice.setText(sum.toString())
+                        sumPrice.text = sum.toString()
                         if (checkboxRecommend.isChecked == true){
-                            val spinnerdressing = findViewById<Spinner>(R.id.spinnerDressing)
-                            spinnerdressing.setSelection(recommendDressing[item].toString().toInt())
+                            val spinnerDressing = findViewById<Spinner>(R.id.spinnerDressing)
+                            spinnerDressing.setSelection(recommendDressing[item].toString().toInt())
+                        }
+                    }
+                    if(itemName == "bread"){
+                        val checkBoxToast = findViewById<CheckBox>(R.id.checkBoxToast)
+                        if (spinner.selectedItem == "無し（サラダ）") {
+                            checkBoxToast.visibility = View.INVISIBLE
+                        } else {
+                            checkBoxToast.visibility = View.VISIBLE
                         }
                     }
                     if (itemName == "dressing") {
                         val spinnerDressingAmount = findViewById<Spinner>(R.id.spinnerDressingAmount)
+                        val textViewDressingAmount = findViewById<TextView>(R.id.textViewDressingAmount)
                         if (spinner.selectedItem == "無し") {
                             spinnerDressingAmount.visibility = View.INVISIBLE
+                            textViewDressingAmount.visibility = View.INVISIBLE
                         } else {
                             spinnerDressingAmount.visibility = View.VISIBLE
+                            textViewDressingAmount.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -96,20 +100,20 @@ class CreateRecipe : Activity() {
             val viewId = resources.getIdentifier("checkBox"+ toppingmap[topping], "id", packageName)
             val checkbox = findViewById<CheckBox>(viewId)
             checkbox.isChecked = false
-            checkbox.setText(topping)
-            checkbox.setOnClickListener(View.OnClickListener{
+            checkbox.text = topping
+            checkbox.setOnClickListener{
                 toppingPrice = 0
                 for (topping2 in toppings){
                     val viewId2 = resources.getIdentifier("checkBox"+ toppingmap[topping2], "id", packageName)
                     val checkbox2 = findViewById<CheckBox>(viewId2)
-                    if (checkbox2.isChecked == true){
+                    if (checkbox2.isChecked){
                         toppingPrice += toppingPrices[topping2].toString().toInt()
                     }
                 }
                 val sum = sandPrice + toppingPrice
-                sumPrice.setText(sum.toString())
+                sumPrice.text = sum.toString()
 
-            })
+            }
         }
 
         val adapterDressingAmount = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, amountsDressing)
@@ -140,7 +144,7 @@ class CreateRecipe : Activity() {
 
 
         completeButton.setOnClickListener{
-            if (textViewName.text.toString().equals("")) {
+            if (textViewName.text.toString() == "") {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("Caution !")
                         .setMessage("レシピの名前を入力してください")
@@ -150,13 +154,13 @@ class CreateRecipe : Activity() {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")
-                        .setPositiveButton("はい") { dialog, which ->
+                        .setPositiveButton("はい") { _, _ ->
                             val uuid = UUID.randomUUID().toString()
-                            val e = preference!!.edit()
+                            val e = preference.edit()
                             recipe.name = textViewName.text.toString()
                             recipe.price = sumPrice.text.toString().toInt()
                             val c = Calendar.getInstance()
-                            val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS")
+                            val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
                             recipe.createTime = sdf.format(c.time)
                             recipe.sandwich = spinnerSand.selectedItem as String
                             recipe.bread = spinnerBread.selectedItem as String
@@ -192,21 +196,16 @@ class CreateRecipe : Activity() {
             }
         }
     }
-
-
-
     override fun onBackPressed() {
 
         val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                 .setTitle("確認")
                 .setMessage("作成途中で終了するとレシピは保存されません。"+ "\n" +"終了しますか？")
-                .setPositiveButton("はい") { dialog, which ->
+                .setPositiveButton("はい") { _, _ ->
                     super.onBackPressed()
                 }
                 .setNegativeButton("キャンセル", null)
                 .show()
     }
-
-
 }
 

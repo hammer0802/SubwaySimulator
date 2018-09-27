@@ -6,22 +6,14 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.os.PersistableBundle
-import android.support.design.widget.Snackbar
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
-import com.getkeepsafe.taptargetview.TapTargetView
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import com.hammer.app.subwaysimulator.R.attr.key
-
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -37,8 +29,8 @@ class MainActivity : AppCompatActivity() {
 
         TutorialActivity.showIfNeeded(this, Bundle())
 
-        Handler().postDelayed(Runnable {
-            val countPreference = getSharedPreferences("countpreference", Context.MODE_PRIVATE)
+        Handler().postDelayed({
+            val countPreference = getSharedPreferences("countPreference", Context.MODE_PRIVATE)
             var count = countPreference.getInt("count", 0)
             if (count == 0) {
                 val sequence = TapTargetSequence(this)
@@ -67,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 e.putInt("count", count)
                 e.apply()
             }
-        }, 3000)
+        }, 1000)
 
         val allKeys = preference.all.keys
         for (key in allKeys){
@@ -75,28 +67,18 @@ class MainActivity : AppCompatActivity() {
         }
         list.sortBy{it.createTime}
 
-        create.setOnClickListener (android.view.View.OnClickListener {
+        create.setOnClickListener{
             val intent1= Intent(this, CreateRecipe::class.java)
-//            val l= list?.size ?: 0
-//            intent1.putExtra("position",l)
-//
-//            val e = preference!!.edit()
-//            e.putString(l.toString(), "")
-//            e.apply()
             this.startActivity(intent1)
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
                 TutorialActivity.showForcibly(this)
