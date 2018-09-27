@@ -1,6 +1,6 @@
 package com.hammer.app.subwaysimulator
 
-var sandwiches = arrayOf(
+val sandwiches = arrayOf(
         "BLT",
         "えびアボカド",
         "生ハム＆マスカルポーネ",
@@ -19,7 +19,7 @@ var sandwiches = arrayOf(
         "アボカドチキン　チポトレ(期間限定)",
         "アボカドベーコン　チポトレ(期間限定)")
 
-var sandPrices = mapOf(
+val sandPrices = mapOf(
         "BLT" to 420,
         "えびアボカド" to 500,
         "生ハム＆マスカルポーネ" to 520,
@@ -38,7 +38,7 @@ var sandPrices = mapOf(
         "アボカドチキン　チポトレ(期間限定)" to 530,
         "アボカドベーコン　チポトレ(期間限定)" to 530)
 
-var breads = arrayOf(
+val breads = arrayOf(
         "ウィート",
         "ホワイト",
         "セサミ",
@@ -47,7 +47,7 @@ var breads = arrayOf(
         "無し（サラダ）"
 )
 
-var toppings = arrayOf(
+val toppings = arrayOf(
         "ナチュラルスライスチーズ(+ ¥40)",
         "クリームタイプチーズ(+ ¥60)",
         "マスカルポーネチーズ(+ ¥90)",
@@ -58,7 +58,7 @@ var toppings = arrayOf(
         "アボカド(+ ¥110)"
 )
 
-var toppingPrices = mapOf(
+val toppingPrices = mapOf(
         "ナチュラルスライスチーズ(+ ¥40)" to 40,
         "クリームタイプチーズ(+ ¥60)" to 60,
         "マスカルポーネチーズ(+ ¥90)" to 90,
@@ -69,7 +69,7 @@ var toppingPrices = mapOf(
         "アボカド(+ ¥110)" to 110
 )
 
-var toppingmap = mapOf(
+val toppingmap = mapOf(
         "ナチュラルスライスチーズ(+ ¥40)" to "cheese",
         "クリームタイプチーズ(+ ¥60)" to "cream",
         "マスカルポーネチーズ(+ ¥90)" to "mascar",
@@ -80,9 +80,7 @@ var toppingmap = mapOf(
         "アボカド(+ ¥110)" to "avocado"
 )
 
-
-
-var dressings = arrayOf(
+val dressings = arrayOf(
         "オイル&ビネガー　塩・こしょう",
         "シーザードレッシング",
         "野菜クリーミードレッシング",
@@ -98,20 +96,20 @@ var dressings = arrayOf(
         "無し"
 )
 
-var amounts = arrayOf(
+val amounts = arrayOf(
         "無し",
         "少なめ",
         "普通",
         "多め"
 )
 
-var amountsDressing = arrayOf(
+val amountsDressing = arrayOf(
         "少なめ",
         "普通",
         "多め"
 )
 
-var recommendDressing = mapOf(
+val recommendDressing = mapOf(
         "BLT" to 1, //"シーザードレッシング"
         "えびアボカド" to 2, //"野菜クリーミードレッシング"
         "生ハム＆マスカルポーネ" to 5, //"バジルソース"

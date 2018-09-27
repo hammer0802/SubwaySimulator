@@ -19,7 +19,7 @@
         android:text="@string/recipe_name"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toStartOf="@+id/recipePrice"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,19 +35,21 @@
         android:text="@string/recipe_price"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recipeName"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
-        android:id="@+id/tableLayout3"
-        android:layout_width="wrap_content"
+        android:id="@+id/tableLayout"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipeName">
 
@@ -126,9 +128,191 @@
             <TextView
                 android:id="@+id/textViewToppingSelect"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/textViewVegetable"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/step4"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewLettuce"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/lettuce"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textViewLettuceAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewTomato"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/tomato"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textViewTomatoAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewGreenpepper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/green_pepper"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textViewGreenpepperAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewRedonion"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/red_onion"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textViewRedonionAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewCarrot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/carrot"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textViewCarrotAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewOlive"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/olive"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textViewOliveAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewPickles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/pickles"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textViewPicklesAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewHotpepper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/hot_pepper"
+                android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/textViewHotpepperAmount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/textViewDressing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/step5"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textViewDressingType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </TableRow>
+
+
     </TableLayout>
+
+
 
 </android.support.constraint.ConstraintLayout>
