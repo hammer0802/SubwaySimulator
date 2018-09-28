@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.hammer.app.subwaysimulator">
 
     <application
@@ -8,7 +9,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
@@ -33,6 +35,15 @@
         <activity
             android:name=".TutorialActivity"
             android:theme="@style/WelcomeScreenTheme" />
+        <activity
+            android:name=".EditRecipe"
+            android:configChanges="orientation|screenSize"
+            android:label="レシピ編集"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".RecipeFunction"
+            android:theme="@style/AppTheme.NoActionBar" />
+
     </application>
 
 </manifest>

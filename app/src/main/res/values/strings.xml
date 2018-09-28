@@ -29,6 +29,7 @@
     <string name="recipe_price">金額</string>
     <string name="type">●種類</string>
     <string name="amount">●量</string>
+    <string name="action_policy">プライバシーポリシー</string>
 
 
 </resources>

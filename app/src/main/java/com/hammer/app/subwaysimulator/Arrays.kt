@@ -69,7 +69,7 @@ val toppingPrices = mapOf(
         "アボカド(+ ¥110)" to 110
 )
 
-val toppingmap = mapOf(
+val toppingMap = mapOf(
         "ナチュラルスライスチーズ(+ ¥40)" to "cheese",
         "クリームタイプチーズ(+ ¥60)" to "cream",
         "マスカルポーネチーズ(+ ¥90)" to "mascar",

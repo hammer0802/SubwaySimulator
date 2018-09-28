@@ -83,6 +83,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> {
                 TutorialActivity.showForcibly(this)
                 true}
+            R.id.action_policy -> {
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

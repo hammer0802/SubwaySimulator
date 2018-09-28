@@ -35,12 +35,11 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewHolder, position: Int) {
-        holder!!.v.findViewById<TextView>(R.id.recipe_name).setText(list[position].name)
+        holder!!.v.findViewById<TextView>(R.id.recipe_name).text = list[position].name
         holder!!.v.findViewById<TextView>(R.id.recipe_name).append("("+ list[position].sandwich + ")")
 
         holder.v.setOnClickListener{v ->
             val intent2= Intent(activity,RecipeResult::class.java)
-            intent2.putExtra("position",position)
             val keys = preference.all.keys
             for (key in keys){
                 if(list[position].name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name) {
@@ -53,7 +52,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
             val alertDialog = AlertDialog.Builder(activity, R.style.MyAlertDialogStyle)
                     .setTitle("確認")
                     .setMessage("1度削除したレシピは復元できません。"+ "\n" +"このレシピを削除しますか？")
-                    .setPositiveButton("はい") { dialog, which ->
+                    .setPositiveButton("はい") { _, _ ->
                         val e = preference.edit()
                         val keys = preference.all.keys
                         for (key in keys){
