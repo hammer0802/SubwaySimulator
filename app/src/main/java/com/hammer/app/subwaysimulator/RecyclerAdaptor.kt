@@ -54,10 +54,10 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                     .setPositiveButton("はい") { _, _ ->
                         val e = preference.edit()
                         val keys = preference.all.keys
-                        for (key in keys){
-                            if(list.any{recipe -> recipe.name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name} ){
-                                e.remove(key)
-                            }
+                        //ToDo：position指定無しで処理できないか考える。
+                        keys.forEach { key ->
+                            val findRecipe = list.find { recipe -> recipe.name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name }
+                            e.remove(findRecipe!!.uuid)
                         }
                         e.apply()
                         list.removeAt(position)
