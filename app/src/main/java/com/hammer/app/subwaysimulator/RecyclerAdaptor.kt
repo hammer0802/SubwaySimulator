@@ -55,7 +55,6 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                         val e = preference.edit()
                         val keys = preference.all.keys
                         for (key in keys){
-                            val findRecipe = list.find { recipe -> recipe.name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name }
                             if(list.any{recipe -> recipe.name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name} ){
                                 e.remove(key)
                             }
