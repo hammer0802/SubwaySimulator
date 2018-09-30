@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         list.sortBy{it.createTime}
 
         create.setOnClickListener{
-            val intent1= Intent(this, CreateRecipe::class.java)
+            val intent1= Intent(this, CreateRecipeActivity::class.java)
             this.startActivity(intent1)
         }
     }

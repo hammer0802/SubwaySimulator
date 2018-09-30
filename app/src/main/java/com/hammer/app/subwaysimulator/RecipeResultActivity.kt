@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.InputType
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -13,7 +12,7 @@ import com.google.gson.Gson
 
 import kotlinx.android.synthetic.main.activity_recipe_result.*
 
-class RecipeResult : AppCompatActivity() {
+class RecipeResultActivity : AppCompatActivity() {
 
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
@@ -102,7 +101,7 @@ class RecipeResult : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_edit -> {
-                val intent3= Intent(this, EditRecipe::class.java)
+                val intent3= Intent(this, EditRecipeActivity::class.java)
                 intent3.putExtra("key", key)
                 startActivity(intent3)
                 true

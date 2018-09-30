@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 
 class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecyclerViewHolder>() {
     private val preference: SharedPreferences by lazy { activity.getSharedPreferences("recipe", Context.MODE_PRIVATE) }
@@ -39,7 +38,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
         holder!!.v.findViewById<TextView>(R.id.recipe_name).append("("+ list[position].sandwich + ")")
 
         holder.v.setOnClickListener{v ->
-            val intent2= Intent(activity,RecipeResult::class.java)
+            val intent2= Intent(activity,RecipeResultActivity::class.java)
             val keys = preference.all.keys
             for (key in keys){
                 if(list[position].name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name) {
@@ -56,7 +55,8 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                         val e = preference.edit()
                         val keys = preference.all.keys
                         for (key in keys){
-                            if(list[position].name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name) {
+                            val findRecipe = list.find { recipe -> recipe.name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name }
+                            if(list.any{recipe -> recipe.name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name} ){
                                 e.remove(key)
                             }
                         }

@@ -4,12 +4,14 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.create_recipe.*
 
-open class RecipeFunction: Activity(){
+abstract class AbstractRecipeActivity: AppCompatActivity(){
     val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
     var sandPrice = 0

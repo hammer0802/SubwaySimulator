@@ -1,20 +1,17 @@
 package com.hammer.app.subwaysimulator
 
-import android.app.AlertDialog
-import android.content.Intent
 import android.os.Bundle
+import android.app.AlertDialog
 import kotlinx.android.synthetic.main.create_recipe.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EditRecipe : RecipeFunction() {
-    private val intent3: Intent by lazy { this.intent }
-    val key: String by lazy { intent3.getStringExtra("key")}
-    private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
+class CreateRecipeActivity : AbstractRecipeActivity() {
+    private val recipe = Recipe()
+    public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.edit_recipe)
+        setContentView(R.layout.create_recipe)
+
         spinner("sandwich", sandwiches, "spinnerSand")
         spinner("bread", breads, "spinnerBread")
         spinnerDefaultVege(amounts, "spinnerLettuce")
@@ -41,12 +38,13 @@ class EditRecipe : RecipeFunction() {
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")
                         .setPositiveButton("はい") { _, _ ->
+                            val uuid = UUID.randomUUID().toString()
                             val e = preference.edit()
                             recipe.name = textViewName.text.toString()
                             recipe.price = sumPrice.text.toString().toInt()
                             val c = Calendar.getInstance()
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
-                            recipe.editTime = sdf.format(c.time)
+                            recipe.createTime = sdf.format(c.time)
                             recipe.sandwich = spinnerSand.selectedItem as String
                             recipe.bread = spinnerBread.selectedItem as String
                             recipe.toast = checkBoxToast.isChecked
@@ -72,7 +70,7 @@ class EditRecipe : RecipeFunction() {
                             } else {
                                 recipe.dressingAmount = spinnerDressingAmount.selectedItem as String
                             }
-                            e.putString(key, gson.toJson(recipe))
+                            e.putString(uuid, gson.toJson(recipe))
                             e.apply()
                             finish()
                         }
@@ -81,11 +79,4 @@ class EditRecipe : RecipeFunction() {
             }
         }
     }
-    override fun onResume() {
-        super.onResume()
-
-    }
 }
-
-
-

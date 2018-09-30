@@ -1,23 +1,20 @@
 package com.hammer.app.subwaysimulator
 
-import android.os.Bundle
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
-import android.content.SharedPreferences
-import android.view.View
-import android.widget.*
-import com.google.gson.Gson
+import android.content.Intent
+import android.os.Bundle
 import kotlinx.android.synthetic.main.create_recipe.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class CreateRecipe : RecipeFunction() {
-    private val recipe = Recipe()
-    public override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.create_recipe)
+class EditRecipeActivity : AbstractRecipeActivity() {
+    private val intent3: Intent by lazy { this.intent }
+    val key: String by lazy { intent3.getStringExtra("key")}
+    private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.edit_recipe)
         spinner("sandwich", sandwiches, "spinnerSand")
         spinner("bread", breads, "spinnerBread")
         spinnerDefaultVege(amounts, "spinnerLettuce")
@@ -44,13 +41,12 @@ class CreateRecipe : RecipeFunction() {
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")
                         .setPositiveButton("はい") { _, _ ->
-                            val uuid = UUID.randomUUID().toString()
                             val e = preference.edit()
                             recipe.name = textViewName.text.toString()
                             recipe.price = sumPrice.text.toString().toInt()
                             val c = Calendar.getInstance()
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
-                            recipe.createTime = sdf.format(c.time)
+                            recipe.editTime = sdf.format(c.time)
                             recipe.sandwich = spinnerSand.selectedItem as String
                             recipe.bread = spinnerBread.selectedItem as String
                             recipe.toast = checkBoxToast.isChecked
@@ -76,7 +72,7 @@ class CreateRecipe : RecipeFunction() {
                             } else {
                                 recipe.dressingAmount = spinnerDressingAmount.selectedItem as String
                             }
-                            e.putString(uuid, gson.toJson(recipe))
+                            e.putString(key, gson.toJson(recipe))
                             e.apply()
                             finish()
                         }
@@ -85,4 +81,11 @@ class CreateRecipe : RecipeFunction() {
             }
         }
     }
+    override fun onResume() {
+        super.onResume()
+
+    }
 }
+
+
+

@@ -23,12 +23,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateRecipe"
+            android:name=".CreateRecipeActivity"
             android:configChanges="orientation|screenSize"
             android:label="レシピ作成"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RecipeResult"
+            android:name=".RecipeResultActivity"
             android:configChanges="orientation|screenSize"
             android:label="レシピ詳細"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -36,13 +36,11 @@
             android:name=".TutorialActivity"
             android:theme="@style/WelcomeScreenTheme" />
         <activity
-            android:name=".EditRecipe"
+            android:name=".EditRecipeActivity"
             android:configChanges="orientation|screenSize"
             android:label="レシピ編集"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".RecipeFunction"
-            android:theme="@style/AppTheme.NoActionBar" />
+
 
     </application>
 
