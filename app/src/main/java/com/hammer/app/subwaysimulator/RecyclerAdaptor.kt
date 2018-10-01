@@ -39,12 +39,10 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
 
         holder.v.setOnClickListener{v ->
             val intent2= Intent(activity,RecipeResultActivity::class.java)
-            val keys = preference.all.keys
-            keys.forEach { key ->
-                if(list[position].uuid == key) {
-                    intent2.putExtra("key", key)
-                }
-            }
+            val key = preference.all.keys.single { k -> k == list[position].uuid }
+            intent2.putExtra("key", key)
+
+
             activity.startActivity(intent2)
         }
         holder.v.setOnLongClickListener{
@@ -53,13 +51,8 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                     .setMessage("1度削除したレシピは復元できません。"+ "\n" +"このレシピを削除しますか？")
                     .setPositiveButton("はい") { _, _ ->
                         val e = preference.edit()
-                        val keys = preference.all.keys
-                        //ToDo：position指定無しで処理できないか考える。
-                        keys.forEach { key ->
-                            if(list[position].uuid == key) {
-                                e.remove(list[position].uuid)
-                            }
-                        }
+                        val key = preference.all.keys.single { k -> k == list[position].uuid }
+                        e.remove(key)
                         e.apply()
                         list.removeAt(position)
                         notifyItemRemoved(position)
