@@ -17,7 +17,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
     var list: MutableList<Recipe> = mutableListOf()
     fun reload(){
         val allKeys = preference.all.keys
-        for (key in allKeys){
+        allKeys.forEach { key ->
             list.add(gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java))
         }
         list.sortBy{it.createTime}
@@ -40,8 +40,8 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
         holder.v.setOnClickListener{v ->
             val intent2= Intent(activity,RecipeResultActivity::class.java)
             val keys = preference.all.keys
-            for (key in keys){
-                if(list[position].name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name) {
+            keys.forEach { key ->
+                if(list[position].uuid == key) {
                     intent2.putExtra("key", key)
                 }
             }
@@ -56,12 +56,14 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                         val keys = preference.all.keys
                         //ToDo：position指定無しで処理できないか考える。
                         keys.forEach { key ->
-                            val findRecipe = list.find { recipe -> recipe.name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name }
-                            e.remove(findRecipe!!.uuid)
+                            if(list[position].uuid == key) {
+                                e.remove(list[position].uuid)
+                            }
                         }
                         e.apply()
                         list.removeAt(position)
                         notifyItemRemoved(position)
+                        notifyItemRangeChanged(position, list.size)
                     }
                     .setNegativeButton("キャンセル", null)
                     .show()
