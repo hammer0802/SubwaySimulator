@@ -16,10 +16,8 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
     val gson = Gson()
     var list: MutableList<Recipe> = mutableListOf()
     fun reload(){
-        val allKeys = preference.all.keys
-        allKeys.forEach { key ->
-            list.add(gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java))
-        }
+        list = preference.all.values.map { value ->
+            gson.fromJson<Recipe>(value as String, Recipe::class.java)}.toMutableList()
         list.sortBy{it.createTime}
     }
 
@@ -39,10 +37,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
 
         holder.v.setOnClickListener{v ->
             val intent2= Intent(activity,RecipeResultActivity::class.java)
-            val key = preference.all.keys.single { k -> k == list[position].uuid }
-            intent2.putExtra("key", key)
-
-
+            intent2.putExtra("key", list[position].uuid)
             activity.startActivity(intent2)
         }
         holder.v.setOnLongClickListener{
@@ -51,8 +46,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                     .setMessage("1度削除したレシピは復元できません。"+ "\n" +"このレシピを削除しますか？")
                     .setPositiveButton("はい") { _, _ ->
                         val e = preference.edit()
-                        val key = preference.all.keys.single { k -> k == list[position].uuid }
-                        e.remove(key)
+                        e.remove(list[position].uuid)
                         e.apply()
                         list.removeAt(position)
                         notifyItemRemoved(position)

@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.content_main.*
 class MainActivity : AppCompatActivity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     private val gson = Gson()
-    val list: MutableList<Recipe> = mutableListOf()
+    var list: MutableList<Recipe> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,10 +61,8 @@ class MainActivity : AppCompatActivity() {
             }
         }, 1000)
 
-        val allKeys = preference.all.keys
-        for (key in allKeys){
-            list.add(gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java))
-        }
+        list = preference.all.values.map { value ->
+            gson.fromJson<Recipe>(value as String, Recipe::class.java)}.toMutableList()
         list.sortBy{it.createTime}
 
         create.setOnClickListener{
