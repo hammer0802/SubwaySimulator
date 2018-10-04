@@ -14,10 +14,17 @@ import com.google.gson.Gson
 class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecyclerViewHolder>() {
     private val preference: SharedPreferences by lazy { activity.getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
-    var list: MutableList<Recipe> = mutableListOf()
+    val list: MutableList<Recipe> = mutableListOf()
     fun reload(){
-        list = preference.all.values.map { value ->
-            gson.fromJson<Recipe>(value as String, Recipe::class.java)}.toMutableList()
+        list.clear()
+        list.addAll(preference.all.values.mapNotNull { value ->
+            val stringValue = value as? String
+            if (stringValue != null){
+                gson.fromJson<Recipe>(stringValue, Recipe::class.java)
+            }else{
+                null
+            }
+        }.toMutableList())
         list.sortBy{it.createTime}
     }
 
