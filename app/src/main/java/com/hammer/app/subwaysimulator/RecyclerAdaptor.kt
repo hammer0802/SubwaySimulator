@@ -17,13 +17,8 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
     val list: MutableList<Recipe> = mutableListOf()
     fun reload(){
         list.clear()
-        list.addAll(preference.all.values.mapNotNull { value ->
-            val stringValue = value as? String
-            if (stringValue != null){
-                gson.fromJson<Recipe>(stringValue, Recipe::class.java)
-            }else{
-                null
-            }
+        list.addAll(preference.all.values.filterIsInstance(String::class.java).map { value ->
+           gson.fromJson<Recipe>(value, Recipe::class.java)
         }.toMutableList())
         list.sortBy{it.createTime}
     }
