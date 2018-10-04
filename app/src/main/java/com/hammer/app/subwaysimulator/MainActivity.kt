@@ -61,10 +61,15 @@ class MainActivity : AppCompatActivity() {
             }
         }, 1000)
 
-        val allKeys = preference.all.keys
-        for (key in allKeys){
-            list.add(gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java))
-        }
+        list.clear()
+        list.addAll(preference.all.values.mapNotNull { value ->
+            val stringValue = value as? String
+            if (stringValue != null){
+                gson.fromJson<Recipe>(stringValue, Recipe::class.java)
+            }else{
+                null
+            }
+        }.toMutableList())
         list.sortBy{it.createTime}
 
         create.setOnClickListener{

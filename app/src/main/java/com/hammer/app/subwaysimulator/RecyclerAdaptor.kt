@@ -14,12 +14,17 @@ import com.google.gson.Gson
 class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecyclerViewHolder>() {
     private val preference: SharedPreferences by lazy { activity.getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
-    var list: MutableList<Recipe> = mutableListOf()
+    val list: MutableList<Recipe> = mutableListOf()
     fun reload(){
-        val allKeys = preference.all.keys
-        for (key in allKeys){
-            list.add(gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java))
-        }
+        list.clear()
+        list.addAll(preference.all.values.mapNotNull { value ->
+            val stringValue = value as? String
+            if (stringValue != null){
+                gson.fromJson<Recipe>(stringValue, Recipe::class.java)
+            }else{
+                null
+            }
+        }.toMutableList())
         list.sortBy{it.createTime}
     }
 
@@ -39,12 +44,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
 
         holder.v.setOnClickListener{v ->
             val intent2= Intent(activity,RecipeResultActivity::class.java)
-            val keys = preference.all.keys
-            for (key in keys){
-                if(list[position].name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name) {
-                    intent2.putExtra("key", key)
-                }
-            }
+            intent2.putExtra("key", list[position].uuid)
             activity.startActivity(intent2)
         }
         holder.v.setOnLongClickListener{
@@ -53,15 +53,11 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                     .setMessage("1度削除したレシピは復元できません。"+ "\n" +"このレシピを削除しますか？")
                     .setPositiveButton("はい") { _, _ ->
                         val e = preference.edit()
-                        val keys = preference.all.keys
-                        for (key in keys){
-                            if(list.any{recipe -> recipe.name == gson.fromJson<Recipe>(preference!!.getString(key, ""), Recipe::class.java).name} ){
-                                e.remove(key)
-                            }
-                        }
+                        e.remove(list[position].uuid)
                         e.apply()
                         list.removeAt(position)
                         notifyItemRemoved(position)
+                        notifyItemRangeChanged(position, list.size)
                     }
                     .setNegativeButton("キャンセル", null)
                     .show()

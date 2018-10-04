@@ -28,6 +28,7 @@ class Recipe {
     var dressingAmount = "" //ドレッシングの量
     var createTime = "" //作成日時
     var editTime = "" //編集日時
+    var uuid = "" //UUID
 }
 
 

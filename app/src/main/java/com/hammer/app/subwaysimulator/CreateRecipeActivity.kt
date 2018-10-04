@@ -70,6 +70,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                             } else {
                                 recipe.dressingAmount = spinnerDressingAmount.selectedItem as String
                             }
+                            recipe.uuid = uuid
                             e.putString(uuid, gson.toJson(recipe))
                             e.apply()
                             finish()
