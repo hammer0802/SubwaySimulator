@@ -16,12 +16,15 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="4dp"
         android:text="@string/recipe_name"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewSand"
         app:layout_constraintEnd_toStartOf="@+id/recipePrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <TextView
         android:id="@+id/recipePrice"
@@ -30,9 +33,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/recipe_price"
-        android:textSize="24sp"
+        android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewSand"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/recipeName"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,8 +47,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/colorPrimary"
         android:text="@string/step1"
         android:textColor="#FFFFFF"
@@ -60,8 +66,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/textViewBread"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,12 +79,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/colorPrimary"
         android:text="@string/step2"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewBreadType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewSandType" />
@@ -87,9 +97,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/text_border"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/textViewTopping"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +110,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/colorPrimary"
         android:text="@string/step3"
         android:textColor="#FFFFFF"
@@ -116,8 +128,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,232 +141,91 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/colorPrimary"
-        android:text="@string/step4"
+        android:text="@string/step4_result"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewVegetableAmount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewToppingSelect" />
 
     <TextView
-        android:id="@+id/textViewLettuce"
-        android:layout_width="120dp"
+        android:id="@+id/textViewVegetableAmount"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:background="@drawable/text_border"
-        android:text="@string/lettuce"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewTomato"
-        app:layout_constraintEnd_toStartOf="@+id/textViewLettuceAmount"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewFreeTopping"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewVegetable" />
 
     <TextView
-        android:id="@+id/textViewLettuceAmount"
+        android:id="@+id/textViewFreeTopping"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
-        app:layout_constraintBottom_toTopOf="@+id/textViewTomatoAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewLettuce"
-        app:layout_constraintTop_toBottomOf="@+id/textViewVegetable" />
-
-    <TextView
-        android:id="@+id/textViewTomato"
-        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:background="@drawable/text_border"
-        android:text="@string/tomato"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewGreenpepper"
-        app:layout_constraintEnd_toStartOf="@+id/textViewTomatoAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLettuce" />
-
-    <TextView
-        android:id="@+id/textViewTomatoAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
+        android:layout_marginBottom="4dp"
+        android:text="@string/free_topping_result"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewFreeToppingAmount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewTomato"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLettuceAmount" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVegetableAmount" />
 
     <TextView
-        android:id="@+id/textViewGreenpepper"
-        android:layout_width="120dp"
+        android:id="@+id/textViewFreeToppingAmount"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:background="@drawable/text_border"
-        android:text="@string/green_pepper"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewRedonion"
-        app:layout_constraintEnd_toStartOf="@+id/textViewGreenpepperAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTomato" />
-
-    <TextView
-        android:id="@+id/textViewGreenpepperAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
-        app:layout_constraintBottom_toTopOf="@+id/textViewRedonionAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewGreenpepper"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTomatoAmount" />
-
-    <TextView
-        android:id="@+id/textViewRedonion"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/text_border"
-        android:text="@string/red_onion"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewCarrot"
-        app:layout_constraintEnd_toStartOf="@+id/textViewRedonionAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewGreenpepper" />
-
-    <TextView
-        android:id="@+id/textViewRedonionAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
-        app:layout_constraintBottom_toTopOf="@+id/textViewCarrotAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewRedonion"
-        app:layout_constraintTop_toBottomOf="@+id/textViewGreenpepperAmount" />
-
-    <TextView
-        android:id="@+id/textViewCarrot"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/text_border"
-        android:text="@string/carrot"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewOlive"
-        app:layout_constraintEnd_toStartOf="@+id/textViewCarrotAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRedonion" />
-
-    <TextView
-        android:id="@+id/textViewCarrotAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
-        app:layout_constraintBottom_toTopOf="@+id/textViewOliveAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewCarrot"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRedonionAmount" />
-
-
-    <TextView
-        android:id="@+id/textViewOlive"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/text_border"
-        android:text="@string/olive"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewPickles"
-        app:layout_constraintEnd_toStartOf="@+id/textViewOliveAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCarrot" />
-
-    <TextView
-        android:id="@+id/textViewOliveAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
-        app:layout_constraintBottom_toTopOf="@+id/textViewPicklesAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewOlive"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCarrotAmount" />
-
-    <TextView
-        android:id="@+id/textViewPickles"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/text_border"
-        android:text="@string/pickles"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewHotpepper"
-        app:layout_constraintEnd_toStartOf="@+id/textViewPicklesAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOlive" />
-
-    <TextView
-        android:id="@+id/textViewPicklesAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
-        app:layout_constraintBottom_toTopOf="@+id/textViewHotpepperAmount"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewPickles"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOliveAmount" />
-
-    <TextView
-        android:id="@+id/textViewHotpepper"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:background="@drawable/text_border"
-        android:text="@string/hot_pepper"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/textViewDressing"
-        app:layout_constraintEnd_toStartOf="@+id/textViewHotpepperAmount"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPickles" />
-
-    <TextView
-        android:id="@+id/textViewHotpepperAmount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toTopOf="@+id/textViewDressing"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textViewHotpepper"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPicklesAmount" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFreeTopping" />
 
     <TextView
         android:id="@+id/textViewDressing"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="4dp"
         android:background="@color/colorPrimary"
         android:text="@string/step5"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textViewDressingType"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewHotpepper" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewFreeToppingAmount" />
 
     <TextView
         android:id="@+id/textViewDressingType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/text_border"
+        android:layout_marginBottom="130dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDressing" />

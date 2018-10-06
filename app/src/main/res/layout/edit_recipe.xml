@@ -271,13 +271,13 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textViewLettuce"
+                app:layout_constraintBottom_toTopOf="@+id/textViewVegetableAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxavocado" />
 
             <TextView
-                android:id="@+id/textViewLettuce"
+                android:id="@+id/textViewVegetableAmount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -285,7 +285,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/lettuce"
-                android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerLettuce"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -305,7 +304,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewLettuce" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewVegetableAmount" />
 
             <TextView
                 android:id="@+id/textViewTomato"
@@ -316,7 +315,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/tomato"
-                android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerTomato"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -347,7 +345,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/green_pepper"
-                android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerGreenpepper"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -378,7 +375,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/red_onion"
-                android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerRedonion"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -409,7 +405,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/carrot"
-                android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerCarrot"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -425,11 +420,28 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:spinnerMode="dialog"
-                app:layout_constraintBottom_toTopOf="@+id/textViewOlive"
+                app:layout_constraintBottom_toTopOf="@+id/textViewFreeTopping"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewCarrot" />
+
+            <TextView
+                android:id="@+id/textViewFreeTopping"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/free_topping"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/textViewOlive"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinnerCarrot" />
 
             <TextView
                 android:id="@+id/textViewOlive"
@@ -440,12 +452,11 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/olive"
-                android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerOlive"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerCarrot" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewFreeTopping" />
 
             <Spinner
                 android:id="@+id/spinnerOlive"
@@ -471,7 +482,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/pickles"
-                android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerPickles"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -502,7 +512,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/hot_pepper"
-                android:textColor="@color/colorPrimary"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@+id/spinnerHotpepper"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -523,7 +532,6 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewHotpepper" />
-
             <TextView
                 android:id="@+id/textViewDressing"
                 android:layout_width="0dp"

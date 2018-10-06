@@ -30,6 +30,9 @@
     <string name="type">●種類</string>
     <string name="amount">●量</string>
     <string name="action_policy">プライバシーポリシー</string>
+    <string name="free_topping">無料トッピング(通常無し)</string>
+    <string name="step4_result">4.野菜(量：普通の野菜は省略)</string>
+    <string name="free_topping_result">無料トッピング</string>
 
 
 </resources>
