@@ -62,16 +62,16 @@ class RecipeResultActivity : AppCompatActivity() {
                 && recipe.tuna == false && recipe.shrimp == false && recipe.avocado == false) toppingSelect.text = "無し"
 
         val vegetableAmount = findViewById<TextView>(R.id.textViewVegetableAmount)
-        if(recipe.lettuce != "普通") vegetableAmount.append("レタス：${recipe.lettuce}\n")
-        if(recipe.tomato != "普通") vegetableAmount.append("トマト：${recipe.tomato}\n")
-        if(recipe.greenpepper != "普通") vegetableAmount.append("ピーマン：${recipe.greenpepper}\n")
-        if(recipe.redonion != "普通") vegetableAmount.append("レッドオニオン：${recipe.redonion}\n")
+        if(recipe.lettuce != "普通") vegetableAmount.append("レタス：${recipe.lettuce} ")
+        if(recipe.tomato != "普通") vegetableAmount.append("トマト：${recipe.tomato} ")
+        if(recipe.greenpepper != "普通") vegetableAmount.append("ピーマン：${recipe.greenpepper} ")
+        if(recipe.redonion != "普通") vegetableAmount.append("レッドオニオン：${recipe.redonion} ")
         if(recipe.carrot != "普通") vegetableAmount.append("ニンジン：${recipe.carrot}")
         if(recipe.lettuce == "普通" && recipe.carrot == "普通" && recipe.greenpepper == "普通" && recipe.redonion == "普通" && recipe.carrot == "普通") vegetableAmount.text = "全ての量：普通"
 
         val freeToppingAmount = findViewById<TextView>(R.id.textViewFreeToppingAmount)
-        if(recipe.olive != "無し") freeToppingAmount.append("オリーブ：${recipe.olive}\n")
-        if(recipe.pickles != "無し") freeToppingAmount.append("ピクルス：${recipe.pickles}\n")
+        if(recipe.olive != "無し") freeToppingAmount.append("オリーブ：${recipe.olive} ")
+        if(recipe.pickles != "無し") freeToppingAmount.append("ピクルス：${recipe.pickles} ")
         if(recipe.hotpepper != "無し") freeToppingAmount.append("ホットペッパー：${recipe.hotpepper}")
         if(recipe.olive == "無し" && recipe.pickles == "無し" && recipe.hotpepper == "無し") freeToppingAmount.text = "無し"
 

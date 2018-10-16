@@ -34,8 +34,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewHolder, position: Int) {
-        holder!!.v.findViewById<TextView>(R.id.recipe_name).text = list[position].name
-        holder!!.v.findViewById<TextView>(R.id.recipe_name).append("("+ list[position].sandwich + ")")
+        holder!!.v.findViewById<TextView>(R.id.recipe_name).text = "${list[position].name}\n${list[position].sandwich}"
 
         holder.v.setOnClickListener{v ->
             val intent2= Intent(activity,RecipeResultActivity::class.java)
