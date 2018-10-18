@@ -254,10 +254,20 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
+                app:layout_constraintBottom_toTopOf="@+id/checkBoxroastbeef"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxshrimp" />
 
+            <CheckBox
+                android:id="@+id/checkBoxroastbeef"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxavocado" />
 
             <TextView
                 android:id="@+id/textViewVegetable"
@@ -275,7 +285,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/textViewVegetableAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxavocado" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxroastbeef" />
 
             <TextView
                 android:id="@+id/textViewVegetableAmount"

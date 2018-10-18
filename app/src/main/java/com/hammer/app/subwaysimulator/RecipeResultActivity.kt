@@ -37,7 +37,7 @@ class RecipeResultActivity : AppCompatActivity() {
         var toast = ""
         var breadText = ""
         when{
-            recipe.bread == "無し（サラダ）" -> breadText = recipe.bread
+            recipe.bread == "無し(サラダ, + ¥300)" -> breadText = recipe.bread
             recipe.toast -> {
                 toast = "トースト有り"
                 breadText = "${recipe.bread}($toast)"
@@ -57,9 +57,10 @@ class RecipeResultActivity : AppCompatActivity() {
         if(recipe.bacon) toppingSelect.append("ベーコン(+ ¥60)\n")
         if(recipe.tuna)toppingSelect.append("ツナ(+ ¥80)\n")
         if(recipe.shrimp)toppingSelect.append("えび(+ ¥100)\n")
-        if(recipe.avocado)toppingSelect.append("アボカド(+ ¥110)")
+        if(recipe.avocado)toppingSelect.append("アボカド(+ ¥110)\n")
+        if(recipe.roastbeef)toppingSelect.append("ローストビーフ(+ ¥340)")
         if(recipe.cheese == false && recipe.cream == false && recipe.mascar == false && recipe.egg == false && recipe.bacon == false
-                && recipe.tuna == false && recipe.shrimp == false && recipe.avocado == false) toppingSelect.text = "無し"
+                && recipe.tuna == false && recipe.shrimp == false && recipe.avocado == false && recipe.roastbeef == false) toppingSelect.text = "無し"
 
         val vegetableAmount = findViewById<TextView>(R.id.textViewVegetableAmount)
         if(recipe.lettuce != "普通") vegetableAmount.append("レタス：${recipe.lettuce} ")
@@ -77,8 +78,8 @@ class RecipeResultActivity : AppCompatActivity() {
 
         val dressingType = findViewById<TextView>(R.id.textViewDressingType)
         var dressingText = ""
-        when{
-            recipe.dressing[0] == "無し" -> dressingText = recipe.dressing[0]
+        when(recipe.dressing[0]){
+            "無し" -> dressingText = recipe.dressing[0]
             else -> dressingText = recipe.dressing[0] + "(量:" + recipe.dressingAmount[0] + ")"
         }
         dressingType.text = dressingText

@@ -52,7 +52,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 }
                 if(itemName == "bread"){
                     val checkBoxToast = findViewById<CheckBox>(R.id.checkBoxToast)
-                    if (spinner.selectedItem == "無し（サラダ）") {
+                    if (spinner.selectedItem == "無し(サラダ, + ¥300)") {
                         checkBoxToast.visibility = View.INVISIBLE
                     } else {
                         checkBoxToast.visibility = View.VISIBLE

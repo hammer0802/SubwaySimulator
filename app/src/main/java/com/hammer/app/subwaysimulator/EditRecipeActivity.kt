@@ -58,6 +58,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                             recipe.tuna = checkBoxtuna.isChecked
                             recipe.shrimp = checkBoxshrimp.isChecked
                             recipe.avocado = checkBoxavocado.isChecked
+                            recipe.roastbeef = checkBoxroastbeef.isChecked
                             recipe.lettuce = spinnerLettuce.selectedItem as String
                             recipe.tomato = spinnerTomato.selectedItem as String
                             recipe.greenpepper = spinnerGreenpepper.selectedItem as String

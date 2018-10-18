@@ -36,7 +36,8 @@ val sandPrices = mapOf(
         "ベジー＆チーズ" to 340,
         "ベジーデライト" to 300,
         "アボカドチキン　チポトレ(期間限定)" to 530,
-        "アボカドベーコン　チポトレ(期間限定)" to 530)
+        "アボカドベーコン　チポトレ(期間限定)" to 530
+)
 
 val breads = arrayOf(
         "ウィート",
@@ -44,7 +45,7 @@ val breads = arrayOf(
         "セサミ",
         "ハニーオーツ",
         "フラットブレッド",
-        "無し（サラダ）"
+        "無し(サラダ, + ¥300)"
 )
 
 val toppings = arrayOf(
@@ -55,7 +56,8 @@ val toppings = arrayOf(
         "ベーコン(+ ¥60)",
         "ツナ(+ ¥80)",
         "えび(+ ¥100)",
-        "アボカド(+ ¥110)"
+        "アボカド(+ ¥110)",
+        "ローストビーフ(+ ¥340)"
 )
 
 val toppingPrices = mapOf(
@@ -66,7 +68,8 @@ val toppingPrices = mapOf(
         "ベーコン(+ ¥60)" to 60,
         "ツナ(+ ¥80)" to 80,
         "えび(+ ¥100)" to 100,
-        "アボカド(+ ¥110)" to 110
+        "アボカド(+ ¥110)" to 110,
+        "ローストビーフ(+ ¥340)" to 340
 )
 
 val toppingMap = mapOf(
@@ -77,7 +80,8 @@ val toppingMap = mapOf(
         "ベーコン(+ ¥60)" to "bacon",
         "ツナ(+ ¥80)" to "tuna",
         "えび(+ ¥100)" to "shrimp",
-        "アボカド(+ ¥110)" to "avocado"
+        "アボカド(+ ¥110)" to "avocado",
+        "ローストビーフ(+ ¥340)" to "roastbeef"
 )
 
 val dressings = arrayOf(

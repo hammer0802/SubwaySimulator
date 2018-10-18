@@ -15,6 +15,7 @@ class Recipe {
     var tuna = false
     var shrimp = false
     var avocado = false
+    var roastbeef = false
     //野菜
     var lettuce = ""
     var tomato = ""
