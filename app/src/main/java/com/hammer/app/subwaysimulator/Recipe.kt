@@ -24,11 +24,9 @@ class Recipe {
     var olive = ""
     var pickles = ""
     var hotpepper = ""
-    var dressing = ""  //ドレッシングの種類
-    var dressingAmount = "" //ドレッシングの量
+    var dressing = mutableListOf<String>()  //ドレッシングの種類
+    var dressingAmount = mutableListOf<String>() //ドレッシングの量
     var createTime = "" //作成日時
     var editTime = "" //編集日時
     var uuid = "" //UUID
 }
-
-

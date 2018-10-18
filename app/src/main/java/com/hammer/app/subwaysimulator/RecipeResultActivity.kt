@@ -78,8 +78,8 @@ class RecipeResultActivity : AppCompatActivity() {
         val dressingType = findViewById<TextView>(R.id.textViewDressingType)
         var dressingText = ""
         when{
-            recipe.dressing == "無し" -> dressingText = recipe.dressing
-            else -> dressingText = recipe.dressing + "(量:" + recipe.dressingAmount + ")"
+            recipe.dressing[0] == "無し" -> dressingText = recipe.dressing[0]
+            else -> dressingText = recipe.dressing[0] + "(量:" + recipe.dressingAmount[0] + ")"
         }
         dressingType.text = dressingText
 

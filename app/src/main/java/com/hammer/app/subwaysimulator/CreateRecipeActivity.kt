@@ -65,11 +65,11 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                             recipe.pickles = spinnerPickles.selectedItem as String
                             recipe.olive = spinnerOlive.selectedItem as String
                             recipe.hotpepper = spinnerHotpepper.selectedItem as String
-                            recipe.dressing = spinnerDressing.selectedItem as String
-                            if (recipe.dressing == "無し") {
-                                recipe.dressingAmount = "-"
+                            recipe.dressing.add(spinnerDressing.selectedItem as String)
+                            if (recipe.dressing[0] == "無し") {
+                                recipe.dressingAmount.add("-")
                             } else {
-                                recipe.dressingAmount = spinnerDressingAmount.selectedItem as String
+                                recipe.dressingAmount.add(spinnerDressingAmount.selectedItem as String)
                             }
                             recipe.uuid = uuid
                             e.putString(uuid, gson.toJson(recipe))
