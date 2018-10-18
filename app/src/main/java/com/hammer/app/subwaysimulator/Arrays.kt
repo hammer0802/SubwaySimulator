@@ -100,7 +100,8 @@ val amounts = arrayOf(
         "無し",
         "少なめ",
         "普通",
-        "多め"
+        "多め",
+        "上限"
 )
 
 val amountsDressing = arrayOf(
