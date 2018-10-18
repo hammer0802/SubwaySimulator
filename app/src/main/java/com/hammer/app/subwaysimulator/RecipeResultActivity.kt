@@ -9,7 +9,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 import com.google.gson.Gson
-
 import kotlinx.android.synthetic.main.activity_recipe_result.*
 
 class RecipeResultActivity : AppCompatActivity() {
@@ -26,10 +25,10 @@ class RecipeResultActivity : AppCompatActivity() {
             setSupportActionBar(toolbar)
 
         val recipeName = findViewById<TextView>(R.id.recipeName)
-        recipeName.append(":"+recipe.name)
+        recipeName.append(":${recipe.name}")
 
         val recipePrice = findViewById<TextView>(R.id.recipePrice)
-        recipePrice.append(":"+recipe.price+"円")
+        recipePrice.append(":${recipe.price}円")
 
         val sandType = findViewById<TextView>(R.id.textViewSandType)
         sandType.text = recipe.sandwich
@@ -41,48 +40,40 @@ class RecipeResultActivity : AppCompatActivity() {
             recipe.bread == "無し（サラダ）" -> breadText = recipe.bread
             recipe.toast -> {
                 toast = "トースト有り"
-                breadText = recipe.bread + "(" + toast + ")"
+                breadText = "${recipe.bread}($toast)"
             }
             else -> {
             toast = "トースト無し"
-            breadText = recipe.bread + "(" + toast + ")"
+            breadText = "${recipe.bread}($toast)"
             }
         }
         breadType.text = breadText
 
         val toppingSelect = findViewById<TextView>(R.id.textViewToppingSelect)
-        if(recipe.cheese){toppingSelect.append("ナチュラルスライスチーズ(+ ¥40)\n")}
-        if(recipe.cream){toppingSelect.append("クリームタイプチーズ(+ ¥60)\n")}
-        if(recipe.mascar){toppingSelect.append("マスカルポーネチーズ(+ ¥90)\n")}
-        if(recipe.egg){toppingSelect.append("たまご(+ ¥60)\n")}
-        if(recipe.bacon){toppingSelect.append("ベーコン(+ ¥60)\n")}
-        if(recipe.tuna){toppingSelect.append("ツナ(+ ¥80)\n")}
-        if(recipe.shrimp){toppingSelect.append("えび(+ ¥100)\n")}
-        if(recipe.avocado){toppingSelect.append("アボカド(+ ¥110)")}
+        if(recipe.cheese) toppingSelect.append("ナチュラルスライスチーズ(+ ¥40)\n")
+        if(recipe.cream) toppingSelect.append("クリームタイプチーズ(+ ¥60)\n")
+        if(recipe.mascar) toppingSelect.append("マスカルポーネチーズ(+ ¥90)\n")
+        if(recipe.egg) toppingSelect.append("たまご(+ ¥60)\n")
+        if(recipe.bacon) toppingSelect.append("ベーコン(+ ¥60)\n")
+        if(recipe.tuna)toppingSelect.append("ツナ(+ ¥80)\n")
+        if(recipe.shrimp)toppingSelect.append("えび(+ ¥100)\n")
+        if(recipe.avocado)toppingSelect.append("アボカド(+ ¥110)")
+        if(recipe.cheese == false && recipe.cream == false && recipe.mascar == false && recipe.egg == false && recipe.bacon == false
+                && recipe.tuna == false && recipe.shrimp == false && recipe.avocado == false) toppingSelect.text = "無し"
 
-        val lettuceAmount = findViewById<TextView>(R.id.textViewLettuceAmount)
-        lettuceAmount.text = recipe.lettuce
+        val vegetableAmount = findViewById<TextView>(R.id.textViewVegetableAmount)
+        if(recipe.lettuce != "普通") vegetableAmount.append("レタス：${recipe.lettuce} ")
+        if(recipe.tomato != "普通") vegetableAmount.append("トマト：${recipe.tomato} ")
+        if(recipe.greenpepper != "普通") vegetableAmount.append("ピーマン：${recipe.greenpepper} ")
+        if(recipe.redonion != "普通") vegetableAmount.append("レッドオニオン：${recipe.redonion} ")
+        if(recipe.carrot != "普通") vegetableAmount.append("ニンジン：${recipe.carrot}")
+        if(recipe.lettuce == "普通" && recipe.carrot == "普通" && recipe.greenpepper == "普通" && recipe.redonion == "普通" && recipe.carrot == "普通") vegetableAmount.text = "全ての量：普通"
 
-        val tomatoAmount = findViewById<TextView>(R.id.textViewTomatoAmount)
-        tomatoAmount.text = recipe.tomato
-
-        val greenpepperAmount = findViewById<TextView>(R.id.textViewGreenpepperAmount)
-        greenpepperAmount.text = recipe.greenpepper
-
-        val redonionAmount = findViewById<TextView>(R.id.textViewRedonionAmount)
-        redonionAmount.text = recipe.redonion
-
-        val carrotAmount = findViewById<TextView>(R.id.textViewCarrotAmount)
-        carrotAmount.text = recipe.carrot
-
-        val oliveAmount = findViewById<TextView>(R.id.textViewOliveAmount)
-        oliveAmount.text = recipe.olive
-
-        val picklesAmount = findViewById<TextView>(R.id.textViewPicklesAmount)
-        picklesAmount.text = recipe.pickles
-
-        val hotpepperAmount = findViewById<TextView>(R.id.textViewHotpepperAmount)
-        hotpepperAmount.text = recipe.hotpepper
+        val freeToppingAmount = findViewById<TextView>(R.id.textViewFreeToppingAmount)
+        if(recipe.olive != "無し") freeToppingAmount.append("オリーブ：${recipe.olive} ")
+        if(recipe.pickles != "無し") freeToppingAmount.append("ピクルス：${recipe.pickles} ")
+        if(recipe.hotpepper != "無し") freeToppingAmount.append("ホットペッパー：${recipe.hotpepper}")
+        if(recipe.olive == "無し" && recipe.pickles == "無し" && recipe.hotpepper == "無し") freeToppingAmount.text = "無し"
 
         val dressingType = findViewById<TextView>(R.id.textViewDressingType)
         var dressingText = ""

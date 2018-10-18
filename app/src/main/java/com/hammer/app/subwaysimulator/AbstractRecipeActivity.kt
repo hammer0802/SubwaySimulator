@@ -4,9 +4,12 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.create_recipe.*
@@ -127,6 +130,13 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
+    fun initAddDressingBtn(){
+        addDressing.setOnClickListener{
+            val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
+            selectDressingItemView.id = selectDressingItemView.hashCode()
+            select_dressing_container.addView(selectDressingItemView)
+        }
+    }
 
 override fun onBackPressed() {
 
