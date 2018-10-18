@@ -43,7 +43,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 val item = spinner2.selectedItem as String
                 if (itemName == "sandwich") {
                     sandPrice = sandPrices[item].toString().toInt()
-                    val sum = sandPrice + toppingPrice
+                    var sum = sandPrice + toppingPrice
+                    if(spinnerBread.selectedItem == "無し(サラダ, + ¥300)") sum += 300
                     sumPrice.text = sum.toString()
                     if (checkboxRecommend.isChecked == true){
                         val spinnerDressing = findViewById<Spinner>(R.id.spinnerDressing)
@@ -54,8 +55,12 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     val checkBoxToast = findViewById<CheckBox>(R.id.checkBoxToast)
                     if (spinner.selectedItem == "無し(サラダ, + ¥300)") {
                         checkBoxToast.visibility = View.INVISIBLE
+                        val sum = sandPrice + toppingPrice + 300
+                        sumPrice.text = sum.toString()
                     } else {
                         checkBoxToast.visibility = View.VISIBLE
+                        val sum = sandPrice + toppingPrice
+                        sumPrice.text = sum.toString()
                     }
                 }
                 if (itemName == "dressing") {
@@ -123,7 +128,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         toppingPrice += toppingPrices[topping2].toString().toInt()
                     }
                 }
-                val sum = sandPrice + toppingPrice
+                var sum = sandPrice + toppingPrice
+                if(spinnerBread.selectedItem == "無し(サラダ, + ¥300)") sum += 300
                 sumPrice.text = sum.toString()
 
             }
