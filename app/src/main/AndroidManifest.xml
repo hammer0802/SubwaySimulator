@@ -13,7 +13,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,12 +24,12 @@
         </activity>
         <activity
             android:name=".CreateRecipeActivity"
-            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="レシピ作成"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RecipeResultActivity"
-            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="レシピ詳細"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -37,11 +37,9 @@
             android:theme="@style/WelcomeScreenTheme" />
         <activity
             android:name=".EditRecipeActivity"
-            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
             android:label="レシピ編集"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
     </application>
 
 </manifest>
