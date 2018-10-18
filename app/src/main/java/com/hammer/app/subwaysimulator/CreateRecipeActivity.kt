@@ -25,7 +25,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
         spinner("dressing", dressings, "spinnerDressing")
         dressingAmount()
         checkBox()
-        addDressing()
+        initAddDressingBtn()
 
         completeButton.setOnClickListener {
             if (textViewName.text.toString() == "") {

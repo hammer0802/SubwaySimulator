@@ -130,7 +130,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
-    fun addDressing(){
+    fun initAddDressingBtn(){
         addDressing.setOnClickListener{
             val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
             selectDressingItemView.id = selectDressingItemView.hashCode()
