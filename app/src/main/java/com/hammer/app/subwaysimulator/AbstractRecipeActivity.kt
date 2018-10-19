@@ -7,12 +7,16 @@ import android.content.SharedPreferences
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.create_recipe.*
+import android.widget.LinearLayout
+
+
 
 abstract class AbstractRecipeActivity: AppCompatActivity(){
     val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
@@ -117,22 +121,32 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         for (topping in toppings) {
             val viewId = resources.getIdentifier("checkBox" + toppingMap[topping], "id", packageName)
             val checkbox = findViewById<CheckBox>(viewId)
+            val counterViewId = resources.getIdentifier("counter" + toppingMap[topping], "id", packageName)
+            val counter = findViewById<LinearLayout>(counterViewId)
             checkbox.isChecked = false
+            counter.visibility = View.INVISIBLE
             checkbox.text = topping
             checkbox.setOnClickListener {
                 toppingPrice = 0
                 for (topping2 in toppings) {
                     val viewId2 = resources.getIdentifier("checkBox" + toppingMap[topping2], "id", packageName)
                     val checkbox2 = findViewById<CheckBox>(viewId2)
+                    val counterViewId2 = resources.getIdentifier("counter" + toppingMap[topping2], "id", packageName)
+                    val counter2 = findViewById<LinearLayout>(counterViewId2)
+                    val valueViewId = resources.getIdentifier("value" + toppingMap[topping2], "id", packageName)
+                    val value = findViewById<EditText>(valueViewId)
                     if (checkbox2.isChecked) {
+                        counter2.visibility = View.VISIBLE
                         toppingPrice += toppingPrices[topping2].toString().toInt()
+                    }else{
+                        counter2.visibility = View.INVISIBLE
                     }
                 }
                 var sum = sandPrice + toppingPrice
                 if(spinnerBread.selectedItem == "無し(サラダ, + ¥300)") sum += 300
                 sumPrice.text = sum.toString()
 
-            }
+            } //TextWatcherでトッピング個数をリアルタイムで取得したい
         }
     }
 
