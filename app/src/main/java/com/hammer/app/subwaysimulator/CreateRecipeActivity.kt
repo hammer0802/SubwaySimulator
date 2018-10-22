@@ -2,7 +2,9 @@ package com.hammer.app.subwaysimulator
 
 import android.os.Bundle
 import android.app.AlertDialog
+import android.view.View
 import kotlinx.android.synthetic.main.create_recipe.*
+import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -83,6 +85,10 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 recipe.dressingAmount.add("-")
                             } else {
                                 recipe.dressingAmount.add(spinnerDressingAmount.selectedItem as String)
+                            }
+                            if(addDressing.visibility == View.INVISIBLE){
+                                recipe.dressing.add(spinnerDressing2.selectedItem as String)
+                                recipe.dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
                             }
                             recipe.uuid = uuid
                             e.putString(uuid, gson.toJson(recipe))

@@ -84,7 +84,8 @@ class RecipeResultActivity : AppCompatActivity() {
             else -> dressingText = recipe.dressing[0] + "(量:" + recipe.dressingAmount[0] + ")"
         }
         dressingType.text = dressingText
-
+        if (recipe.dressing.count() == 2 && recipe.dressing[0] != "無し")
+                dressingType.append("\n × ${recipe.dressing[1]}(量:${recipe.dressingAmount[1]})")
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_recipe, menu)

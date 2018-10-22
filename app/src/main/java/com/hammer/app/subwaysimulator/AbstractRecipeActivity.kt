@@ -17,6 +17,7 @@ import android.widget.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.create_recipe.*
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.security.InvalidKeyException
 
 
@@ -79,9 +80,21 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     if (spinner.selectedItem == "無し") {
                         spinnerDressingAmount.visibility = View.INVISIBLE
                         textViewDressingAmount.visibility = View.INVISIBLE
+                        if(addDressing.visibility == View.INVISIBLE){
+                            spinnerDressing2.visibility = View.INVISIBLE
+                            textViewDressingType2.visibility = View.INVISIBLE
+                            spinnerDressingAmount2.visibility = View.INVISIBLE
+                            textViewDressingAmount2.visibility = View.INVISIBLE
+                        }
                     } else {
                         spinnerDressingAmount.visibility = View.VISIBLE
                         textViewDressingAmount.visibility = View.VISIBLE
+                        if(addDressing.visibility == View.INVISIBLE){
+                            spinnerDressing2.visibility = View.VISIBLE
+                            textViewDressingType2.visibility = View.VISIBLE
+                            spinnerDressingAmount2.visibility = View.VISIBLE
+                            textViewDressingAmount2.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
@@ -223,6 +236,37 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
             selectDressingItemView.id = selectDressingItemView.hashCode()
             select_dressing_container.addView(selectDressingItemView)
+
+            val adapterDressing = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dressingsWoNothing)
+            adapterDressing.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerDressing2.adapter = adapterDressing
+            spinnerDressing2.setSelection(0)
+            spinnerDressing2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View,
+                                            posi: Int, id: Long) {
+                }
+
+                override fun onNothingSelected(arg0: AdapterView<*>) {}
+            }
+
+            val adapterDressingAmount = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, amountsDressing)
+            adapterDressingAmount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerDressingAmount2.adapter = adapterDressingAmount
+            spinnerDressingAmount2.setSelection(1)
+            spinnerDressingAmount2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View,
+                                            posi: Int, id: Long) {
+                }
+                override fun onNothingSelected(arg0: AdapterView<*>) {}
+            }
+            addDressing.visibility = View.INVISIBLE
+            addDressingText.visibility = View.INVISIBLE
+            if(spinnerDressing.selectedItem == "無し"){
+                spinnerDressing2.visibility = View.INVISIBLE
+                textViewDressingType2.visibility = View.INVISIBLE
+                spinnerDressingAmount2.visibility = View.INVISIBLE
+                textViewDressingAmount2.visibility = View.INVISIBLE
+            }
         }
     }
     
