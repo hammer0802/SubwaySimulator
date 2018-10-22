@@ -51,15 +51,15 @@ class RecipeResultActivity : AppCompatActivity() {
         breadType.text = breadText
 
         val toppingSelect = findViewById<TextView>(R.id.textViewToppingSelect)
-        if(recipe.cheese) toppingSelect.append("ナチュラルスライスチーズ\n")
-        if(recipe.cream) toppingSelect.append("クリームタイプチーズ\n")
-        if(recipe.mascar) toppingSelect.append("マスカルポーネチーズ\n")
-        if(recipe.egg) toppingSelect.append("たまご\n")
-        if(recipe.bacon) toppingSelect.append("ベーコン\n")
-        if(recipe.tuna)toppingSelect.append("ツナ\n")
-        if(recipe.shrimp)toppingSelect.append("えび\n")
-        if(recipe.avocado)toppingSelect.append("アボカド\n")
-        if(recipe.roastbeef)toppingSelect.append("ローストビーフ")
+        if(recipe.cheese) toppingSelect.append("ナチュラルスライスチーズ × ${recipe.cheeseAmount}\n")
+        if(recipe.cream) toppingSelect.append("クリームタイプチーズ × ${recipe.creamAmount}\n")
+        if(recipe.mascar) toppingSelect.append("マスカルポーネチーズ × ${recipe.mascarAmount}\n")
+        if(recipe.egg) toppingSelect.append("たまご × ${recipe.eggAmount}\n")
+        if(recipe.bacon) toppingSelect.append("ベーコン × ${recipe.baconAmount}\n")
+        if(recipe.tuna)toppingSelect.append("ツナ × ${recipe.tunaAmount}\n")
+        if(recipe.shrimp)toppingSelect.append("えび × ${recipe.shrimpAmount}\n")
+        if(recipe.avocado)toppingSelect.append("アボカド × ${recipe.avocadoAmount}\n")
+        if(recipe.roastbeef)toppingSelect.append("ローストビーフ × ${recipe.roastbeefAmount}")
         if(recipe.cheese == false && recipe.cream == false && recipe.mascar == false && recipe.egg == false && recipe.bacon == false
                 && recipe.tuna == false && recipe.shrimp == false && recipe.avocado == false && recipe.roastbeef == false) toppingSelect.text = "無し"
 
