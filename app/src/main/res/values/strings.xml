@@ -35,6 +35,8 @@
     <string name="foot_long">フットロングにする(+ 300円)</string>
     <string name="step5_2">5-2.追加ドレッシング</string>
     <string name="add_dressing_text">ドレッシングを追加する</string>
+    <string name="separate_dressing">左右に分けてかける</string>
+    <string name="blend_dressing">ブレンドする</string>
 
 
 </resources>

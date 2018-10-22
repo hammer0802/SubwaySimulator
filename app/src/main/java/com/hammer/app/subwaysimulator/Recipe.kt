@@ -37,6 +37,7 @@ class Recipe {
     var hotpepper = ""
     var dressing = mutableListOf<String>()  //ドレッシングの種類
     var dressingAmount = mutableListOf<String>() //ドレッシングの量
+    var howToDress = ""
     var createTime = "" //作成日時
     var editTime = "" //編集日時
     var uuid = "" //UUID

@@ -85,6 +85,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                             textViewDressingType2.visibility = View.INVISIBLE
                             spinnerDressingAmount2.visibility = View.INVISIBLE
                             textViewDressingAmount2.visibility = View.INVISIBLE
+                            howToDress.visibility = View.INVISIBLE
                         }
                     } else {
                         spinnerDressingAmount.visibility = View.VISIBLE
@@ -94,6 +95,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                             textViewDressingType2.visibility = View.VISIBLE
                             spinnerDressingAmount2.visibility = View.VISIBLE
                             textViewDressingAmount2.visibility = View.VISIBLE
+                            howToDress.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -266,6 +268,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 textViewDressingType2.visibility = View.INVISIBLE
                 spinnerDressingAmount2.visibility = View.INVISIBLE
                 textViewDressingAmount2.visibility = View.INVISIBLE
+                howToDress.visibility = View.INVISIBLE
             }
         }
     }
