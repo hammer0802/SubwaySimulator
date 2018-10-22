@@ -104,9 +104,21 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/recommend"
-                app:layout_constraintBottom_toTopOf="@+id/textViewBread"
+                app:layout_constraintBottom_toTopOf="@+id/checkBoxFootLong"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerSand" />
+
+            <CheckBox
+                android:id="@+id/checkBoxFootLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/foot_long"
+                app:layout_constraintBottom_toTopOf="@+id/textViewBread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxRecommend" />
 
             <TextView
                 android:id="@+id/textViewBread"
@@ -124,7 +136,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/spinnerBread"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxRecommend" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxFootLong" />
 
             <Spinner
                 android:id="@+id/spinnerBread"

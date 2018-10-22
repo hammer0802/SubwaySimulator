@@ -27,6 +27,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
         checkBox()
         initAddDressingBtn()
         counterBtn()
+        checkBoxFootLong()
 
         completeButton.setOnClickListener {
             if (textViewName.text.toString() == "") {
@@ -48,6 +49,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
                             recipe.createTime = sdf.format(c.time)
                             recipe.sandwich = spinnerSand.selectedItem as String
+                            recipe.footLong = checkBoxFootLong.isChecked
                             recipe.bread = spinnerBread.selectedItem as String
                             recipe.toast = checkBoxToast.isChecked
                             recipe.cheese = checkBoxcheese.isChecked
@@ -59,6 +61,15 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                             recipe.shrimp = checkBoxshrimp.isChecked
                             recipe.avocado = checkBoxavocado.isChecked
                             recipe.roastbeef = checkBoxroastbeef.isChecked
+                            recipe.cheeseAmount = valuecheese.text.toString().toInt()
+                            recipe.creamAmount = valuecream.text.toString().toInt()
+                            recipe.mascarAmount = valuemascar.text.toString().toInt()
+                            recipe.eggAmount = valueegg.text.toString().toInt()
+                            recipe.baconAmount = valuebacon.text.toString().toInt()
+                            recipe.tunaAmount = valuetuna.text.toString().toInt()
+                            recipe.shrimpAmount = valueshrimp.text.toString().toInt()
+                            recipe.avocadoAmount = valueavocado.text.toString().toInt()
+                            recipe.roastbeefAmount = valueroastbeef.text.toString().toInt()
                             recipe.lettuce = spinnerLettuce.selectedItem as String
                             recipe.tomato = spinnerTomato.selectedItem as String
                             recipe.greenpepper = spinnerGreenpepper.selectedItem as String

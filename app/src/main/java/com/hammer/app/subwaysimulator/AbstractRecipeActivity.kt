@@ -26,13 +26,13 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
     var sandPrice = 0
     var toppingPrice = 0
 
-
     fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val viewId = resources.getIdentifier(spinnerName, "id", packageName)
         val spinner = findViewById<Spinner>(viewId)
         val checkboxRecommend = findViewById<CheckBox>(R.id.checkBoxRecommend)
+        val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
         checkboxRecommend.isChecked = true
         // アダプターを設定
         spinner.adapter = adapter
@@ -50,22 +50,26 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 if (itemName == "sandwich") {
                     sandPrice = sandPrices[item].toString().toInt()
                     var sum = sandPrice + toppingPrice
-                    if(spinnerBread.selectedItem == "無し(サラダ, + ¥300)") sum += 300
+                    if(checkBoxFootLong.isChecked) sum += 300
+                    if(spinnerBread.selectedItem == "無し(サラダ, + 300円)") sum += 300
                     sumPrice.text = sum.toString()
-                    if (checkboxRecommend.isChecked == true){
+                    if (checkboxRecommend.isChecked){
                         val spinnerDressing = findViewById<Spinner>(R.id.spinnerDressing)
                         spinnerDressing.setSelection(recommendDressing[item].toString().toInt())
                     }
                 }
                 if(itemName == "bread"){
                     val checkBoxToast = findViewById<CheckBox>(R.id.checkBoxToast)
-                    if (spinner.selectedItem == "無し(サラダ, + ¥300)") {
+                    if (spinner.selectedItem == "無し(サラダ, + 300円)") {
                         checkBoxToast.visibility = View.INVISIBLE
+                        checkBoxFootLong.visibility = View.INVISIBLE
                         val sum = sandPrice + toppingPrice + 300
                         sumPrice.text = sum.toString()
                     } else {
                         checkBoxToast.visibility = View.VISIBLE
-                        val sum = sandPrice + toppingPrice
+                        checkBoxFootLong.visibility = View.VISIBLE
+                        var sum = sandPrice + toppingPrice
+                        if (checkBoxFootLong.isChecked) sum += 300
                         sumPrice.text = sum.toString()
                     }
                 }
@@ -90,7 +94,6 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val viewId = resources.getIdentifier(spinnerName, "id", packageName)
         val spinner = findViewById<Spinner>(viewId)
-
         // アダプターを設定
         spinner.adapter = adapter
         spinner.setSelection(2)
@@ -125,8 +128,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val checkbox = findViewById<CheckBox>(viewId)
             val counterViewId = resources.getIdentifier("counter" + toppingMap[topping], "id", packageName)
             val counter = findViewById<LinearLayout>(counterViewId)
-            val valueViewId = resources.getIdentifier("value" + toppingMap[topping], "id", packageName)
-            val value = findViewById<EditText>(valueViewId)
+            val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
             checkbox.isChecked = false
             counter.visibility = View.INVISIBLE
             checkbox.text = topping
@@ -147,11 +149,10 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     }
                 }
                 var sum = sandPrice + toppingPrice
-                if(spinnerBread.selectedItem == "無し(サラダ, + ¥300)") sum += 300
+                if(spinnerBread.selectedItem == "無し(サラダ, + 300円)") sum += 300
+                if(checkBoxFootLong.isChecked) sum += 300
                 sumPrice.text = sum.toString()
-
             }
-            //TextWatcherでトッピング個数をリアルタイムで取得したい
         }
     }
 
@@ -163,6 +164,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val value = findViewById<EditText>(valueViewId)
             val downBtnViewId = resources.getIdentifier("down" + toppingMap[topping], "id", packageName)
             val downBtn = findViewById<ImageButton>(downBtnViewId)
+            val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
             upBtn.setOnClickListener{
                 var v = value.text.toString().toInt()
                 if(v < 9 ) v++
@@ -208,7 +210,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         if (checkbox.isChecked) toppingPrice += toppingPrices[topping2].toString().toInt() * value2.text.toString().toInt()
                     }
                     var sum = sandPrice + toppingPrice
-                    if(spinnerBread.selectedItem == "無し(サラダ, + ¥300)") sum += 300
+                    if(spinnerBread.selectedItem == "無し(サラダ, + 300円)") sum += 300
+                    if(checkBoxFootLong.isChecked) sum += 300
                     sumPrice.text = sum.toString()
                 }
             })
@@ -220,6 +223,19 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
             selectDressingItemView.id = selectDressingItemView.hashCode()
             select_dressing_container.addView(selectDressingItemView)
+        }
+    }
+    
+    fun checkBoxFootLong(){
+        val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
+        checkBoxFootLong.setOnClickListener{
+            if(checkBoxFootLong.isChecked){ 
+                val sum = sandPrice + toppingPrice + 300
+                sumPrice.text = sum.toString()
+            }else{ 
+                val sum = sandPrice + toppingPrice
+                sumPrice.text = sum.toString()
+            }
         }
     }
 

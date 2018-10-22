@@ -4,6 +4,7 @@ class Recipe {
     var name = ""  //レシピ名
     var price = 0  //合計金額
     var sandwich = "" //サンドウィッチの種類
+    var footLong = false
     var bread = ""  //パンの種類
     var toast = false //トーストの有無
     //トッピング
@@ -16,6 +17,15 @@ class Recipe {
     var shrimp = false
     var avocado = false
     var roastbeef = false
+    var cheeseAmount = 1
+    var creamAmount = 1
+    var mascarAmount = 1
+    var eggAmount = 1
+    var baconAmount = 1
+    var tunaAmount = 1
+    var shrimpAmount = 1
+    var avocadoAmount = 1
+    var roastbeefAmount = 1
     //野菜
     var lettuce = ""
     var tomato = ""

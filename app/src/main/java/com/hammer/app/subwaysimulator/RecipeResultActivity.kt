@@ -32,12 +32,13 @@ class RecipeResultActivity : AppCompatActivity() {
 
         val sandType = findViewById<TextView>(R.id.textViewSandType)
         sandType.text = recipe.sandwich
+        if(recipe.footLong) sandType.append("(フットロング)")
 
         val breadType = findViewById<TextView>(R.id.textViewBreadType)
         var toast = ""
         var breadText = ""
         when{
-            recipe.bread == "無し(サラダ, + ¥300)" -> breadText = recipe.bread
+            recipe.bread == "無し(サラダ, + 300円)" -> breadText = "無し(サラダ)"
             recipe.toast -> {
                 toast = "トースト有り"
                 breadText = "${recipe.bread}($toast)"
@@ -50,15 +51,15 @@ class RecipeResultActivity : AppCompatActivity() {
         breadType.text = breadText
 
         val toppingSelect = findViewById<TextView>(R.id.textViewToppingSelect)
-        if(recipe.cheese) toppingSelect.append("ナチュラルスライスチーズ(+ ¥40)\n")
-        if(recipe.cream) toppingSelect.append("クリームタイプチーズ(+ ¥60)\n")
-        if(recipe.mascar) toppingSelect.append("マスカルポーネチーズ(+ ¥90)\n")
-        if(recipe.egg) toppingSelect.append("たまご(+ ¥60)\n")
-        if(recipe.bacon) toppingSelect.append("ベーコン(+ ¥60)\n")
-        if(recipe.tuna)toppingSelect.append("ツナ(+ ¥80)\n")
-        if(recipe.shrimp)toppingSelect.append("えび(+ ¥100)\n")
-        if(recipe.avocado)toppingSelect.append("アボカド(+ ¥110)\n")
-        if(recipe.roastbeef)toppingSelect.append("ローストビーフ(+ ¥340)")
+        if(recipe.cheese) toppingSelect.append("ナチュラルスライスチーズ\n")
+        if(recipe.cream) toppingSelect.append("クリームタイプチーズ\n")
+        if(recipe.mascar) toppingSelect.append("マスカルポーネチーズ\n")
+        if(recipe.egg) toppingSelect.append("たまご\n")
+        if(recipe.bacon) toppingSelect.append("ベーコン\n")
+        if(recipe.tuna)toppingSelect.append("ツナ\n")
+        if(recipe.shrimp)toppingSelect.append("えび\n")
+        if(recipe.avocado)toppingSelect.append("アボカド\n")
+        if(recipe.roastbeef)toppingSelect.append("ローストビーフ")
         if(recipe.cheese == false && recipe.cream == false && recipe.mascar == false && recipe.egg == false && recipe.bacon == false
                 && recipe.tuna == false && recipe.shrimp == false && recipe.avocado == false && recipe.roastbeef == false) toppingSelect.text = "無し"
 
