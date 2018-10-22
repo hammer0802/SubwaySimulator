@@ -35,11 +35,16 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
         completeButton.setOnClickListener {
             if (textViewName.text.toString() == "") {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                        .setTitle("Caution !")
-                        .setMessage("レシピの名前を入力してください")
+                        .setTitle("レシピの名前を入力してください")
                         .setNegativeButton("はい", null)
                         .show()
-            } else {
+            }else if(addDressing.visibility == View.INVISIBLE && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
+                val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+                        .setTitle("追加ドレッシングは元のドレッシングと違うものにしてください")
+                        .setNegativeButton("はい", null)
+                        .show()
+            }
+            else {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")

@@ -14,7 +14,8 @@
         android:layout_height="0dp"
         android:focusableInTouchMode="true"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
-        tools:layout_editor_absoluteX="244dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <android.support.constraint.ConstraintLayout

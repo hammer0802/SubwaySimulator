@@ -3,7 +3,10 @@ package com.hammer.app.subwaysimulator
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.RadioButton
 import kotlinx.android.synthetic.main.create_recipe.*
+import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,12 +31,19 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         spinner("dressing", dressings, "spinnerDressing")
         dressingAmount()
         checkBox()
+        initAddDressingBtn()
+        counterBtn()
+        checkBoxFootLong()
 
         completeButton.setOnClickListener {
             if (textViewName.text.toString() == "") {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                        .setTitle("Caution !")
-                        .setMessage("レシピの名前を入力してください")
+                        .setTitle("レシピの名前を入力してください")
+                        .setNegativeButton("はい", null)
+                        .show()
+            }else if(addDressing.visibility == View.INVISIBLE && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
+                val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+                        .setTitle("追加ドレッシングは元のドレッシングと違うものにしてください")
                         .setNegativeButton("はい", null)
                         .show()
             } else {
@@ -59,6 +69,15 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                             recipe.shrimp = checkBoxshrimp.isChecked
                             recipe.avocado = checkBoxavocado.isChecked
                             recipe.roastbeef = checkBoxroastbeef.isChecked
+                            recipe.cheeseAmount = valuecheese.text.toString().toInt()
+                            recipe.creamAmount = valuecream.text.toString().toInt()
+                            recipe.mascarAmount = valuemascar.text.toString().toInt()
+                            recipe.eggAmount = valueegg.text.toString().toInt()
+                            recipe.baconAmount = valuebacon.text.toString().toInt()
+                            recipe.tunaAmount = valuetuna.text.toString().toInt()
+                            recipe.shrimpAmount = valueshrimp.text.toString().toInt()
+                            recipe.avocadoAmount = valueavocado.text.toString().toInt()
+                            recipe.roastbeefAmount = valueroastbeef.text.toString().toInt()
                             recipe.lettuce = spinnerLettuce.selectedItem as String
                             recipe.tomato = spinnerTomato.selectedItem as String
                             recipe.greenpepper = spinnerGreenpepper.selectedItem as String
@@ -72,6 +91,12 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 recipe.dressingAmount.add("-")
                             } else {
                                 recipe.dressingAmount.add(spinnerDressingAmount.selectedItem as String)
+                            }
+                            if(addDressing.visibility == View.INVISIBLE) {
+                                recipe.dressing.add(spinnerDressing2.selectedItem as String)
+                                recipe.dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
+                                val checkedRadioBtn = findViewById<RadioButton>(howToDress.checkedRadioButtonId)
+                                recipe.howToDress = checkedRadioBtn.text.toString()
                             }
                             e.putString(key, gson.toJson(recipe))
                             e.apply()
