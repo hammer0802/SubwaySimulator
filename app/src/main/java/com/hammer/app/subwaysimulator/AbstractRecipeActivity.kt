@@ -7,7 +7,9 @@ import android.content.SharedPreferences
 import android.support.constraint.ConstraintLayout
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
 import android.text.Layout
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +17,7 @@ import android.widget.*
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.create_recipe.*
 import android.widget.LinearLayout
-
+import java.security.InvalidKeyException
 
 
 abstract class AbstractRecipeActivity: AppCompatActivity(){
@@ -123,6 +125,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val checkbox = findViewById<CheckBox>(viewId)
             val counterViewId = resources.getIdentifier("counter" + toppingMap[topping], "id", packageName)
             val counter = findViewById<LinearLayout>(counterViewId)
+            val valueViewId = resources.getIdentifier("value" + toppingMap[topping], "id", packageName)
+            val value = findViewById<EditText>(valueViewId)
             checkbox.isChecked = false
             counter.visibility = View.INVISIBLE
             checkbox.text = topping
@@ -133,11 +137,11 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     val checkbox2 = findViewById<CheckBox>(viewId2)
                     val counterViewId2 = resources.getIdentifier("counter" + toppingMap[topping2], "id", packageName)
                     val counter2 = findViewById<LinearLayout>(counterViewId2)
-                    val valueViewId = resources.getIdentifier("value" + toppingMap[topping2], "id", packageName)
-                    val value = findViewById<EditText>(valueViewId)
+                    val valueViewId2 = resources.getIdentifier("value" + toppingMap[topping2], "id", packageName)
+                    val value2 = findViewById<EditText>(valueViewId2)
                     if (checkbox2.isChecked) {
                         counter2.visibility = View.VISIBLE
-                        toppingPrice += toppingPrices[topping2].toString().toInt()
+                        toppingPrice += toppingPrices[topping2].toString().toInt() * value2.text.toString().toInt()
                     }else{
                         counter2.visibility = View.INVISIBLE
                     }
@@ -146,7 +150,68 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 if(spinnerBread.selectedItem == "無し(サラダ, + ¥300)") sum += 300
                 sumPrice.text = sum.toString()
 
-            } //TextWatcherでトッピング個数をリアルタイムで取得したい
+            }
+            //TextWatcherでトッピング個数をリアルタイムで取得したい
+        }
+    }
+
+    fun counterBtn(){
+        for (topping in toppings){
+            val upBtnViewId = resources.getIdentifier("up" + toppingMap[topping], "id", packageName)
+            val upBtn = findViewById<ImageButton>(upBtnViewId)
+            val valueViewId = resources.getIdentifier("value" + toppingMap[topping], "id", packageName)
+            val value = findViewById<EditText>(valueViewId)
+            val downBtnViewId = resources.getIdentifier("down" + toppingMap[topping], "id", packageName)
+            val downBtn = findViewById<ImageButton>(downBtnViewId)
+            upBtn.setOnClickListener{
+                var v = value.text.toString().toInt()
+                if(v < 9 ) v++
+                value.setText(v.toString())
+            }
+            downBtn.setOnClickListener{
+                var v = value.text.toString().toInt()
+                if (v <= 0) {
+                    throw InvalidKeyException()
+                }
+                v--
+                value.setText(v.toString())
+            }
+
+            value.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(text: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (text.isNullOrBlank()) {
+                        value.setText("1")
+                    } else {
+                        val v = value.text.toString().toInt()
+                        downBtn.isEnabled = v >= 1
+                        upBtn.isEnabled = v <= 9
+                        when{
+                            v < 1 -> value.setText("1")
+                            v > 9 -> value.setText("9")
+                            text.toString() != v.toString() -> value.setText(v.toString())
+                        }
+                    }
+                    value.setSelection(value.length())
+
+                    toppingPrice = 0
+                    for (topping2 in toppings) {
+                        val viewId = resources.getIdentifier("checkBox" + toppingMap[topping2], "id", packageName)
+                        val checkbox = findViewById<CheckBox>(viewId)
+                        val valueViewId2 = resources.getIdentifier("value" + toppingMap[topping2], "id", packageName)
+                        val value2 = findViewById<EditText>(valueViewId2)
+                        if (checkbox.isChecked) toppingPrice += toppingPrices[topping2].toString().toInt() * value2.text.toString().toInt()
+                    }
+                    var sum = sandPrice + toppingPrice
+                    if(spinnerBread.selectedItem == "無し(サラダ, + ¥300)") sum += 300
+                    sumPrice.text = sum.toString()
+                }
+            })
         }
     }
 

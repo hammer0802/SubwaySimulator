@@ -26,6 +26,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
         dressingAmount()
         checkBox()
         initAddDressingBtn()
+        counterBtn()
 
         completeButton.setOnClickListener {
             if (textViewName.text.toString() == "") {
