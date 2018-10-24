@@ -204,8 +204,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         valueEditText.setText("1")
                     } else {
                         val v = valueEditText.text.toString().toInt()
-                        downBtn.isEnabled = v >= 1
-                        upBtn.isEnabled = v <= 9
+                        downBtn.isEnabled = v > 1
+                        upBtn.isEnabled = v < 9
                         when{
                             v < 1 -> valueEditText.setText("1")
                             v > 9 -> valueEditText.setText("9")

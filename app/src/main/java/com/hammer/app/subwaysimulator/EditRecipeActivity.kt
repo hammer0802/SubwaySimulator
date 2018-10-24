@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
@@ -52,51 +53,54 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                         .setMessage("レシピを保存しますか？")
                         .setPositiveButton("はい") { _, _ ->
                             val e = preference.edit()
-                            recipe.name = textViewName.text.toString()
-                            recipe.price = sumPrice.text.toString().toInt()
                             val c = Calendar.getInstance()
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
-                            recipe.editTime = sdf.format(c.time)
-                            recipe.sandwich = spinnerSand.selectedItem as String
-                            recipe.bread = spinnerBread.selectedItem as String
-                            recipe.toast = checkBoxToast.isChecked
-                            recipe.cheese = checkBoxcheese.isChecked
-                            recipe.cream = checkBoxcream.isChecked
-                            recipe.mascar = checkBoxmascar.isChecked
-                            recipe.egg = checkBoxegg.isChecked
-                            recipe.bacon = checkBoxbacon.isChecked
-                            recipe.tuna = checkBoxtuna.isChecked
-                            recipe.shrimp = checkBoxshrimp.isChecked
-                            recipe.avocado = checkBoxavocado.isChecked
-                            recipe.roastbeef = checkBoxroastbeef.isChecked
-                            recipe.cheeseAmount = valuecheese.text.toString().toInt()
-                            recipe.creamAmount = valuecream.text.toString().toInt()
-                            recipe.mascarAmount = valuemascar.text.toString().toInt()
-                            recipe.eggAmount = valueegg.text.toString().toInt()
-                            recipe.baconAmount = valuebacon.text.toString().toInt()
-                            recipe.tunaAmount = valuetuna.text.toString().toInt()
-                            recipe.shrimpAmount = valueshrimp.text.toString().toInt()
-                            recipe.avocadoAmount = valueavocado.text.toString().toInt()
-                            recipe.roastbeefAmount = valueroastbeef.text.toString().toInt()
-                            recipe.lettuce = spinnerLettuce.selectedItem as String
-                            recipe.tomato = spinnerTomato.selectedItem as String
-                            recipe.greenpepper = spinnerGreenpepper.selectedItem as String
-                            recipe.redonion = spinnerRedonion.selectedItem as String
-                            recipe.carrot = spinnerCarrot.selectedItem as String
-                            recipe.pickles = spinnerPickles.selectedItem as String
-                            recipe.olive = spinnerOlive.selectedItem as String
-                            recipe.hotpepper = spinnerHotpepper.selectedItem as String
-                            recipe.dressing.add(spinnerDressing.selectedItem as String)
-                            if (recipe.dressing[0] == "無し") {
-                                recipe.dressingAmount.add("-")
-                            } else {
-                                recipe.dressingAmount.add(spinnerDressingAmount.selectedItem as String)
-                            }
-                            if(addDressing.visibility == View.INVISIBLE) {
-                                recipe.dressing.add(spinnerDressing2.selectedItem as String)
-                                recipe.dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
-                                val checkedRadioBtn = findViewById<RadioButton>(howToDress.checkedRadioButtonId)
-                                recipe.howToDress = checkedRadioBtn.text.toString()
+                            recipe.apply {
+                                name = textViewName.text.toString()
+                                price = sumPrice.text.toString().toInt()
+                                editTime = sdf.format(c.time)
+                                sandwich = spinnerSand.selectedItem as String
+                                bread = spinnerBread.selectedItem as String
+                                toast = checkBoxToast.isChecked
+                                cheese = checkBoxcheese.isChecked
+                                cream = checkBoxcream.isChecked
+                                mascar = checkBoxmascar.isChecked
+                                egg = checkBoxegg.isChecked
+                                bacon = checkBoxbacon.isChecked
+                                tuna = checkBoxtuna.isChecked
+                                shrimp = checkBoxshrimp.isChecked
+                                avocado = checkBoxavocado.isChecked
+                                roastbeef = checkBoxroastbeef.isChecked
+                                cheeseAmount = valuecheese.text.toString().toInt()
+                                creamAmount = valuecream.text.toString().toInt()
+                                mascarAmount = valuemascar.text.toString().toInt()
+                                eggAmount = valueegg.text.toString().toInt()
+                                baconAmount = valuebacon.text.toString().toInt()
+                                tunaAmount = valuetuna.text.toString().toInt()
+                                shrimpAmount = valueshrimp.text.toString().toInt()
+                                avocadoAmount = valueavocado.text.toString().toInt()
+                                roastbeefAmount = valueroastbeef.text.toString().toInt()
+                                lettuce = spinnerLettuce.selectedItem as String
+                                tomato = spinnerTomato.selectedItem as String
+                                greenpepper = spinnerGreenpepper.selectedItem as String
+                                redonion = spinnerRedonion.selectedItem as String
+                                carrot = spinnerCarrot.selectedItem as String
+                                pickles = spinnerPickles.selectedItem as String
+                                olive = spinnerOlive.selectedItem as String
+                                hotpepper = spinnerHotpepper.selectedItem as String
+                                dressing.add(spinnerDressing.selectedItem as String)
+                                if (dressing[0] == "無し") {
+                                    dressingAmount.add("-")
+                                } else {
+                                    dressingAmount.add(spinnerDressingAmount.selectedItem as String)
+                                }
+                                if(addDressing.visibility == View.INVISIBLE) {
+                                    dressing.add(spinnerDressing2.selectedItem as String)
+                                    dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
+                                    val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
+                                    val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
+                                    howToDress = checkedRadioBtn.text.toString()
+                                }
                             }
                             e.putString(key, gson.toJson(recipe))
                             e.apply()
@@ -112,6 +116,3 @@ class EditRecipeActivity : AbstractRecipeActivity() {
 
     }
 }
-
-
-
