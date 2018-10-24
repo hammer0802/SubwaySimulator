@@ -15,6 +15,10 @@ import kotlinx.android.synthetic.main.create_recipe.*
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.security.InvalidKeyException
+import android.text.InputFilter
+import android.widget.EditText
+
+
 
 
 abstract class AbstractRecipeActivity: AppCompatActivity(){
@@ -176,19 +180,16 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val downBtnViewId = resources.getIdentifier("down${toppingMap[topping]}", "id", packageName)
             val downBtn = findViewById<ImageButton>(downBtnViewId)
             val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
+            valueEditText.filters = arrayOf<InputFilter>(MinMaxFilter("1", "9"))
+            var v = valueEditText.text.toString().toInt()
             upBtn.setOnClickListener{
-                var v = valueEditText.text.toString().toInt()
                 upBtn.isEnabled = v < 9
-                when {
-                    v in 1..8 -> v++
-                    v > 9 -> throw InvalidKeyException()
-                }
+                v++
                 valueEditText.setText(v.toString())
             }
             downBtn.setOnClickListener{
-                var v = valueEditText.text.toString().toInt()
                 downBtn.isEnabled = v >= 1
-                if (v <= 0) throw InvalidKeyException() else v--
+                v--
                 valueEditText.setText(v.toString())
             }
 
@@ -203,14 +204,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     if (text.isNullOrBlank()) {
                         valueEditText.setText("1")
                     } else {
-                        val v = valueEditText.text.toString().toInt()
                         downBtn.isEnabled = v > 1
                         upBtn.isEnabled = v < 9
-                        when{
-                            v < 1 -> valueEditText.setText("1")
-                            v > 9 -> valueEditText.setText("9")
-                            text.toString() != v.toString() -> valueEditText.setText(v.toString())
-                        }
                     }
                     valueEditText.setSelection(valueEditText.length())
 

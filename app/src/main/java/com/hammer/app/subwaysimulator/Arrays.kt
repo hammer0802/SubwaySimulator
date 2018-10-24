@@ -1,5 +1,7 @@
 package com.hammer.app.subwaysimulator
 
+//enum classにしたい
+
 val sandwiches = arrayOf(
         "BLT",
         "えびアボカド",

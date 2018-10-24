@@ -7,7 +7,7 @@ class Recipe {
     var footLong = false
     var bread = ""  //パンの種類
     var toast = false //トーストの有無
-    //トッピング
+    //トッピング、煩雑なのでToppingクラスでまとめる？
     var cheese = false
     var cream = false
     var mascar = false

@@ -102,8 +102,8 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                     howToDress = checkedRadioBtn.text.toString()
                                 }
                                 this.uuid = uuid
+                                e.putString(uuid, gson.toJson(this))
                             }
-                            e.putString(uuid, gson.toJson(recipe))
                             e.apply()
                             finish()
                         }
