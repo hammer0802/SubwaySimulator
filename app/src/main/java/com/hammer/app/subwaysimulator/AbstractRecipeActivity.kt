@@ -182,15 +182,13 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
             upBtn.setOnClickListener{
                 var v = value.text.toString().toInt()
-                if(v < 9 ) v++
+                if(v in 1..8) v++
+                else if (v > 9) throw InvalidKeyException()
                 value.setText(v.toString())
             }
             downBtn.setOnClickListener{
                 var v = value.text.toString().toInt()
-                if (v <= 0) {
-                    throw InvalidKeyException()
-                }
-                v--
+                if (v <= 0) throw InvalidKeyException() else v--
                 value.setText(v.toString())
             }
 
