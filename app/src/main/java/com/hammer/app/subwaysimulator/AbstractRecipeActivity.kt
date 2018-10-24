@@ -27,7 +27,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
     var sandPrice = 0
     var toppingPrice = 0
 
-    fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
+    protected fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val viewId = resources.getIdentifier(spinnerName, "id", packageName)
@@ -104,7 +104,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
-    fun spinnerDefaultVege(itemArray: Array<String>, spinnerName: String){
+    protected fun spinnerDefaultVege(itemArray: Array<String>, spinnerName: String){
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val viewId = resources.getIdentifier(spinnerName, "id", packageName)
@@ -122,7 +122,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
-    fun dressingAmount(){
+    protected fun dressingAmount(){
         val adapterDressingAmount = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, amountsDressing)
         adapterDressingAmount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinnerDressingAmount = findViewById<Spinner>(R.id.spinnerDressingAmount)
@@ -137,28 +137,28 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
-    fun checkBox() {
-        for (topping in toppings) {
-            val viewId = resources.getIdentifier("checkBox" + toppingMap[topping], "id", packageName)
+    protected fun checkBox() {
+        toppings.forEach {
+            val viewId = resources.getIdentifier("checkBox" + toppingMap[it], "id", packageName)
             val checkbox = findViewById<CheckBox>(viewId)
-            val counterViewId = resources.getIdentifier("counter" + toppingMap[topping], "id", packageName)
+            val counterViewId = resources.getIdentifier("counter" + toppingMap[it], "id", packageName)
             val counter = findViewById<LinearLayout>(counterViewId)
             val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
             checkbox.isChecked = false
             counter.visibility = View.INVISIBLE
-            checkbox.text = topping
+            checkbox.text = it
             checkbox.setOnClickListener {
                 toppingPrice = 0
-                for (topping2 in toppings) {
-                    val viewId2 = resources.getIdentifier("checkBox" + toppingMap[topping2], "id", packageName)
+                toppings.forEach {
+                    val viewId2 = resources.getIdentifier("checkBox" + toppingMap[it], "id", packageName)
                     val checkbox2 = findViewById<CheckBox>(viewId2)
-                    val counterViewId2 = resources.getIdentifier("counter" + toppingMap[topping2], "id", packageName)
+                    val counterViewId2 = resources.getIdentifier("counter" + toppingMap[it], "id", packageName)
                     val counter2 = findViewById<LinearLayout>(counterViewId2)
-                    val valueViewId2 = resources.getIdentifier("value" + toppingMap[topping2], "id", packageName)
+                    val valueViewId2 = resources.getIdentifier("value" + toppingMap[it], "id", packageName)
                     val value2 = findViewById<EditText>(valueViewId2)
                     if (checkbox2.isChecked) {
                         counter2.visibility = View.VISIBLE
-                        toppingPrice += toppingPrices[topping2].toString().toInt() * value2.text.toString().toInt()
+                        toppingPrice += toppingPrices[it].toString().toInt() * value2.text.toString().toInt()
                     }else{
                         counter2.visibility = View.INVISIBLE
                     }
@@ -171,13 +171,13 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
-    fun counterBtn(){
-        for (topping in toppings){
-            val upBtnViewId = resources.getIdentifier("up" + toppingMap[topping], "id", packageName)
+    protected fun counterBtn(){
+        toppings.forEach{
+            val upBtnViewId = resources.getIdentifier("up" + toppingMap[it], "id", packageName)
             val upBtn = findViewById<ImageButton>(upBtnViewId)
-            val valueViewId = resources.getIdentifier("value" + toppingMap[topping], "id", packageName)
+            val valueViewId = resources.getIdentifier("value" + toppingMap[it], "id", packageName)
             val value = findViewById<EditText>(valueViewId)
-            val downBtnViewId = resources.getIdentifier("down" + toppingMap[topping], "id", packageName)
+            val downBtnViewId = resources.getIdentifier("down" + toppingMap[it], "id", packageName)
             val downBtn = findViewById<ImageButton>(downBtnViewId)
             val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
             upBtn.setOnClickListener{
@@ -217,12 +217,12 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     value.setSelection(value.length())
 
                     toppingPrice = 0
-                    for (topping2 in toppings) {
-                        val viewId = resources.getIdentifier("checkBox" + toppingMap[topping2], "id", packageName)
+                    toppings.forEach{
+                        val viewId = resources.getIdentifier("checkBox" + toppingMap[it], "id", packageName)
                         val checkbox = findViewById<CheckBox>(viewId)
-                        val valueViewId2 = resources.getIdentifier("value" + toppingMap[topping2], "id", packageName)
+                        val valueViewId2 = resources.getIdentifier("value" + toppingMap[it], "id", packageName)
                         val value2 = findViewById<EditText>(valueViewId2)
-                        if (checkbox.isChecked) toppingPrice += toppingPrices[topping2].toString().toInt() * value2.text.toString().toInt()
+                        if (checkbox.isChecked) toppingPrice += toppingPrices[it].toString().toInt() * value2.text.toString().toInt()
                     }
                     var sum = sandPrice + toppingPrice
                     if(spinnerBread.selectedItem == "無し(サラダ, + 300円)") sum += 300
@@ -233,7 +233,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
-    fun initAddDressingBtn(){
+    protected fun initAddDressingBtn(){
         addDressing.setOnClickListener{
             val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
             selectDressingItemView.id = selectDressingItemView.hashCode()
@@ -273,7 +273,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
     
-    fun checkBoxFootLong(){
+    protected fun checkBoxFootLong(){
         val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
         checkBoxFootLong.setOnClickListener{
             if(checkBoxFootLong.isChecked){ 
