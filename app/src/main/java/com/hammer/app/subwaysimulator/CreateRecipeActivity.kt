@@ -39,7 +39,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                         .setTitle("レシピの名前を入力してください")
                         .setNegativeButton("はい", null)
                         .show()
-            }else if(addDressing.visibility == View.INVISIBLE && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
+            }else if(addDressing.visibility == View.GONE && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("追加ドレッシングは元のドレッシングと違うものにしてください")
                         .setNegativeButton("はい", null)
@@ -94,7 +94,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 } else {
                                     dressingAmount.add(spinnerDressingAmount.selectedItem as String)
                                 }
-                                if(addDressing.visibility == View.INVISIBLE){
+                                if(addDressing.visibility == View.GONE){
                                     dressing.add(spinnerDressing2.selectedItem as String)
                                     dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
