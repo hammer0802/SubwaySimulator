@@ -1022,6 +1022,31 @@
                 app:layout_constraintStart_toEndOf="@id/addDressing"
                 app:layout_constraintTop_toTopOf="@+id/addDressing" />
 
+            <ImageButton
+                android:id="@+id/addDressing2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/select_dressing_container"
+                app:srcCompat="@drawable/ic_add_box_black_36dp" />
+
+            <TextView
+                android:id="@+id/addDressingText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_dressing_text"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/addDressing2"
+                app:layout_constraintTop_toTopOf="@+id/addDressing2" />
 
         </android.support.constraint.ConstraintLayout>
 

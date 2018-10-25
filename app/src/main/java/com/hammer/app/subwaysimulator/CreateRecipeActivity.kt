@@ -94,7 +94,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 } else {
                                     dressingAmount.add(spinnerDressingAmount.selectedItem as String)
                                 }
-                                if(addDressing.visibility == View.GONE){
+                                if(addDressingCount == 1 && dressing[0] != "無し" && removeDressing.visibility == View.VISIBLE){
                                     dressing.add(spinnerDressing2.selectedItem as String)
                                     dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)

@@ -25,6 +25,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
     val gson = Gson()
     var sandPrice = 0
     var toppingPrice = 0
+    var addDressingCount = 0
+    var addDressing2Count = 0
 
     protected fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
@@ -79,22 +81,28 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     if (spinner.selectedItem == "無し") {
                         spinnerDressingAmount.visibility = View.GONE
                         textViewDressingAmount.visibility = View.GONE
-                        if(addDressing.visibility == View.GONE){
+                        if (addDressingCount == 1){
                             spinnerDressing2.visibility = View.GONE
                             textViewDressingType2.visibility = View.GONE
                             spinnerDressingAmount2.visibility = View.GONE
                             textViewDressingAmount2.visibility = View.GONE
                             howToDress.visibility = View.GONE
+                        }else{
+                            addDressing.visibility = View.GONE
+                            addDressingText.visibility = View.GONE
                         }
                     } else {
                         spinnerDressingAmount.visibility = View.VISIBLE
                         textViewDressingAmount.visibility = View.VISIBLE
-                        if(addDressing.visibility == View.GONE){
+                        if(addDressingCount == 1 && removeDressing.visibility == View.VISIBLE){
                             spinnerDressing2.visibility = View.VISIBLE
                             textViewDressingType2.visibility = View.VISIBLE
                             spinnerDressingAmount2.visibility = View.VISIBLE
                             textViewDressingAmount2.visibility = View.VISIBLE
                             howToDress.visibility = View.VISIBLE
+                        }else if(addDressing2Count == 0 ){
+                            addDressing.visibility = View.VISIBLE
+                            addDressingText.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -226,7 +234,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
     }
 
     protected fun initAddDressingBtn(){
-        addDressing.setOnClickListener{
+        addDressing.setOnClickListener{addBtn ->
+            addDressingCount++
             val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
             selectDressingItemView.id = selectDressingItemView.hashCode()
             select_dressing_container.addView(selectDressingItemView)
@@ -253,7 +262,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 }
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
-            addDressing.visibility = View.GONE
+            addBtn.visibility = View.GONE
             addDressingText.visibility = View.GONE
             if(spinnerDressing.selectedItem == "無し"){
                 spinnerDressing2.visibility = View.GONE
@@ -265,18 +274,35 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 removeDressingText.visibility = View.GONE
             }
 
-            removeDressing.setOnClickListener{
-                addDressing.visibility = View.VISIBLE
-                addDressingText.visibility = View.VISIBLE
+            removeDressing.setOnClickListener{removeBtn ->
+                addDressing2.visibility = View.VISIBLE
+                addDressingText2.visibility = View.VISIBLE
                 textViewDressing2.visibility = View.GONE
                 spinnerDressing2.visibility = View.GONE
                 textViewDressingType2.visibility = View.GONE
                 spinnerDressingAmount2.visibility = View.GONE
                 textViewDressingAmount2.visibility = View.GONE
                 howToDress.visibility = View.GONE
-                removeDressing.visibility = View.GONE
+                removeBtn.visibility = View.GONE
                 removeDressingText.visibility = View.GONE
             }
+            
+            addDressing2.setOnClickListener {addBtn2 ->
+                addDressing2Count++
+                if (spinnerDressing.selectedItem != "無し"){
+                    addBtn2.visibility = View.GONE
+                    addDressingText2.visibility = View.GONE
+                    textViewDressing2.visibility = View.VISIBLE
+                    spinnerDressing2.visibility = View.VISIBLE
+                    textViewDressingType2.visibility = View.VISIBLE
+                    spinnerDressingAmount2.visibility = View.VISIBLE
+                    textViewDressingAmount2.visibility = View.VISIBLE
+                    howToDress.visibility = View.VISIBLE
+                    removeDressing.visibility = View.VISIBLE
+                    removeDressingText.visibility = View.VISIBLE
+                }
+            }
+            
         }
     }
     
