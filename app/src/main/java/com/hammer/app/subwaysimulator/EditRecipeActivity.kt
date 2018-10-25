@@ -89,12 +89,12 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 olive = spinnerOlive.selectedItem as String
                                 hotpepper = spinnerHotpepper.selectedItem as String
                                 dressing.add(spinnerDressing.selectedItem as String)
-                                if (dressing[0] == "無し") {
+                                if (dressing[0] == Dressings.NONE.dressingName) {
                                     dressingAmount.add("-")
                                 } else {
                                     dressingAmount.add(spinnerDressingAmount.selectedItem as String)
                                 }
-                                if(addDressingCount == 1 && dressing[0] != "無し" && removeDressing.visibility == View.VISIBLE) {
+                                if(addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
                                     dressing.add(spinnerDressing2.selectedItem as String)
                                     dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)

@@ -1,24 +1,24 @@
 package com.hammer.app.subwaysimulator
 
-enum class sandwiches(val number: Int, val sandName: String, val price: Int, val recommendDressing: Int){
-    BLT(0,"BLT", 420, dressings.CAESAR.number),
-    EBI_AVOCADO(1,"えびアボカド", 500, dressings.CREAMY.number),
-    NAMA_HAM(2,"生ハム＆マスカルポーネ", 520, dressings.BASIL.number),
-    ROAST_CHICKEN(3, "ローストチキン", 420, dressings.HONEY_MUSTARD.number),
-    ROAST_BEEF(4,"ローストビーフ　～プレミアム製法～", 590, dressings.WASABI.number),
-    TURKEY_BACON_EGG(5,"ターキーベーコンエッグ", 490, dressings.CAESAR.number),
-    CHEESE_ROAST_CHICKEN(6,"チーズローストチキン",480, dressings.NONE.number),
-    TERIYAKI_CHICKEN(7,"てり焼きチキン", 480, dressings.MAYONNAISE.number),
-    CHILI_CHICKEN(8,"チリチキン",410, dressings.MAYONNAISE.number),
-    TURKEY(9, "ターキーブレスト",450, dressings.BALSAMICO.number),
-    TUNA(10,"ツナ",430, dressings.PEPPER.number),
-    EGG(11, "たまご",390, dressings.SALT_PEPPER.number),
-    AVOCADO_VEGE(12,"アボカドベジー", 410, dressings.CREAMY.number),
-    VEGE_CHEESE(13, "ベジー＆チーズ",340, dressings.CREAMY.number),
-    VEGE_DE_LIGHT(14,"ベジーデライト",300, dressings.OIL_VINEGAR.number)
+enum class Sandwiches(val number: Int, val sandName: String, val price: Int, val recommendDressing: Int){
+    BLT(0,"BLT", 420, Dressings.CAESAR.number),
+    EBI_AVOCADO(1,"えびアボカド", 500, Dressings.CREAMY.number),
+    NAMA_HAM(2,"生ハム＆マスカルポーネ", 520, Dressings.BASIL.number),
+    ROAST_CHICKEN(3, "ローストチキン", 420, Dressings.HONEY_MUSTARD.number),
+    ROAST_BEEF(4,"ローストビーフ　～プレミアム製法～", 590, Dressings.WASABI.number),
+    TURKEY_BACON_EGG(5,"ターキーベーコンエッグ", 490, Dressings.CAESAR.number),
+    CHEESE_ROAST_CHICKEN(6,"チーズローストチキン",480, Dressings.NONE.number),
+    TERIYAKI_CHICKEN(7,"てり焼きチキン", 480, Dressings.MAYONNAISE.number),
+    CHILI_CHICKEN(8,"チリチキン",410, Dressings.MAYONNAISE.number),
+    TURKEY(9, "ターキーブレスト",450, Dressings.BALSAMICO.number),
+    TUNA(10,"ツナ",430, Dressings.PEPPER.number),
+    EGG(11, "たまご",390, Dressings.SALT_PEPPER.number),
+    AVOCADO_VEGE(12,"アボカドベジー", 410, Dressings.CREAMY.number),
+    VEGE_CHEESE(13, "ベジー＆チーズ",340, Dressings.CREAMY.number),
+    VEGE_DE_LIGHT(14,"ベジーデライト",300, Dressings.OIL_VINEGAR.number)
 }
 
-enum class breads(val number: Int, val breadName: String, val price: Int) {
+enum class Breads(val number: Int, val breadName: String, val price: Int) {
     WHEAT(0, "ウィート", 0),
     WHITE(1, "ホワイト", 0),
     SESAME(2,"セサミ",0),
@@ -27,7 +27,7 @@ enum class breads(val number: Int, val breadName: String, val price: Int) {
     NONE(5,"無し(サラダ, + 300円)", 300)
 }
 
-enum class toppings(val toppingName: String, val price: Int, val engName: String) {
+enum class Toppings(val toppingName: String, val price: Int, val engName: String) {
     NATURAL_CHEESE("ナチュラルスライスチーズ(+ 40円)", 40, "cheese"),
     CREAM_CHEESE("クリームタイプチーズ(+ 60円)", 60, "cream"),
     MASCARPONE_CHEESE("マスカルポーネチーズ(+ 90円)", 90, "mascar"),
@@ -39,7 +39,7 @@ enum class toppings(val toppingName: String, val price: Int, val engName: String
     ROAST_BEEF("ローストビーフ(+ 350円)", 350, "roastbeef")
 }
 
-enum class dressings(val number: Int, val dressingName: String){
+enum class Dressings(val number: Int, val dressingName: String){
     OIL_VINEGAR(0, "オイル&ビネガー　塩・こしょう"),
     CAESAR(1, "シーザードレッシング"),
     CREAMY(2,"野菜クリーミードレッシング"),
@@ -53,6 +53,60 @@ enum class dressings(val number: Int, val dressingName: String){
     PEPPER(10, "こしょう"),
     NONE(11, "無し")
 }
+
+val sandwiches = arrayOf(
+        "BLT",
+        "えびアボカド",
+        "生ハム＆マスカルポーネ",
+        "ローストチキン",
+        "ローストビーフ　～プレミアム製法～",
+        "ターキーベーコンエッグ",
+        "チーズローストチキン",
+        "てり焼きチキン",
+        "チリチキン",
+        "ターキーブレスト",
+        "ツナ",
+        "たまご",
+        "アボカドベジー",
+        "ベジー＆チーズ",
+        "ベジーデライト"
+)
+
+val breads = arrayOf(
+        "ウィート",
+        "ホワイト",
+        "セサミ",
+        "ハニーオーツ",
+        "フラットブレッド",
+        "無し(サラダ, + 300円)"
+)
+
+val toppings = arrayOf(
+        "ナチュラルスライスチーズ(+ 40円)",
+        "クリームタイプチーズ(+ 60円)",
+        "マスカルポーネチーズ(+ 90円)",
+        "たまご(+ 60円)",
+        "ベーコン(+ 60円)",
+        "ツナ(+ 80円)",
+        "えび(+ 100円)",
+        "アボカド(+ 110円)",
+        "ローストビーフ(+ 350円)"
+)
+
+val dressings = arrayOf(
+        "オイル&ビネガー　塩・こしょう",
+        "シーザードレッシング",
+        "野菜クリーミードレッシング",
+        "ハニーマスタードソース",
+        "わさび醤油ソース",
+        "バジルソース",
+        "バルサミコソース",
+        "マヨネーズタイプ",
+        "チリソース（激辛)",
+        "塩・こしょう",
+        "こしょう",
+        "無し"
+)
 
 val dressingsWoNothing = arrayOf(
         "オイル&ビネガー　塩・こしょう",
