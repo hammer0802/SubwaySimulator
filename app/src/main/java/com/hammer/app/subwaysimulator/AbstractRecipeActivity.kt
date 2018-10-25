@@ -102,6 +102,11 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                             addDressingText.visibility = View.VISIBLE
                         }
                     }
+                    val selectedSand =  Sandwiches.values().filter { spinnerSand.selectedItem == it.sandName }[0]
+                    val recommendDress = Dressings.values().filter { selectedSand.recommendDressing == it.number }[0].dressingName
+                    if(checkboxRecommend.isChecked && spinner.selectedItem != recommendDress){
+                        checkboxRecommend.isChecked = false
+                    }
                 }
             }
             override fun onNothingSelected(arg0: AdapterView<*>) {}

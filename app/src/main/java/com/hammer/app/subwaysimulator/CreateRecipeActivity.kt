@@ -39,7 +39,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                         .setTitle("レシピの名前を入力してください")
                         .setNegativeButton("はい", null)
                         .show()
-            }else if(addDressing.visibility == View.GONE && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
+            }else if(addDressingCount == 1 && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("追加ドレッシングは元のドレッシングと違うものにしてください")
                         .setNegativeButton("はい", null)

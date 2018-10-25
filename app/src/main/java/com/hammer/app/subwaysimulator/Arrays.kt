@@ -54,6 +54,20 @@ enum class Dressings(val number: Int, val dressingName: String){
     NONE(11, "無し")
 }
 
+enum class Amounts(val number: Int, val amount: String){
+    NONE(0,"無し"),
+    LITTLE(1,"少なめ"),
+    NORMAL(2, "普通"),
+    MANY(3,"多め"),
+    MAX(4,"上限")
+}
+
+enum class AmountsDressing(val number: Int, val amount: String){
+    LITTLE(0,"少なめ"),
+    NORMAL(1, "普通"),
+    MANY(2,"多め"),
+}
+
 val sandwiches = arrayOf(
         "BLT",
         "えびアボカド",
