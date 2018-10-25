@@ -32,12 +32,13 @@ class RecipeResultActivity : AppCompatActivity() {
 
         val sandType = findViewById<TextView>(R.id.textViewSandType)
         sandType.text = recipe.sandwich
+        if(recipe.footLong) sandType.append("(フットロング)")
 
         val breadType = findViewById<TextView>(R.id.textViewBreadType)
         var toast = ""
         var breadText = ""
         when{
-            recipe.bread == "無し（サラダ）" -> breadText = recipe.bread
+            recipe.bread == "無し(サラダ, + 300円)" -> breadText = "無し(サラダ)"
             recipe.toast -> {
                 toast = "トースト有り"
                 breadText = "${recipe.bread}($toast)"
@@ -50,16 +51,17 @@ class RecipeResultActivity : AppCompatActivity() {
         breadType.text = breadText
 
         val toppingSelect = findViewById<TextView>(R.id.textViewToppingSelect)
-        if(recipe.cheese) toppingSelect.append("ナチュラルスライスチーズ(+ ¥40)\n")
-        if(recipe.cream) toppingSelect.append("クリームタイプチーズ(+ ¥60)\n")
-        if(recipe.mascar) toppingSelect.append("マスカルポーネチーズ(+ ¥90)\n")
-        if(recipe.egg) toppingSelect.append("たまご(+ ¥60)\n")
-        if(recipe.bacon) toppingSelect.append("ベーコン(+ ¥60)\n")
-        if(recipe.tuna)toppingSelect.append("ツナ(+ ¥80)\n")
-        if(recipe.shrimp)toppingSelect.append("えび(+ ¥100)\n")
-        if(recipe.avocado)toppingSelect.append("アボカド(+ ¥110)")
+        if(recipe.cheese) toppingSelect.append("ナチュラルスライスチーズ × ${recipe.cheeseAmount}\n")
+        if(recipe.cream) toppingSelect.append("クリームタイプチーズ × ${recipe.creamAmount}\n")
+        if(recipe.mascar) toppingSelect.append("マスカルポーネチーズ × ${recipe.mascarAmount}\n")
+        if(recipe.egg) toppingSelect.append("たまご × ${recipe.eggAmount}\n")
+        if(recipe.bacon) toppingSelect.append("ベーコン × ${recipe.baconAmount}\n")
+        if(recipe.tuna)toppingSelect.append("ツナ × ${recipe.tunaAmount}\n")
+        if(recipe.shrimp)toppingSelect.append("えび × ${recipe.shrimpAmount}\n")
+        if(recipe.avocado)toppingSelect.append("アボカド × ${recipe.avocadoAmount}\n")
+        if(recipe.roastbeef)toppingSelect.append("ローストビーフ × ${recipe.roastbeefAmount}")
         if(recipe.cheese == false && recipe.cream == false && recipe.mascar == false && recipe.egg == false && recipe.bacon == false
-                && recipe.tuna == false && recipe.shrimp == false && recipe.avocado == false) toppingSelect.text = "無し"
+                && recipe.tuna == false && recipe.shrimp == false && recipe.avocado == false && recipe.roastbeef == false) toppingSelect.text = "無し"
 
         val vegetableAmount = findViewById<TextView>(R.id.textViewVegetableAmount)
         if(recipe.lettuce != "普通") vegetableAmount.append("レタス：${recipe.lettuce} ")
@@ -77,12 +79,15 @@ class RecipeResultActivity : AppCompatActivity() {
 
         val dressingType = findViewById<TextView>(R.id.textViewDressingType)
         var dressingText = ""
-        when{
-            recipe.dressing == "無し" -> dressingText = recipe.dressing
-            else -> dressingText = recipe.dressing + "(量:" + recipe.dressingAmount + ")"
+        when(recipe.dressing[0]){
+            "無し" -> dressingText = recipe.dressing[0]
+            else -> dressingText = recipe.dressing[0] + "(量:" + recipe.dressingAmount[0] + ")"
         }
         dressingType.text = dressingText
-
+        if (recipe.dressing.count() == 2 && recipe.dressing[0] != "無し") {
+            dressingType.append("\n × ${recipe.dressing[1]}(量:${recipe.dressingAmount[1]})")
+            dressingType.append("\nかけ方：${recipe.howToDress}")
+        }
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_recipe, menu)

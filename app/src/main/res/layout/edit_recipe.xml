@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
 
     <ScrollView
 
@@ -12,7 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:focusableInTouchMode="true"
-        app:layout_constraintBottom_toTopOf="@+id/constraintLayout">
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <android.support.constraint.ConstraintLayout
@@ -20,15 +22,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
-            app:layout_constraintTop_toTopOf="@+id/textViewVegetable"
-            tools:layout_editor_absoluteY="81dp">
+            app:layout_constraintTop_toTopOf="@+id/textViewVegetable">
 
             <TextView
                 android:id="@+id/textViewNameEdit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="75dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@color/colorPrimary"
@@ -43,6 +44,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <requestFocus />
             </TextView>
 
@@ -103,9 +105,21 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/recommend"
-                app:layout_constraintBottom_toTopOf="@+id/textViewBread"
+                app:layout_constraintBottom_toTopOf="@+id/checkBoxFootLong"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerSand" />
+
+            <CheckBox
+                android:id="@+id/checkBoxFootLong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/foot_long"
+                app:layout_constraintBottom_toTopOf="@+id/textViewBread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxRecommend" />
 
             <TextView
                 android:id="@+id/textViewBread"
@@ -123,7 +137,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/spinnerBread"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxRecommend" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxFootLong" />
 
             <Spinner
                 android:id="@+id/spinnerBread"
@@ -175,10 +189,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/checkBoxcream"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTopping" />
+
+            <LinearLayout
+                android:id="@+id/countercheese"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/countercream"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewTopping">
+
+                <ImageButton
+                    android:id="@+id/downcheese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valuecheese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/upcheese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkBoxcream"
@@ -186,10 +239,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/checkBoxmascar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxcheese" />
+
+            <LinearLayout
+                android:id="@+id/countercream"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/countermascar"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/countercheese">
+
+                <ImageButton
+                    android:id="@+id/downcream"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valuecream"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/upcream"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkBoxmascar"
@@ -197,10 +289,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/checkBoxegg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxcream" />
+
+            <LinearLayout
+                android:id="@+id/countermascar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/counteregg"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/countercream">
+
+                <ImageButton
+                    android:id="@+id/downmascar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valuemascar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/upmascar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkBoxegg"
@@ -208,10 +339,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/checkBoxbacon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxmascar" />
+
+            <LinearLayout
+                android:id="@+id/counteregg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/counterbacon"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/countermascar">
+
+                <ImageButton
+                    android:id="@+id/downegg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valueegg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/upegg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkBoxbacon"
@@ -219,10 +389,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/checkBoxtuna"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxegg" />
+
+            <LinearLayout
+                android:id="@+id/counterbacon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/countertuna"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/counteregg">
+
+                <ImageButton
+                    android:id="@+id/downbacon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valuebacon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/upbacon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkBoxtuna"
@@ -230,10 +439,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/checkBoxshrimp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxbacon" />
+
+            <LinearLayout
+                android:id="@+id/countertuna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/countershrimp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/counterbacon">
+
+                <ImageButton
+                    android:id="@+id/downtuna"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valuetuna"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/uptuna"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkBoxshrimp"
@@ -241,10 +489,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/checkBoxavocado"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxtuna" />
+
+            <LinearLayout
+                android:id="@+id/countershrimp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/counteravocado"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/countertuna">
+
+                <ImageButton
+                    android:id="@+id/downshrimp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valueshrimp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/upshrimp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkBoxavocado"
@@ -252,11 +539,99 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/checkBoxroastbeef"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxshrimp" />
 
+            <LinearLayout
+                android:id="@+id/counteravocado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/counterroastbeef"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/countershrimp">
+
+                <ImageButton
+                    android:id="@+id/downavocado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valueavocado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/upavocado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/checkBoxroastbeef"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxavocado" />
+
+            <LinearLayout
+                android:id="@+id/counterroastbeef"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/counteravocado">
+
+                <ImageButton
+                    android:id="@+id/downroastbeef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_remove_circle_36dp" />
+
+                <EditText
+                    android:id="@+id/valueroastbeef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:text="@string/one" />
+
+                <ImageButton
+                    android:id="@+id/uproastbeef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_add_circle_36dp" />
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/textViewVegetable"
@@ -274,7 +649,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/textViewVegetableAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxavocado" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxroastbeef" />
 
             <TextView
                 android:id="@+id/textViewVegetableAmount"
@@ -532,6 +907,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewHotpepper" />
+
             <TextView
                 android:id="@+id/textViewDressing"
                 android:layout_width="0dp"
@@ -545,70 +921,106 @@
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/spinnerDressing"
+                app:layout_constraintBottom_toTopOf="@+id/select_dressing_container"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spinnerHotpepper" />
 
-            <TextView
-                android:id="@+id/textViewDressingType"
+            <LinearLayout
+                android:id="@+id/select_dressing_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/type"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/spinnerDressing"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@+id/addDressing"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDressing" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewDressing">
 
-            <Spinner
-                android:id="@+id/spinnerDressing"
-                android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/textViewDressingType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/type"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/spinnerDressing"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDressing" />
+
+                <Spinner
+                    android:id="@+id/spinnerDressing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:spinnerMode="dialog"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewDressingAmount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDressingType" />
+
+                <TextView
+                    android:id="@+id/textViewDressingAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/amount"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toTopOf="@+id/spinnerDressingAmount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerDressing" />
+
+                <Spinner
+                    android:id="@+id/spinnerDressingAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:spinnerMode="dialog"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDressingAmount" />
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/addDressing"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:spinnerMode="dialog"
-                app:layout_constraintBottom_toBottomOf="@id/textViewDressingAmount"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDressingType" />
-
-            <TextView
-                android:id="@+id/textViewDressingAmount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:text="@string/amount"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/spinnerDressingAmount"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinnerDressing" />
-
-            <Spinner
-                android:id="@+id/spinnerDressingAmount"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:spinnerMode="dialog"
+                android:background="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDressingAmount" />
+                app:layout_constraintTop_toBottomOf="@+id/select_dressing_container"
+                app:srcCompat="@drawable/ic_add_box_black_36dp" />
+
+            <TextView
+                android:id="@+id/addDressingText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_dressing_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/addDressing"
+                app:layout_constraintTop_toTopOf="@+id/addDressing" />
 
 
         </android.support.constraint.ConstraintLayout>
