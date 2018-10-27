@@ -22,6 +22,7 @@ android {
         }
     }
     signingConfigs {
+        def releaseSettingGradleFile = new File("${project.rootDir}/release.gradle")
         apply from: releaseSettingGradleFile, to: android
     }
 }
