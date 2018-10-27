@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Build') {
     steps {
-      sh './gradlew assembleRelease'
+      sh './gradlew assembleDebug'
     }}
   }
   post {
