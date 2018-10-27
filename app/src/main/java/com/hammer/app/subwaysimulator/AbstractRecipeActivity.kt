@@ -79,6 +79,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         spinnerDressingAmount.visibility = View.GONE
                         textViewDressingAmount.visibility = View.GONE
                         if (addDressingCount == 1){
+                            addDressing2.visibility = View.GONE
+                            addDressingText2.visibility = View.GONE
                             spinnerDressing2.visibility = View.GONE
                             textViewDressingType2.visibility = View.GONE
                             spinnerDressingAmount2.visibility = View.GONE
@@ -91,12 +93,17 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     } else {
                         spinnerDressingAmount.visibility = View.VISIBLE
                         textViewDressingAmount.visibility = View.VISIBLE
-                        if(addDressingCount == 1 && removeDressing.visibility == View.VISIBLE){
+                        if(addDressingCount == 1){
+                            addDressing2.visibility = View.VISIBLE
+                            addDressingText2.visibility = View.VISIBLE
+                        }else if(addDressingCount == 1 && removeDressing.visibility == View.VISIBLE){
                             spinnerDressing2.visibility = View.VISIBLE
                             textViewDressingType2.visibility = View.VISIBLE
                             spinnerDressingAmount2.visibility = View.VISIBLE
                             textViewDressingAmount2.visibility = View.VISIBLE
                             howToDress.visibility = View.VISIBLE
+                            addDressing2.visibility = View.VISIBLE
+                            addDressingText2.visibility = View.VISIBLE
                         }else if(addDressing2Count == 0 ){
                             addDressing.visibility = View.VISIBLE
                             addDressingText.visibility = View.VISIBLE
