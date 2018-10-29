@@ -19,6 +19,7 @@ import android.opengl.ETC1.getHeight
 import android.opengl.ETC1.getWidth
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
 import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
@@ -138,14 +139,25 @@ class RecipeResultActivity : AppCompatActivity() {
                                 bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
                                 fos.close()
                                 val contentUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", filePath)
-
                                 val shareIntent = Intent()
-                                shareIntent.action = Intent.ACTION_SEND
-                                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
-                                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-                                shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
-                                startActivity(Intent.createChooser(shareIntent, "アプリを選ぶ"))
+
+                                when(sns[which]) {
+                                    "Twitter", "Facebook", "Instagram" -> {
+                                        shareIntent.action = Intent.ACTION_SEND
+                                        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
+                                        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+                                        shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
+                                        startActivity(Intent.createChooser(shareIntent, "アプリを選ぶ"))
+                                    }
+                                    "LINE" -> {
+                                        shareIntent.action = Intent.ACTION_EDIT
+                                        val message = Uri.encode("テスト #SubwaySimulator")
+                                        shareIntent.data= Uri.parse("line://msg/text/$message")
+                                        shareIntent.data= Uri.parse("line://msg/image/$filePath")
+                                        startActivity(shareIntent)
+                                    }
+                                }
                             }
                         }
                         .setNegativeButton("キャンセル", null)
