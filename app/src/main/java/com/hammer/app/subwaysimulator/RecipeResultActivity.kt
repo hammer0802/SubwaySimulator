@@ -23,6 +23,9 @@ import android.net.Uri
 import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
+import android.widget.Toast
+
+
 
 
 class RecipeResultActivity : AppCompatActivity() {
@@ -141,7 +144,7 @@ class RecipeResultActivity : AppCompatActivity() {
                                 val contentUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", filePath)
                                 val shareIntent = Intent()
 
-                                when(sns[which]) {
+                                when(sns[checkedItems[0]]) {
                                     "Twitter", "Facebook", "Instagram" -> {
                                         shareIntent.action = Intent.ACTION_SEND
                                         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -155,7 +158,12 @@ class RecipeResultActivity : AppCompatActivity() {
                                         val message = Uri.encode("テスト #SubwaySimulator")
                                         shareIntent.data= Uri.parse("line://msg/text/$message")
                                         shareIntent.data= Uri.parse("line://msg/image/$filePath")
-                                        startActivity(shareIntent)
+                                        try {
+                                            startActivity(shareIntent)
+                                        } catch (e: Exception) {
+                                            Toast.makeText(applicationContext, "LINEアプリがインストールされていません", Toast.LENGTH_LONG)
+                                                    .show()
+                                        }
                                     }
                                 }
                             }
