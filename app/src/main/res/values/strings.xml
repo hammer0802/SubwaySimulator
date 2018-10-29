@@ -37,6 +37,7 @@
     <string name="add_dressing_text">ドレッシングを追加する</string>
     <string name="separate_dressing">左右に分けてかける</string>
     <string name="blend_dressing">ブレンドする</string>
+    <string name="remove_dressing_text">ドレッシングを1つにする</string>
 
 
 </resources>

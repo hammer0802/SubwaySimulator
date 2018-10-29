@@ -25,16 +25,17 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecyclerViewHolder {
 
-        val view = LayoutInflater.from(parent!!.context).inflate(R.layout.list_recipe, parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_recipe, parent,false)
         return MyRecyclerViewHolder(view)
     }
 
     override fun getItemCount(): Int {
-        return list?.size ?: 0
+        return list.size ?: 0
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewHolder, position: Int) {
-        holder!!.v.findViewById<TextView>(R.id.recipe_name).text = "${list[position].name}\n${list[position].sandwich}"
+        val listTitle = "${list[position].name}\n${list[position].sandwich}"
+        holder.v.findViewById<TextView>(R.id.recipe_name).text = listTitle
 
         holder.v.setOnClickListener{v ->
             val intent2= Intent(activity,RecipeResultActivity::class.java)

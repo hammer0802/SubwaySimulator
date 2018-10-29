@@ -33,7 +33,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/type"
-        android:textColor="@color/colorPrimary"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerDressing2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +62,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="@string/amount"
-        android:textColor="@color/colorPrimary"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerDressingAmount2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,8 +88,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:checkedButton="@+id/separateDressing"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/addDressing"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerDressingAmount2">
 
@@ -110,6 +110,29 @@
             android:text="@string/blend_dressing" />
 
     </RadioGroup>
+
+    <ImageButton
+        android:id="@+id/removeDressing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/howToDress"
+        app:srcCompat="@drawable/ic_indeterminate_check_box_36dp" />
+
+    <TextView
+        android:id="@+id/removeDressingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/remove_dressing_text"
+        app:layout_constraintStart_toEndOf="@id/removeDressing"
+        app:layout_constraintTop_toTopOf="@+id/removeDressing" />
 
 
 </android.support.constraint.ConstraintLayout>
