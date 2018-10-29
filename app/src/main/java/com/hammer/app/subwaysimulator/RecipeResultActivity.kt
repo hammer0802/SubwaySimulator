@@ -14,9 +14,14 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_recipe_result.*
 import android.text.method.TextKeyListener.clear
 import android.text.method.TextKeyListener.clear
-
-
-
+import kotlinx.android.synthetic.main.content_recipe_result.*
+import android.opengl.ETC1.getHeight
+import android.opengl.ETC1.getWidth
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.support.v4.content.FileProvider
+import java.io.File
+import java.io.FileOutputStream
 
 
 class RecipeResultActivity : AppCompatActivity() {
@@ -120,9 +125,27 @@ class RecipeResultActivity : AppCompatActivity() {
                             checkedItems.clear()
                             checkedItems.add(which)
                         }
-                        .setPositiveButton("決定"){ _, _ ->
+                        .setPositiveButton("決定"){ _, which ->
                             if (!checkedItems.isEmpty()) {
-                             finish()
+                                val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
+                                val canvas = Canvas(bmp)
+                                recipeLayout.draw(canvas)
+
+                                val cachePath = File(this.cacheDir, "images")
+                                cachePath.mkdirs()
+                                val filePath = File(cachePath, "SubwayRecipe.png")
+                                val fos = FileOutputStream(filePath.absolutePath)
+                                bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
+                                fos.close()
+                                val contentUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", filePath)
+
+                                val shareIntent = Intent()
+                                shareIntent.action = Intent.ACTION_SEND
+                                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
+                                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+                                shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
+                                startActivity(Intent.createChooser(shareIntent, "アプリを選ぶ"))
                             }
                         }
                         .setNegativeButton("キャンセル", null)

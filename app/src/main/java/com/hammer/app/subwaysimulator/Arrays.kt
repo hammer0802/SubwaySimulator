@@ -152,5 +152,7 @@ val amountsDressing = arrayOf(
 
 val sns = arrayOf(
         "Twitter",
-        "Facebook"
+        "Facebook",
+        "LINE",
+        "Instagram"
 )
