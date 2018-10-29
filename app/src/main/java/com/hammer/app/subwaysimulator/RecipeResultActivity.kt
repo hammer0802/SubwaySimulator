@@ -1,6 +1,8 @@
 package com.hammer.app.subwaysimulator
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -10,6 +12,12 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_recipe_result.*
+import android.text.method.TextKeyListener.clear
+import android.text.method.TextKeyListener.clear
+
+
+
+
 
 class RecipeResultActivity : AppCompatActivity() {
 
@@ -103,6 +111,22 @@ class RecipeResultActivity : AppCompatActivity() {
                 true
             }
             R.id.action_sns ->{
+                val defaultItem = 0 // デフォルトでチェックされているアイテム
+                val checkedItems = ArrayList<Int>()
+                checkedItems.add(defaultItem)
+                val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+                        .setTitle("共有するSNSを選択してください")
+                        .setSingleChoiceItems(sns, defaultItem){ _, which ->
+                            checkedItems.clear()
+                            checkedItems.add(which)
+                        }
+                        .setPositiveButton("決定"){ _, _ ->
+                            if (!checkedItems.isEmpty()) {
+                             finish()
+                            }
+                        }
+                        .setNegativeButton("キャンセル", null)
+                        .show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
