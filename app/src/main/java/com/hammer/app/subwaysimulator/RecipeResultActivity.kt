@@ -145,7 +145,21 @@ class RecipeResultActivity : AppCompatActivity() {
                                 val shareIntent = Intent()
 
                                 when(sns[checkedItems[0]]) {
-                                    "Twitter", "Facebook", "Instagram" -> {
+                                    "Twitter" -> {
+                                        shareIntent.action = Intent.ACTION_SEND
+                                        shareIntent.`package` = "com.twitter.android"
+                                        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
+                                        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+                                        shareIntent.putExtra(Intent.EXTRA_TEXT, "test #SubwaySimulator")
+                                        try {
+                                            startActivity(shareIntent)
+                                        } catch (e: Exception){
+                                            Toast.makeText(applicationContext, "Twitterアプリがインストールされていません", Toast.LENGTH_LONG)
+                                                    .show()
+                                        }
+                                    }
+                                    "Facebook", "Instagram" -> {
                                         shareIntent.action = Intent.ACTION_SEND
                                         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                         shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
