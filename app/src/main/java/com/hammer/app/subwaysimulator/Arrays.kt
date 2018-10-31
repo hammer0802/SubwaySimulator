@@ -154,5 +154,5 @@ val sns = arrayOf(
         "Twitter",
         "Facebook",
         "LINE",
-        "Instagram"
+        "メール"
 )

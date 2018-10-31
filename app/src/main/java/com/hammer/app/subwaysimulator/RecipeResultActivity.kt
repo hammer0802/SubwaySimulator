@@ -159,7 +159,7 @@ class RecipeResultActivity : AppCompatActivity() {
                                                     .show()
                                         }
                                     }
-                                    "Facebook", "Instagram" -> {
+                                    "Facebook" -> {
                                         shareIntent.action = Intent.ACTION_SEND
                                         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                         shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
@@ -169,13 +169,28 @@ class RecipeResultActivity : AppCompatActivity() {
                                     }
                                     "LINE" -> {
                                         shareIntent.action = Intent.ACTION_EDIT
+                                        /* ↓文章を共有(いらないかも？なので一旦コメントアウト)
                                         val message = Uri.encode("テスト #SubwaySimulator")
-                                        shareIntent.data= Uri.parse("line://msg/text/$message")
+                                        shareIntent.data= Uri.parse("line://msg/text/$message") */
+
                                         shareIntent.data= Uri.parse("line://msg/image/$filePath")
                                         try {
                                             startActivity(shareIntent)
                                         } catch (e: Exception) {
                                             Toast.makeText(applicationContext, "LINEアプリがインストールされていません", Toast.LENGTH_LONG)
+                                                    .show()
+                                        }
+                                    }
+                                    "メール" -> {
+                                        shareIntent.action = Intent.ACTION_SENDTO
+                                        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
+                                        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+                                        shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
+                                        try {
+                                            startActivity(Intent.createChooser(shareIntent, "共有するメールアプリを選ぶ"))
+                                        } catch (e: Exception) {
+                                            Toast.makeText(applicationContext, "メールアプリがインストールされていません", Toast.LENGTH_LONG)
                                                     .show()
                                         }
                                     }
