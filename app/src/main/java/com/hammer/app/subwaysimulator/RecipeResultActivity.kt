@@ -124,12 +124,12 @@ class RecipeResultActivity : AppCompatActivity() {
                 val checkedItems = ArrayList<Int>()
                 checkedItems.add(defaultItem)
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                        .setTitle("共有するSNSを選択してください")
-                        .setSingleChoiceItems(sns, defaultItem){ _, which ->
+                        .setTitle("共有するアプリを選択してください")
+                        .setSingleChoiceItems(shareApp, defaultItem){ _, which ->
                             checkedItems.clear()
                             checkedItems.add(which)
                         }
-                        .setPositiveButton("決定"){ _, which ->
+                        .setPositiveButton("決定"){ _, _ ->
                             if (!checkedItems.isEmpty()) {
                                 val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
                                 val canvas = Canvas(bmp)
@@ -144,7 +144,7 @@ class RecipeResultActivity : AppCompatActivity() {
                                 val contentUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", filePath)
                                 val shareIntent = Intent()
 
-                                when(sns[checkedItems[0]]) {
+                                when(shareApp[checkedItems[0]]) {
                                     "Twitter" -> {
                                         shareIntent.action = Intent.ACTION_SEND
                                         shareIntent.`package` = "com.twitter.android"
@@ -181,18 +181,13 @@ class RecipeResultActivity : AppCompatActivity() {
                                                     .show()
                                         }
                                     }
-                                    "メール" -> {
-                                        shareIntent.action = Intent.ACTION_SENDTO
+                                    "その他" -> {
+                                        shareIntent.action = Intent.ACTION_SEND
                                         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                         shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
                                         shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
                                         shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
-                                        try {
-                                            startActivity(Intent.createChooser(shareIntent, "共有するメールアプリを選ぶ"))
-                                        } catch (e: Exception) {
-                                            Toast.makeText(applicationContext, "メールアプリがインストールされていません", Toast.LENGTH_LONG)
-                                                    .show()
-                                        }
+                                        startActivity(Intent.createChooser(shareIntent, "共有するアプリを選ぶ"))
                                     }
                                 }
                             }

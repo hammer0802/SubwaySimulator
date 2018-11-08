@@ -150,9 +150,9 @@ val amountsDressing = arrayOf(
         "多め"
 )
 
-val sns = arrayOf(
+val shareApp = arrayOf(
         "Twitter",
         "Facebook",
         "LINE",
-        "メール"
+        "その他"
 )
