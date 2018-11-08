@@ -189,15 +189,15 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 pickles = spinnerPickles.selectedItem as String
                                 olive = spinnerOlive.selectedItem as String
                                 hotpepper = spinnerHotpepper.selectedItem as String
-                                dressing.add(spinnerDressing.selectedItem as String)
+                                dressing[0] = spinnerDressing.selectedItem as String
                                 if (dressing[0] == Dressings.NONE.dressingName) {
-                                    dressingAmount.add("-")
+                                    dressingAmount[0] = "-"
                                 } else {
-                                    dressingAmount.add(spinnerDressingAmount.selectedItem as String)
+                                    dressingAmount[0] = spinnerDressingAmount.selectedItem as String
                                 }
                                 if(addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
-                                    dressing.add(spinnerDressing2.selectedItem as String)
-                                    dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
+                                    dressing[1] = spinnerDressing2.selectedItem as String
+                                    dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
                                     val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
                                     howToDress = checkedRadioBtn.text.toString()
