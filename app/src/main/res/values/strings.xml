@@ -14,7 +14,7 @@
     <string name="olive">●オリーブ</string>
     <string name="pickles">●ピクルス</string>
     <string name="hot_pepper">●ホットペッパー</string>
-    <string name="name_edit">レシピの名前(10文字まで)</string>
+    <string name="name_edit">レシピの名前(15文字まで)</string>
     <string name="complete">レシピ完成！</string>
     <string name="sumtext1">合計:</string>
     <string name="sumtext2">円</string>
@@ -23,8 +23,8 @@
     <string name="skip">スキップする</string>
     <string name="done">完了</string>
     <string name="title_activity_recipe_result">RecipeResult</string>
-    <string name="action_edit">レシピを編集する</string>
-    <string name="action_sns">SNSで共有する</string>
+    <string name="action_edit">レシピを編集</string>
+    <string name="action_sns">レシピを共有</string>
     <string name="recipe_name">レシピ名</string>
     <string name="recipe_price">金額</string>
     <string name="type">●種類</string>

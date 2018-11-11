@@ -128,6 +128,10 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         // アダプターを設定
         spinner.adapter = adapter
         spinner.setSelection(2)
+        spinner.setOnTouchListener { _, _ ->
+            textViewName.clearFocus()
+            false
+        }
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
@@ -144,6 +148,10 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         val spinnerDressingAmount = findViewById<Spinner>(R.id.spinnerDressingAmount)
         spinnerDressingAmount.adapter = adapterDressingAmount
         spinnerDressingAmount.setSelection(1)
+        spinnerDressingAmount.setOnTouchListener { _, _ ->
+            textViewName.clearFocus()
+            false
+        }
         spinnerDressingAmount.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View,
                                         posi: Int, id: Long) {
@@ -165,6 +173,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             counter.visibility = View.INVISIBLE
             checkbox.text = topping
             checkbox.setOnClickListener {
+                textViewName.clearFocus()
                 toppingPrice = 0
                 toppings.forEach {topping2 ->
                     val toppingName2 = Toppings.values().filter { tpp2 -> tpp2.toppingName == topping2 }[0]
@@ -202,11 +211,13 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             valueEditText.filters = arrayOf<InputFilter>(MinMaxFilter("1", "9"))
             var v = valueEditText.text.toString().toInt()
             upBtn.setOnClickListener{
+                textViewName.clearFocus()
                 upBtn.isEnabled = v < 9
                 v++
                 valueEditText.setText(v.toString())
             }
             downBtn.setOnClickListener{
+                textViewName.clearFocus()
                 downBtn.isEnabled = v >= 1
                 v--
                 valueEditText.setText(v.toString())
@@ -248,6 +259,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
     protected fun initAddDressingBtn(){
         addDressing.setOnClickListener{addBtn ->
+            textViewName.clearFocus()
             addDressingCount++
             val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
             selectDressingItemView.id = selectDressingItemView.hashCode()
@@ -288,6 +300,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             }
 
             removeDressing.setOnClickListener{removeBtn ->
+                textViewName.clearFocus()
                 addDressing2.visibility = View.VISIBLE
                 addDressingText2.visibility = View.VISIBLE
                 textViewDressing2.visibility = View.GONE
@@ -301,6 +314,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             }
             
             addDressing2.setOnClickListener {addBtn2 ->
+                textViewName.clearFocus()
                 addDressing2Count++
                 if (spinnerDressing.selectedItem != Dressings.NONE.dressingName){
                     addBtn2.visibility = View.GONE
@@ -322,6 +336,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
     protected fun checkBoxFootLong(){
         val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
         checkBoxFootLong.setOnClickListener{
+            textViewName.clearFocus()
             if(checkBoxFootLong.isChecked){ 
                 val sum = sandPrice + toppingPrice + 300
                 sumPrice.text = sum.toString()
