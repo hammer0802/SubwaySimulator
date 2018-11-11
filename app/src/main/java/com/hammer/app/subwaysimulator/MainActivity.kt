@@ -13,9 +13,14 @@ import android.view.MenuItem
 import android.view.View
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
+import com.google.android.gms.ads.AdRequest
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
+
+
 
 class MainActivity : AppCompatActivity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
@@ -71,6 +76,12 @@ class MainActivity : AppCompatActivity() {
             val intent1= Intent(this, CreateRecipeActivity::class.java)
             this.startActivity(intent1)
         }
+
+        MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424/4122056222")
+
+        val mAdView = findViewById<AdView>(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
