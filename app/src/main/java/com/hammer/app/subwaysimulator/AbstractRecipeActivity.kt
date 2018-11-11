@@ -14,18 +14,16 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.create_recipe.*
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.select_dressing_item.*
-import java.security.InvalidKeyException
 import android.text.InputFilter
 import android.widget.EditText
-
-
-
 
 abstract class AbstractRecipeActivity: AppCompatActivity(){
     val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     val gson = Gson()
     var sandPrice = 0
     var toppingPrice = 0
+    var addDressingCount = 0
+    var addDressing2Count = 0
 
     protected fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
@@ -49,22 +47,22 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 val spinner2 = parent as Spinner
                 val item = spinner2.selectedItem as String
                 if (itemName == "sandwich") {
-                    sandPrice = sandPrices[item].toString().toInt()
+                    val selectedSand = Sandwiches.values().filter { it.sandName == item }[0]
+                    sandPrice = selectedSand.price
                     var sum = sandPrice + toppingPrice
                     if(checkBoxFootLong.isChecked) sum += 300
-                    if(spinnerBread.selectedItem == "無し(サラダ, + 300円)") sum += 300
+                    if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
                     sumPrice.text = sum.toString()
                     if (checkboxRecommend.isChecked){
-                        val spinnerDressing = findViewById<Spinner>(R.id.spinnerDressing)
-                        spinnerDressing.setSelection(recommendDressing[item].toString().toInt())
+                        spinnerDressing.setSelection(selectedSand.recommendDressing)
                     }
                 }
                 if(itemName == "bread"){
                     val checkBoxToast = findViewById<CheckBox>(R.id.checkBoxToast)
-                    if (spinner.selectedItem == "無し(サラダ, + 300円)") {
-                        checkBoxToast.visibility = View.INVISIBLE
-                        checkBoxFootLong.visibility = View.INVISIBLE
-                        val sum = sandPrice + toppingPrice + 300
+                    if (spinner.selectedItem == Breads.NONE.breadName) {
+                        checkBoxToast.visibility = View.GONE
+                        checkBoxFootLong.visibility = View.GONE
+                        val sum = sandPrice + toppingPrice + Breads.NONE.price
                         sumPrice.text = sum.toString()
                     } else {
                         checkBoxToast.visibility = View.VISIBLE
@@ -77,26 +75,44 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 if (itemName == "dressing") {
                     val spinnerDressingAmount = findViewById<Spinner>(R.id.spinnerDressingAmount)
                     val textViewDressingAmount = findViewById<TextView>(R.id.textViewDressingAmount)
-                    if (spinner.selectedItem == "無し") {
-                        spinnerDressingAmount.visibility = View.INVISIBLE
-                        textViewDressingAmount.visibility = View.INVISIBLE
-                        if(addDressing.visibility == View.INVISIBLE){
-                            spinnerDressing2.visibility = View.INVISIBLE
-                            textViewDressingType2.visibility = View.INVISIBLE
-                            spinnerDressingAmount2.visibility = View.INVISIBLE
-                            textViewDressingAmount2.visibility = View.INVISIBLE
-                            howToDress.visibility = View.INVISIBLE
+                    if (spinner.selectedItem == Dressings.NONE.dressingName) {
+                        spinnerDressingAmount.visibility = View.GONE
+                        textViewDressingAmount.visibility = View.GONE
+                        if (addDressingCount == 1){
+                            addDressing2.visibility = View.GONE
+                            addDressingText2.visibility = View.GONE
+                            spinnerDressing2.visibility = View.GONE
+                            textViewDressingType2.visibility = View.GONE
+                            spinnerDressingAmount2.visibility = View.GONE
+                            textViewDressingAmount2.visibility = View.GONE
+                            howToDress.visibility = View.GONE
+                        }else{
+                            addDressing.visibility = View.GONE
+                            addDressingText.visibility = View.GONE
                         }
                     } else {
                         spinnerDressingAmount.visibility = View.VISIBLE
                         textViewDressingAmount.visibility = View.VISIBLE
-                        if(addDressing.visibility == View.INVISIBLE){
+                        if(addDressingCount == 1){
+                            addDressing2.visibility = View.VISIBLE
+                            addDressingText2.visibility = View.VISIBLE
+                        }else if(addDressingCount == 1 && removeDressing.visibility == View.VISIBLE){
                             spinnerDressing2.visibility = View.VISIBLE
                             textViewDressingType2.visibility = View.VISIBLE
                             spinnerDressingAmount2.visibility = View.VISIBLE
                             textViewDressingAmount2.visibility = View.VISIBLE
                             howToDress.visibility = View.VISIBLE
+                            addDressing2.visibility = View.VISIBLE
+                            addDressingText2.visibility = View.VISIBLE
+                        }else if(addDressing2Count == 0 ){
+                            addDressing.visibility = View.VISIBLE
+                            addDressingText.visibility = View.VISIBLE
                         }
+                    }
+                    val selectedSand =  Sandwiches.values().filter { spinnerSand.selectedItem == it.sandName }[0]
+                    val recommendDress = Dressings.values().filter { selectedSand.recommendDressing == it.number }[0].dressingName
+                    if(checkboxRecommend.isChecked && spinner.selectedItem != recommendDress){
+                        checkboxRecommend.isChecked = false
                     }
                 }
             }
@@ -139,9 +155,10 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
     protected fun checkBox() {
         toppings.forEach {topping ->
-            val viewId = resources.getIdentifier("checkBox${toppingMap[topping]}", "id", packageName)
+            val toppingName = Toppings.values().filter {tpp -> tpp.toppingName == topping }[0]
+            val viewId = resources.getIdentifier("checkBox${toppingName.engName}", "id", packageName)
             val checkbox = findViewById<CheckBox>(viewId)
-            val counterViewId = resources.getIdentifier("counter${toppingMap[topping]}", "id", packageName)
+            val counterViewId = resources.getIdentifier("counter${toppingName.engName}", "id", packageName)
             val counter = findViewById<LinearLayout>(counterViewId)
             val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
             checkbox.isChecked = false
@@ -150,21 +167,22 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             checkbox.setOnClickListener {
                 toppingPrice = 0
                 toppings.forEach {topping2 ->
-                    val viewId2 = resources.getIdentifier("checkBox${toppingMap[topping2]}", "id", packageName)
+                    val toppingName2 = Toppings.values().filter { tpp2 -> tpp2.toppingName == topping2 }[0]
+                    val viewId2 = resources.getIdentifier("checkBox${toppingName2.engName}", "id", packageName)
                     val checkbox2 = findViewById<CheckBox>(viewId2)
-                    val counterViewId2 = resources.getIdentifier("counter${toppingMap[topping2]}", "id", packageName)
+                    val counterViewId2 = resources.getIdentifier("counter${toppingName2.engName}", "id", packageName)
                     val counter2 = findViewById<LinearLayout>(counterViewId2)
-                    val valueViewId = resources.getIdentifier("value${toppingMap[topping2]}", "id", packageName)
+                    val valueViewId = resources.getIdentifier("value${toppingName2.engName}", "id", packageName)
                     val valueEditText = findViewById<EditText>(valueViewId)
                     if (checkbox2.isChecked) {
                         counter2.visibility = View.VISIBLE
-                        toppingPrice += toppingPrices[topping2].toString().toInt() * valueEditText.text.toString().toInt()
+                        toppingPrice += toppingName2.price * valueEditText.text.toString().toInt()
                     }else{
                         counter2.visibility = View.INVISIBLE
                     }
                 }
                 var sum = sandPrice + toppingPrice
-                if(spinnerBread.selectedItem == "無し(サラダ, + 300円)") sum += 300
+                if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
                 if(checkBoxFootLong.isChecked) sum += 300
                 sumPrice.text = sum.toString()
             }
@@ -173,11 +191,12 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
     protected fun counterBtn(){
         toppings.forEach{topping ->
-            val upBtnViewId = resources.getIdentifier("up${toppingMap[topping]}", "id", packageName)
+            val toppingName = Toppings.values().filter {tpp -> tpp.toppingName == topping }[0]
+            val upBtnViewId = resources.getIdentifier("up${toppingName.engName}", "id", packageName)
             val upBtn = findViewById<ImageButton>(upBtnViewId)
-            val valueViewId = resources.getIdentifier("value${toppingMap[topping]}", "id", packageName)
+            val valueViewId = resources.getIdentifier("value${toppingName.engName}", "id", packageName)
             val valueEditText = findViewById<EditText>(valueViewId)
-            val downBtnViewId = resources.getIdentifier("down${toppingMap[topping]}", "id", packageName)
+            val downBtnViewId = resources.getIdentifier("down${toppingName.engName}", "id", packageName)
             val downBtn = findViewById<ImageButton>(downBtnViewId)
             val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
             valueEditText.filters = arrayOf<InputFilter>(MinMaxFilter("1", "9"))
@@ -211,14 +230,15 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
                     toppingPrice = 0
                     toppings.forEach{topping2 ->
-                        val viewId = resources.getIdentifier("checkBox${toppingMap[topping2]}", "id", packageName)
+                        val toppingName2 = Toppings.values().filter { tpp2 -> tpp2.toppingName == topping2 }[0]
+                        val viewId = resources.getIdentifier("checkBox${toppingName2.engName}", "id", packageName)
                         val checkbox = findViewById<CheckBox>(viewId)
-                        val valueViewId2 = resources.getIdentifier("value${toppingMap[topping2]}", "id", packageName)
+                        val valueViewId2 = resources.getIdentifier("value${toppingName2.engName}", "id", packageName)
                         val valueEditText2 = findViewById<EditText>(valueViewId2)
-                        if (checkbox.isChecked) toppingPrice += toppingPrices[topping2].toString().toInt() * valueEditText2.text.toString().toInt()
+                        if (checkbox.isChecked) toppingPrice += toppingName2.price * valueEditText2.text.toString().toInt()
                     }
                     var sum = sandPrice + toppingPrice
-                    if(spinnerBread.selectedItem == "無し(サラダ, + 300円)") sum += 300
+                    if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
                     if(checkBoxFootLong.isChecked) sum += 300
                     sumPrice.text = sum.toString()
                 }
@@ -227,7 +247,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
     }
 
     protected fun initAddDressingBtn(){
-        addDressing.setOnClickListener{
+        addDressing.setOnClickListener{addBtn ->
+            addDressingCount++
             val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
             selectDressingItemView.id = selectDressingItemView.hashCode()
             select_dressing_container.addView(selectDressingItemView)
@@ -254,15 +275,47 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 }
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
-            addDressing.visibility = View.INVISIBLE
-            addDressingText.visibility = View.INVISIBLE
-            if(spinnerDressing.selectedItem == "無し"){
-                spinnerDressing2.visibility = View.INVISIBLE
-                textViewDressingType2.visibility = View.INVISIBLE
-                spinnerDressingAmount2.visibility = View.INVISIBLE
-                textViewDressingAmount2.visibility = View.INVISIBLE
-                howToDress.visibility = View.INVISIBLE
+            addBtn.visibility = View.GONE
+            addDressingText.visibility = View.GONE
+            if(spinnerDressing.selectedItem == Dressings.NONE.dressingName){
+                spinnerDressing2.visibility = View.GONE
+                textViewDressingType2.visibility = View.GONE
+                spinnerDressingAmount2.visibility = View.GONE
+                textViewDressingAmount2.visibility = View.GONE
+                howToDress.visibility = View.GONE
+                removeDressing.visibility = View.GONE
+                removeDressingText.visibility = View.GONE
             }
+
+            removeDressing.setOnClickListener{removeBtn ->
+                addDressing2.visibility = View.VISIBLE
+                addDressingText2.visibility = View.VISIBLE
+                textViewDressing2.visibility = View.GONE
+                spinnerDressing2.visibility = View.GONE
+                textViewDressingType2.visibility = View.GONE
+                spinnerDressingAmount2.visibility = View.GONE
+                textViewDressingAmount2.visibility = View.GONE
+                howToDress.visibility = View.GONE
+                removeBtn.visibility = View.GONE
+                removeDressingText.visibility = View.GONE
+            }
+            
+            addDressing2.setOnClickListener {addBtn2 ->
+                addDressing2Count++
+                if (spinnerDressing.selectedItem != Dressings.NONE.dressingName){
+                    addBtn2.visibility = View.GONE
+                    addDressingText2.visibility = View.GONE
+                    textViewDressing2.visibility = View.VISIBLE
+                    spinnerDressing2.visibility = View.VISIBLE
+                    textViewDressingType2.visibility = View.VISIBLE
+                    spinnerDressingAmount2.visibility = View.VISIBLE
+                    textViewDressingAmount2.visibility = View.VISIBLE
+                    howToDress.visibility = View.VISIBLE
+                    removeDressing.visibility = View.VISIBLE
+                    removeDressingText.visibility = View.VISIBLE
+                }
+            }
+            
         }
     }
     

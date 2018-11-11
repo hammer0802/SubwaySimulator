@@ -1,6 +1,72 @@
 package com.hammer.app.subwaysimulator
 
-//enum classにしたい
+enum class Sandwiches(val number: Int, val sandName: String, val price: Int, val recommendDressing: Int){
+    BLT(0,"BLT", 420, Dressings.CAESAR.number),
+    EBI_AVOCADO(1,"えびアボカド", 500, Dressings.CREAMY.number),
+    NAMA_HAM(2,"生ハム＆マスカルポーネ", 520, Dressings.BASIL.number),
+    ROAST_CHICKEN(3, "ローストチキン", 420, Dressings.HONEY_MUSTARD.number),
+    ROAST_BEEF(4,"ローストビーフ　～プレミアム製法～", 590, Dressings.WASABI.number),
+    TURKEY_BACON_EGG(5,"ターキーベーコンエッグ", 490, Dressings.CAESAR.number),
+    CHEESE_ROAST_CHICKEN(6,"チーズローストチキン",480, Dressings.NONE.number),
+    TERIYAKI_CHICKEN(7,"てり焼きチキン", 480, Dressings.MAYONNAISE.number),
+    CHILI_CHICKEN(8,"チリチキン",410, Dressings.MAYONNAISE.number),
+    TURKEY(9, "ターキーブレスト",450, Dressings.BALSAMICO.number),
+    TUNA(10,"ツナ",430, Dressings.PEPPER.number),
+    EGG(11, "たまご",390, Dressings.SALT_PEPPER.number),
+    AVOCADO_VEGE(12,"アボカドベジー", 410, Dressings.CREAMY.number),
+    VEGE_CHEESE(13, "ベジー＆チーズ",340, Dressings.CREAMY.number),
+    VEGE_DE_LIGHT(14,"ベジーデライト",300, Dressings.OIL_VINEGAR.number)
+}
+
+enum class Breads(val number: Int, val breadName: String, val price: Int) {
+    WHEAT(0, "ウィート", 0),
+    WHITE(1, "ホワイト", 0),
+    SESAME(2,"セサミ",0),
+    HONEY_OATES(3, "ハニーオーツ",0),
+    FLAT_BREAD(4, "フラットブレッド", 0),
+    NONE(5,"無し(サラダ, + 300円)", 300)
+}
+
+enum class Toppings(val toppingName: String, val price: Int, val engName: String) {
+    NATURAL_CHEESE("ナチュラルスライスチーズ(+ 40円)", 40, "cheese"),
+    CREAM_CHEESE("クリームタイプチーズ(+ 60円)", 60, "cream"),
+    MASCARPONE_CHEESE("マスカルポーネチーズ(+ 90円)", 90, "mascar"),
+    EGG("たまご(+ 60円)", 60, "egg"),
+    BACON("ベーコン(+ 60円)",60, "bacon"),
+    TUNA("ツナ(+ 80円)",80, "tuna"),
+    SHRIMP("えび(+ 100円)",100, "shrimp"),
+    AVOCADO("アボカド(+ 110円)",110,"avocado"),
+    ROAST_BEEF("ローストビーフ(+ 350円)", 350, "roastbeef")
+}
+
+enum class Dressings(val number: Int, val dressingName: String){
+    OIL_VINEGAR(0, "オイル&ビネガー　塩・こしょう"),
+    CAESAR(1, "シーザードレッシング"),
+    CREAMY(2,"野菜クリーミードレッシング"),
+    HONEY_MUSTARD(3,"ハニーマスタードソース"),
+    WASABI(4,"わさび醤油ソース"),
+    BASIL(5,"バジルソース"),
+    BALSAMICO(6,"バルサミコソース"),
+    MAYONNAISE(7,"マヨネーズタイプ"),
+    CHILI(8,"チリソース（激辛)"),
+    SALT_PEPPER(9, "塩・こしょう"),
+    PEPPER(10, "こしょう"),
+    NONE(11, "無し")
+}
+
+enum class Amounts(val number: Int, val amount: String){
+    NONE(0,"無し"),
+    LITTLE(1,"少なめ"),
+    NORMAL(2, "普通"),
+    MANY(3,"多め"),
+    MAX(4,"上限")
+}
+
+enum class AmountsDressing(val number: Int, val amount: String){
+    LITTLE(0,"少なめ"),
+    NORMAL(1, "普通"),
+    MANY(2,"多め"),
+}
 
 val sandwiches = arrayOf(
         "BLT",
@@ -17,28 +83,7 @@ val sandwiches = arrayOf(
         "たまご",
         "アボカドベジー",
         "ベジー＆チーズ",
-        "ベジーデライト",
-        "アボカドチキン　チポトレ(期間限定)",
-        "アボカドベーコン　チポトレ(期間限定)")
-
-val sandPrices = mapOf(
-        "BLT" to 420,
-        "えびアボカド" to 500,
-        "生ハム＆マスカルポーネ" to 520,
-        "ローストチキン" to 420,
-        "ローストビーフ　～プレミアム製法～" to 590,
-        "ターキーベーコンエッグ" to 490,
-        "チーズローストチキン" to 480,
-        "てり焼きチキン" to 480,
-        "チリチキン" to 410,
-        "ターキーブレスト" to 450,
-        "ツナ" to 430,
-        "たまご" to 390,
-        "アボカドベジー" to 410,
-        "ベジー＆チーズ" to 340,
-        "ベジーデライト" to 300,
-        "アボカドチキン　チポトレ(期間限定)" to 530,
-        "アボカドベーコン　チポトレ(期間限定)" to 530
+        "ベジーデライト"
 )
 
 val breads = arrayOf(
@@ -62,30 +107,6 @@ val toppings = arrayOf(
         "ローストビーフ(+ 350円)"
 )
 
-val toppingPrices = mapOf(
-        "ナチュラルスライスチーズ(+ 40円)" to 40,
-        "クリームタイプチーズ(+ 60円)" to 60,
-        "マスカルポーネチーズ(+ 90円)" to 90,
-        "たまご(+ 60円)" to 60,
-        "ベーコン(+ 60円)" to 60,
-        "ツナ(+ 80円)" to 80,
-        "えび(+ 100円)" to 100,
-        "アボカド(+ 110円)" to 110,
-        "ローストビーフ(+ 350円)" to 350
-)
-
-val toppingMap = mapOf(
-        "ナチュラルスライスチーズ(+ 40円)" to "cheese",
-        "クリームタイプチーズ(+ 60円)" to "cream",
-        "マスカルポーネチーズ(+ 90円)" to "mascar",
-        "たまご(+ 60円)" to "egg",
-        "ベーコン(+ 60円)" to "bacon",
-        "ツナ(+ 80円)" to "tuna",
-        "えび(+ 100円)" to "shrimp",
-        "アボカド(+ 110円)" to "avocado",
-        "ローストビーフ(+ 350円)" to "roastbeef"
-)
-
 val dressings = arrayOf(
         "オイル&ビネガー　塩・こしょう",
         "シーザードレッシング",
@@ -98,7 +119,6 @@ val dressings = arrayOf(
         "チリソース（激辛)",
         "塩・こしょう",
         "こしょう",
-        "チポトレ　サウスウェストソース(期間限定)",
         "無し"
 )
 
@@ -113,8 +133,7 @@ val dressingsWoNothing = arrayOf(
         "マヨネーズタイプ",
         "チリソース（激辛)",
         "塩・こしょう",
-        "こしょう",
-        "チポトレ　サウスウェストソース(期間限定)"
+        "こしょう"
 )
 
 val amounts = arrayOf(
@@ -129,24 +148,4 @@ val amountsDressing = arrayOf(
         "少なめ",
         "普通",
         "多め"
-)
-
-val recommendDressing = mapOf(
-        "BLT" to 1, //"シーザードレッシング"
-        "えびアボカド" to 2, //"野菜クリーミードレッシング"
-        "生ハム＆マスカルポーネ" to 5, //"バジルソース"
-        "ローストチキン" to 3, //"ハニーマスタードソース"
-        "ローストビーフ　～プレミアム製法～" to 4, //"わさび醤油ソース"
-        "ターキーベーコンエッグ" to 1, //"シーザードレッシング"
-        "チーズローストチキン" to 12, //"無し"
-        "てり焼きチキン" to 7, //"マヨネーズタイプ"
-        "チリチキン" to 7, //"マヨネーズタイプ"
-        "ターキーブレスト" to 6, //"バルサミコソース"
-        "ツナ" to 10, //"こしょう"
-        "たまご" to 9, //"塩・こしょう"
-        "アボカドベジー" to 2, //"野菜クリーミードレッシング"
-        "ベジー＆チーズ" to 2, //"野菜クリーミードレッシング"
-        "ベジーデライト" to 0, //"オイル&ビネガー　塩・こしょう"
-        "アボカドチキン　チポトレ(期間限定)" to 11, //"チポトレ　サウスウェストソース(期間限定)"
-        "アボカドベーコン　チポトレ(期間限定)" to 11 //"チポトレ　サウスウェストソース(期間限定)"
 )
