@@ -114,9 +114,6 @@ class RecipeResultActivity : AppCompatActivity() {
                 true
             }
             R.id.action_sns ->{
-                val defaultItem = 0 // デフォルトでチェックされているアイテム
-                val checkedItems = ArrayList<Int>()
-                checkedItems.add(defaultItem)
                 val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(bmp)
                 recipeLayout.draw(canvas)
