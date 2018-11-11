@@ -1,8 +1,6 @@
 package com.hammer.app.subwaysimulator
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -12,19 +10,12 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_recipe_result.*
-import android.text.method.TextKeyListener.clear
-import android.text.method.TextKeyListener.clear
 import kotlinx.android.synthetic.main.content_recipe_result.*
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.net.Uri
 import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
-import android.widget.Toast
-import com.facebook.FacebookSdk
 import android.support.v4.app.ShareCompat
 
 
@@ -126,84 +117,22 @@ class RecipeResultActivity : AppCompatActivity() {
                 val defaultItem = 0 // デフォルトでチェックされているアイテム
                 val checkedItems = ArrayList<Int>()
                 checkedItems.add(defaultItem)
-                val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                        .setTitle("共有するアプリを選択してください")
-                        .setSingleChoiceItems(shareApp, defaultItem){ _, which ->
-                            checkedItems.clear()
-                            checkedItems.add(which)
-                        }
-                        .setPositiveButton("決定"){ _, _ ->
-                            if (!checkedItems.isEmpty()) {
-                                val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
-                                val canvas = Canvas(bmp)
-                                recipeLayout.draw(canvas)
-
-                                val cachePath = File(this.cacheDir, "images")
-                                cachePath.mkdirs()
-                                val filePath = File(cachePath, "SubwayRecipe.png")
-                                val fos = FileOutputStream(filePath.absolutePath)
-                                bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
-                                fos.close()
-                                val contentUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", filePath)
-                                val shareIntent = Intent()
-
-                                when(shareApp[checkedItems[0]]) {
-                                    "Twitter" -> {
-                                        shareIntent.action = Intent.ACTION_SEND
-                                        shareIntent.`package` = "com.twitter.android"
-                                        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, "test #SubwaySimulator")
-                                        try {
-                                            startActivity(shareIntent)
-                                        } catch (e: Exception){
-                                            Toast.makeText(applicationContext, "Twitterアプリがインストールされていません", Toast.LENGTH_LONG)
-                                                    .show()
-                                        }
-                                    }
-                                    "Facebook" -> {
-                                        shareIntent.action = Intent.ACTION_SEND
-                                        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
-                                        startActivity(Intent.createChooser(shareIntent, "アプリを選ぶ"))
-                                    }
-                                    "LINE" -> {
-                                        shareIntent.action = Intent.ACTION_VIEW
-                                        /* ↓文章を共有(いらないかも？なので一旦コメントアウト)
-                                        val message = Uri.encode("テスト #SubwaySimulator")
-                                        shareIntent.data= Uri.parse("line://msg/text/$message") */
-
-                                        shareIntent.data= Uri.parse("line://msg/image/$filePath")
-                                        try {
-                                            startActivity(shareIntent)
-                                        } catch (e: Exception) {
-                                            Toast.makeText(applicationContext, "LINEアプリがインストールされていません", Toast.LENGTH_LONG)
-                                                    .show()
-                                        }
-                                    }
-                                    "その他" -> {
-                                        val builder = ShareCompat.IntentBuilder.from(this)
-                                        builder.setChooserTitle("投稿アプリを選択してください")
-                                        builder.setType("image/png")
-                                        builder.setStream(contentUri)
-                                        builder.setText("test")
-// Intent を起動する
-                                        builder.startChooser()
-//                                        shareIntent.action = Intent.ACTION_SEND
-//                                        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//                                        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
-//                                        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-//                                        shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
-//                                        startActivity(Intent.createChooser(shareIntent, "共有するアプリを選ぶ"))
-                                    }
-                                }
-                            }
-                        }
-                        .setNegativeButton("キャンセル", null)
-                        .show()
+                val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(bmp)
+                recipeLayout.draw(canvas)
+                val cachePath = File(this.cacheDir, "images")
+                cachePath.mkdirs()
+                val filePath = File(cachePath, "SubwayRecipe.png")
+                val fos = FileOutputStream(filePath.absolutePath)
+                bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
+                fos.close()
+                val contentUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", filePath)
+                val builder = ShareCompat.IntentBuilder.from(this)
+                builder.setChooserTitle("共有アプリを選択してください")
+                builder.setType("image/png")
+                builder.setStream(contentUri)
+                builder.setText("#SubwaySimulator")
+                builder.startChooser()
                 true
             }
             else -> super.onOptionsItemSelected(item)
