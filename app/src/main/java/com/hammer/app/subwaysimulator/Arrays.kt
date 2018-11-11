@@ -149,3 +149,10 @@ val amountsDressing = arrayOf(
         "普通",
         "多め"
 )
+
+val shareApp = arrayOf(
+        "Twitter",
+        "Facebook",
+        "LINE",
+        "その他"
+)

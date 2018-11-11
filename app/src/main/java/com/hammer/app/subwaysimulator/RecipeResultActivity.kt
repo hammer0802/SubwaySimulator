@@ -10,6 +10,17 @@ import android.view.MenuItem
 import android.widget.TextView
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_recipe_result.*
+import kotlinx.android.synthetic.main.content_recipe_result.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.support.v4.content.FileProvider
+import java.io.File
+import java.io.FileOutputStream
+import android.support.v4.app.ShareCompat
+
+
+
+
 
 class RecipeResultActivity : AppCompatActivity() {
 
@@ -103,6 +114,22 @@ class RecipeResultActivity : AppCompatActivity() {
                 true
             }
             R.id.action_sns ->{
+                val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(bmp)
+                recipeLayout.draw(canvas)
+                val cachePath = File(this.cacheDir, "images")
+                cachePath.mkdirs()
+                val filePath = File(cachePath, "SubwayRecipe.png")
+                val fos = FileOutputStream(filePath.absolutePath)
+                bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
+                fos.close()
+                val contentUri = FileProvider.getUriForFile(this, "$packageName.fileprovider", filePath)
+                val builder = ShareCompat.IntentBuilder.from(this)
+                builder.setChooserTitle("共有アプリを選択してください")
+                builder.setType("image/png")
+                builder.setStream(contentUri)
+                builder.setText("#SubwaySimulator")
+                builder.startChooser()
                 true
             }
             else -> super.onOptionsItemSelected(item)
