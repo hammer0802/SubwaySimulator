@@ -25,6 +25,9 @@ import java.io.File
 import java.io.FileOutputStream
 import android.widget.Toast
 import com.facebook.FacebookSdk
+import android.support.v4.app.ShareCompat
+
+
 
 
 
@@ -168,7 +171,7 @@ class RecipeResultActivity : AppCompatActivity() {
                                         startActivity(Intent.createChooser(shareIntent, "アプリを選ぶ"))
                                     }
                                     "LINE" -> {
-                                        shareIntent.action = Intent.ACTION_EDIT
+                                        shareIntent.action = Intent.ACTION_VIEW
                                         /* ↓文章を共有(いらないかも？なので一旦コメントアウト)
                                         val message = Uri.encode("テスト #SubwaySimulator")
                                         shareIntent.data= Uri.parse("line://msg/text/$message") */
@@ -182,12 +185,19 @@ class RecipeResultActivity : AppCompatActivity() {
                                         }
                                     }
                                     "その他" -> {
-                                        shareIntent.action = Intent.ACTION_SEND
-                                        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                                        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
-                                        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-                                        shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
-                                        startActivity(Intent.createChooser(shareIntent, "共有するアプリを選ぶ"))
+                                        val builder = ShareCompat.IntentBuilder.from(this)
+                                        builder.setChooserTitle("投稿アプリを選択してください")
+                                        builder.setType("image/png")
+                                        builder.setStream(contentUri)
+                                        builder.setText("test")
+// Intent を起動する
+                                        builder.startChooser()
+//                                        shareIntent.action = Intent.ACTION_SEND
+//                                        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                                        shareIntent.setDataAndType(contentUri, contentResolver.getType(contentUri))
+//                                        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+//                                        shareIntent.putExtra(Intent.EXTRA_TEXT, "#SubwaySimulator")
+//                                        startActivity(Intent.createChooser(shareIntent, "共有するアプリを選ぶ"))
                                     }
                                 }
                             }
