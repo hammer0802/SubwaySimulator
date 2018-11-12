@@ -73,6 +73,12 @@ class MainActivity : AppCompatActivity() {
         list.sortBy{it.createTime}
 
         create.setOnClickListener{
+            create.isEnabled = false
+            val handler = Handler()
+            val runnable = Runnable {
+                create.isEnabled = true
+            }
+            handler.postDelayed(runnable, 2000)
             val intent1= Intent(this, CreateRecipeActivity::class.java)
             this.startActivity(intent1)
         }
