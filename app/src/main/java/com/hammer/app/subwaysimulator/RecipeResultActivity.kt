@@ -17,6 +17,7 @@ import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 import android.support.v4.app.ShareCompat
+import android.widget.Toast
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -139,7 +140,18 @@ class RecipeResultActivity : AppCompatActivity() {
                 true
             }
             R.id.action_save_image ->{
-
+                try {
+                    val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
+                    val canvas = Canvas(bmp)
+                    recipeLayout.draw(canvas)
+                    val filePath = File(applicationContext.filesDir, "MyRecipe.png")
+                    val fos = FileOutputStream(filePath.absolutePath)
+                    bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
+                    fos.close()
+                    Toast.makeText(this, "レシピ画像を保存しました", Toast.LENGTH_SHORT).show()
+                }catch (e :Exception){
+                    Toast.makeText(this, "画像を保存できませんでした", Toast.LENGTH_SHORT).show()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
