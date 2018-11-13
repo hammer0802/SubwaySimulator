@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-9742059950156424~8280793083"/>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"

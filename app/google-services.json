@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "586870316665",
+    "firebase_url": "https://subwaysimulator-2e609.firebaseio.com",
+    "project_id": "subwaysimulator-2e609",
+    "storage_bucket": "subwaysimulator-2e609.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586870316665:android:ce2a38e34d1c5a73",
+        "android_client_info": {
+          "package_name": "com.hammer.app.subwaysimulator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586870316665-tsgp0lf51ucv7m38k7e34bg68m0f6sl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi_s1ejEVw0ITiVBDkjprO43rUkgW4R8Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,9 +17,9 @@ import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 import android.support.v4.app.ShareCompat
-
-
-
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 
 class RecipeResultActivity : AppCompatActivity() {
@@ -99,6 +99,12 @@ class RecipeResultActivity : AppCompatActivity() {
             dressingType.append("\n × ${recipe.dressing[1]}(量:${recipe.dressingAmount[1]})")
             dressingType.append("\nかけ方：${recipe.howToDress}")
         }
+
+        MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424/4122056222")
+
+        val mAdView = findViewById<AdView>(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
     }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_recipe, menu)

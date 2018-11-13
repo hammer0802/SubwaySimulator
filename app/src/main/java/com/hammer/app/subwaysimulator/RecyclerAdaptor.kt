@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Handler
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +38,13 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
         val listTitle = "${list[position].name}\n${list[position].sandwich}"
         holder.v.findViewById<TextView>(R.id.recipe_name).text = listTitle
 
-        holder.v.setOnClickListener{v ->
+        holder.v.setOnClickListener{_ ->
+            holder.v.isEnabled = false
+            val handler = Handler()
+            val runnable = Runnable {
+                holder.v.isEnabled = true
+            }
+            handler.postDelayed(runnable, 2000)
             val intent2= Intent(activity,RecipeResultActivity::class.java)
             intent2.putExtra("key", list[position].uuid)
             activity.startActivity(intent2)
