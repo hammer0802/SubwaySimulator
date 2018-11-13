@@ -39,5 +39,6 @@
     <string name="blend_dressing">ブレンドする</string>
     <string name="remove_dressing_text">ドレッシングを1つにする</string>
     <string name="facebook_app_id">2184376268492554</string>
+    <string name="action_save_image">レシピ画像を保存</string>
 
 </resources>

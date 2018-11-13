@@ -138,6 +138,10 @@ class RecipeResultActivity : AppCompatActivity() {
                 builder.startChooser()
                 true
             }
+            R.id.action_save_image ->{
+
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
