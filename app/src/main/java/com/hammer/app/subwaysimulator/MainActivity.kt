@@ -82,9 +82,13 @@ class MainActivity : AppCompatActivity() {
             val intent1= Intent(this, CreateRecipeActivity::class.java)
             this.startActivity(intent1)
         }
-
-        MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
-
+        if(BuildConfig.DEBUG){
+            //テスト用アプリID
+            MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
+        }else{
+            //本番アプリID
+            MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424~8280793083")
+        }
         val mAdView = findViewById<AdView>(R.id.adView)
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
