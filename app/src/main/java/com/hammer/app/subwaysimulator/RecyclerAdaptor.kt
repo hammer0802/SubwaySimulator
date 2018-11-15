@@ -55,13 +55,14 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                     .setTitle("確認")
                     .setMessage("1度削除したレシピは復元できません。"+ "\n" +"このレシピを削除しますか？")
                     .setPositiveButton("はい") { _, _ ->
+                        val deleteName = list[position].name
                         val e = preference.edit()
                         e.remove(list[position].uuid)
                         e.apply()
                         list.removeAt(position)
                         notifyItemRemoved(position)
                         notifyItemRangeChanged(position, list.size)
-                        Toast.makeText(activity, "レシピを削除しました", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "レシピ名: $deleteName を削除しました", Toast.LENGTH_SHORT).show()
                     }
                     .setNegativeButton("キャンセル", null)
                     .show()

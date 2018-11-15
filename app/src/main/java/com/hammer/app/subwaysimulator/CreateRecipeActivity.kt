@@ -106,7 +106,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 e.putString(uuid, gson.toJson(this))
                             }
                             e.apply()
-                            Toast.makeText(this, "レシピを作成しました", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "レシピ名: ${recipe.name} を作成しました", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                         .setNegativeButton("いいえ", null)

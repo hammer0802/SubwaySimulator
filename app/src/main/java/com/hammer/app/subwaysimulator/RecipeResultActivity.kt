@@ -31,10 +31,10 @@ const val REQUEST_CODE = 1
 class RecipeResultActivity : AppCompatActivity() {
 
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-    val gson = Gson()
+    private val gson = Gson()
     private val intent2: Intent by lazy { this.intent }
     val key: String by lazy { intent2.getStringExtra("key")}
-    val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
+    private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)

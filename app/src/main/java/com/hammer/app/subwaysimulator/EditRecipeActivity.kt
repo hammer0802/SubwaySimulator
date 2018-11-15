@@ -151,7 +151,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             } else {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("確認")
-                        .setMessage("レシピを保存しますか？")
+                        .setMessage("レシピ編集を完了しますか？")
                         .setPositiveButton("はい") { _, _ ->
                             val e = preference.edit()
                             val c = Calendar.getInstance()
