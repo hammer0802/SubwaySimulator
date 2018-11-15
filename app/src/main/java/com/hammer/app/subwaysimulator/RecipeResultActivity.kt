@@ -1,9 +1,7 @@
 package com.hammer.app.subwaysimulator
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.content.*
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -17,6 +15,7 @@ import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
@@ -174,6 +173,7 @@ class RecipeResultActivity : AppCompatActivity() {
         val fos = FileOutputStream(filePath.absolutePath)
         bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
         fos.close()
+        registerDatabase(Environment.getExternalStorageDirectory().path + "/SubwaySimulator/${recipe.createTime}.png")
         Toast.makeText(this, "レシピ画像を保存しました", Toast.LENGTH_SHORT).show()
     }
 
@@ -197,4 +197,11 @@ class RecipeResultActivity : AppCompatActivity() {
         }
     }
 
+    private fun registerDatabase(file: String){
+        val contentValues = ContentValues()
+        val contentResolver = this.contentResolver
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+        contentValues.put("_data", file)
+        contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+    }
 }
