@@ -123,8 +123,8 @@ class RecipeResultActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, intent)
         if(resultCode == RESULT_OK && requestCode == RESULT_EDIT && null != intent){
             clearRecipeText()
-            val key: String by lazy { intent.getStringExtra("key")}
-            val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
+            val key = intent.getStringExtra("key")
+            val recipe= gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java)
             setRecipeText(recipe)
         }
     }
