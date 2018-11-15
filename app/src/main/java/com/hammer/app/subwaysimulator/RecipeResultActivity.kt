@@ -1,8 +1,7 @@
 package com.hammer.app.subwaysimulator
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.app.AlertDialog
+import android.content.*
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -13,14 +12,21 @@ import kotlinx.android.synthetic.main.activity_recipe_result.*
 import kotlinx.android.synthetic.main.content_recipe_result.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 import android.support.v4.app.ShareCompat
+import android.widget.Toast
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import net.taptappun.taku.kobayashi.runtimepermissionchecker.RuntimePermissionChecker
 
+const val REQUEST_CODE = 1
 
 class RecipeResultActivity : AppCompatActivity() {
 
@@ -100,7 +106,13 @@ class RecipeResultActivity : AppCompatActivity() {
             dressingType.append("\nかけ方：${recipe.howToDress}")
         }
 
-        MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424/4122056222")
+        if(BuildConfig.DEBUG){
+            //テスト用アプリID
+            MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
+        }else {
+            //本番アプリID
+            MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424~8280793083")
+        }
 
         val mAdView = findViewById<AdView>(R.id.adView)
         val adRequest = AdRequest.Builder().build()
@@ -138,7 +150,58 @@ class RecipeResultActivity : AppCompatActivity() {
                 builder.startChooser()
                 true
             }
+            R.id.action_save_image ->{
+                try {
+                    RuntimePermissionChecker.requestPermission(this, REQUEST_CODE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    if (RuntimePermissionChecker.hasSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) saveImage()
+                }catch (e :Exception){
+                    Toast.makeText(this, "画像を保存できませんでした", Toast.LENGTH_SHORT).show()
+                }
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun saveImage(){
+        val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmp)
+        recipeLayout.draw(canvas)
+        val myDir = File(Environment.getExternalStorageDirectory().path, "/SubwaySimulator")
+        if (!myDir.exists()) myDir.mkdirs()
+        val filePath = File(myDir, "${recipe.createTime}.png")
+        val fos = FileOutputStream(filePath.absolutePath)
+        bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
+        fos.close()
+        registerDatabase(Environment.getExternalStorageDirectory().path + "/SubwaySimulator/${recipe.createTime}.png")
+        Toast.makeText(this, "レシピ画像を保存しました", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (!RuntimePermissionChecker.hasSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                if (shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) Toast.makeText(this, "ストレージ権限がありません", Toast.LENGTH_SHORT).show()
+                else {
+                    val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+                            .setMessage("ストレージ権限がないため、アプリ情報から許可してください")
+                            .setPositiveButton("アプリ情報"){_, _ ->
+                                val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName"))
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(intent)
+                            }
+                            .setNegativeButton("キャンセル", null)
+                            .show()
+                }
+            }
+            if (RuntimePermissionChecker.hasSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) saveImage()
+        }
+    }
+
+    private fun registerDatabase(file: String){
+        val contentValues = ContentValues()
+        val contentResolver = this.contentResolver
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+        contentValues.put("_data", file)
+        contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
     }
 }
