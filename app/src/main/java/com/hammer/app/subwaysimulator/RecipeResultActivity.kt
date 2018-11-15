@@ -1,5 +1,6 @@
 package com.hammer.app.subwaysimulator
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -13,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_recipe_result.*
 import kotlinx.android.synthetic.main.content_recipe_result.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.support.v4.content.FileProvider
 import java.io.File
@@ -23,7 +26,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import net.taptappun.taku.kobayashi.runtimepermissionchecker.RuntimePermissionChecker
-import java.util.jar.Manifest
 
 const val REQUEST_CODE = 1
 
@@ -152,18 +154,7 @@ class RecipeResultActivity : AppCompatActivity() {
             R.id.action_save_image ->{
                 try {
                     RuntimePermissionChecker.requestPermission(this, REQUEST_CODE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    if(RuntimePermissionChecker.hasSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                        val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
-                        val canvas = Canvas(bmp)
-                        recipeLayout.draw(canvas)
-                        val myDir = File(Environment.getExternalStorageDirectory().path, "/SubwaySimulator")
-                        if (!myDir.exists()) myDir.mkdirs()
-                        val filePath = File(myDir, "${recipe.createTime}.png")
-                        val fos = FileOutputStream(filePath.absolutePath)
-                        bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
-                        fos.close()
-                        Toast.makeText(this, "レシピ画像を保存しました", Toast.LENGTH_SHORT).show()
-                    }else Toast.makeText(this, "ストレージ読み書きの許可をしてください", Toast.LENGTH_SHORT).show()
+                    if (RuntimePermissionChecker.hasSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) saveImage()
                 }catch (e :Exception){
                     Toast.makeText(this, "画像を保存できませんでした", Toast.LENGTH_SHORT).show()
                 }
@@ -172,4 +163,38 @@ class RecipeResultActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun saveImage(){
+        val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bmp)
+        recipeLayout.draw(canvas)
+        val myDir = File(Environment.getExternalStorageDirectory().path, "/SubwaySimulator")
+        if (!myDir.exists()) myDir.mkdirs()
+        val filePath = File(myDir, "${recipe.createTime}.png")
+        val fos = FileOutputStream(filePath.absolutePath)
+        bmp.compress(Bitmap.CompressFormat.PNG, 95, fos)
+        fos.close()
+        Toast.makeText(this, "レシピ画像を保存しました", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (!RuntimePermissionChecker.hasSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                if (shouldShowRequestPermissionRationale(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) Toast.makeText(this, "ストレージ権限がありません", Toast.LENGTH_SHORT).show()
+                else {
+                    val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
+                            .setMessage("ストレージ権限がないため、アプリ情報から許可してください")
+                            .setPositiveButton("アプリ情報"){_, _ ->
+                                val intent = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName"))
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                startActivity(intent)
+                            }
+                            .setNegativeButton("キャンセル", null)
+                            .show()
+                }
+            }
+            if (RuntimePermissionChecker.hasSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)) saveImage()
+        }
+    }
+
 }
