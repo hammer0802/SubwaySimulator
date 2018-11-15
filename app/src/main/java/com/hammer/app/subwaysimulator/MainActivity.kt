@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -110,9 +109,6 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onPostCreate(savedInstanceState, persistentState)
-    }
 
     override fun onResume() {
         super.onResume()
@@ -122,5 +118,4 @@ class MainActivity : AppCompatActivity() {
         recyclerAdaptor.reload()
         recycler_view.adapter!!.notifyDataSetChanged()
     }
-
 }

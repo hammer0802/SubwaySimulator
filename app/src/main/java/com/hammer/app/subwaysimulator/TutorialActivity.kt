@@ -1,7 +1,6 @@
 package com.hammer.app.subwaysimulator
 
 import android.app.Activity
-import android.net.IpSecTransform
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import com.stephentuso.welcome.*

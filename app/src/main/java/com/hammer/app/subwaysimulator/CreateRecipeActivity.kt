@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
@@ -105,6 +106,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 e.putString(uuid, gson.toJson(this))
                             }
                             e.apply()
+                            Toast.makeText(this, "レシピを作成しました", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                         .setNegativeButton("いいえ", null)

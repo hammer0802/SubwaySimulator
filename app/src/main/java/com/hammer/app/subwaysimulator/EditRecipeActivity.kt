@@ -205,15 +205,12 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 e.putString(key, gson.toJson(this))
                             }
                             e.apply()
+                            Toast.makeText(this, "レシピを編集しました", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                         .setNegativeButton("いいえ", null)
                         .show()
             }
         }
-    }
-    override fun onResume() {
-        super.onResume()
-
     }
 }
