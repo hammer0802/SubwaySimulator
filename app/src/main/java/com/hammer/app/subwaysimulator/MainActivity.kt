@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity() {
                 create.isEnabled = true
             }
             handler.postDelayed(runnable, 2000)
-            val intent1= Intent(this, CreateRecipeActivity::class.java)
-            this.startActivity(intent1)
+            val intentToCreate= Intent(this, CreateRecipeActivity::class.java)
+            this.startActivity(intentToCreate)
         }
         if(BuildConfig.DEBUG){
             //テスト用アプリID

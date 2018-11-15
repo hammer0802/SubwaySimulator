@@ -13,8 +13,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class EditRecipeActivity : AbstractRecipeActivity() {
-    private val intent3: Intent by lazy { this.intent }
-    val key: String by lazy { intent3.getStringExtra("key")}
+    private val intentFromResult: Intent by lazy { this.intent }
+    val key: String by lazy { intentFromResult.getStringExtra("key")}
     private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,6 +153,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                         .setTitle("確認")
                         .setMessage("レシピ編集を完了しますか？")
                         .setPositiveButton("はい") { _, _ ->
+                            val intentToResult = Intent()
                             val e = preference.edit()
                             val c = Calendar.getInstance()
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
@@ -161,6 +162,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 price = sumPrice.text.toString().toInt()
                                 editTime = sdf.format(c.time)
                                 sandwich = spinnerSand.selectedItem as String
+                                footLong = checkBoxFootLong.isChecked
                                 bread = spinnerBread.selectedItem as String
                                 toast = checkBoxToast.isChecked
                                 cheese = checkBoxcheese.isChecked
@@ -205,7 +207,9 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 e.putString(key, gson.toJson(this))
                             }
                             e.apply()
+                            intentToResult.putExtra("key", key)
                             Toast.makeText(this, "レシピを編集しました", Toast.LENGTH_SHORT).show()
+                            setResult(RESULT_OK, intentToResult)
                             finish()
                         }
                         .setNegativeButton("いいえ", null)

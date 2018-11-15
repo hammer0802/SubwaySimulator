@@ -46,9 +46,9 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                 holder.v.isEnabled = true
             }
             handler.postDelayed(runnable, 2000)
-            val intent2= Intent(activity,RecipeResultActivity::class.java)
-            intent2.putExtra("key", list[position].uuid)
-            activity.startActivity(intent2)
+            val intentToResult= Intent(activity,RecipeResultActivity::class.java)
+            intentToResult.putExtra("key", list[position].uuid)
+            activity.startActivity(intentToResult)
         }
         holder.v.setOnLongClickListener{
             val alertDialog = AlertDialog.Builder(activity, R.style.MyAlertDialogStyle)
