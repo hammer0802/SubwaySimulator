@@ -38,7 +38,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         initAddDressingBtn()
         counterBtn()
         checkBoxFootLong()
-        recipe.run {
+        recipe.apply {
             textViewName.setText(name)
             spinnerSand.setSelection(Sandwiches.values().filter { sandwich == it.sandName }[0].number)
             checkBoxFootLong.isChecked = footLong
@@ -136,6 +136,39 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 addDressingText.visibility = View.GONE
                 spinnerDressing2.setSelection(Dressings.values().filter { dressing[1] == it.dressingName }[0].number)
                 spinnerDressingAmount2.setSelection(Dressings.values().filter { dressing[1] == it.dressingName }[0].number)
+
+                val howToDressRadioGroup = findViewById<RadioGroup>(R.id.howToDress)
+
+                removeDressing.setOnClickListener{removeBtn ->
+                    textViewName.clearFocus()
+                    addDressing2.visibility = View.VISIBLE
+                    addDressingText2.visibility = View.VISIBLE
+                    textViewDressing2.visibility = View.GONE
+                    spinnerDressing2.visibility = View.GONE
+                    textViewDressingType2.visibility = View.GONE
+                    spinnerDressingAmount2.visibility = View.GONE
+                    textViewDressingAmount2.visibility = View.GONE
+                    howToDressRadioGroup.visibility = View.GONE
+                    removeBtn.visibility = View.GONE
+                    removeDressingText.visibility = View.GONE
+                }
+
+                addDressing2.setOnClickListener {addBtn2 ->
+                    textViewName.clearFocus()
+                    addDressing2Count++
+                    if (spinnerDressing.selectedItem != Dressings.NONE.dressingName){
+                        addBtn2.visibility = View.GONE
+                        addDressingText2.visibility = View.GONE
+                        textViewDressing2.visibility = View.VISIBLE
+                        spinnerDressing2.visibility = View.VISIBLE
+                        textViewDressingType2.visibility = View.VISIBLE
+                        spinnerDressingAmount2.visibility = View.VISIBLE
+                        textViewDressingAmount2.visibility = View.VISIBLE
+                        howToDressRadioGroup.visibility = View.VISIBLE
+                        removeDressing.visibility = View.VISIBLE
+                        removeDressingText.visibility = View.VISIBLE
+                    }
+                }
             }
         }
 
