@@ -203,7 +203,7 @@ class RecipeResultActivity : AppCompatActivity() {
             else -> "${recipe.dressing[0]}(量:${recipe.dressingAmount[0]})"
         }
         textViewDressingType.text = dressingText
-        if (recipe.dressing.count() == 2 && recipe.dressing[0] != "無し") {
+        if (recipe.dressing[1] != "" && recipe.dressing[0] != "無し") {
             textViewDressingType.append("\n × ${recipe.dressing[1]}(量:${recipe.dressingAmount[1]})")
             textViewDressingType.append("\nかけ方：${recipe.howToDress}")
         }

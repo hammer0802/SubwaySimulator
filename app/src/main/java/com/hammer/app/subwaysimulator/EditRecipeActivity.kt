@@ -135,7 +135,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 addDressing.visibility = View.GONE
                 addDressingText.visibility = View.GONE
                 spinnerDressing2.setSelection(Dressings.values().filter { dressing[1] == it.dressingName }[0].number)
-                spinnerDressingAmount2.setSelection(Dressings.values().filter { dressing[1] == it.dressingName }[0].number)
+                spinnerDressingAmount2.setSelection(AmountsDressing.values().filter { dressingAmount[1] == it.amount }[0].number)
 
                 val howToDressRadioGroup = findViewById<RadioGroup>(R.id.howToDress)
 
@@ -178,7 +178,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                         .setTitle("レシピの名前を入力してください")
                         .setNegativeButton("はい", null)
                         .show()
-            }else if(addDressingCount == 1 && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
+            } else if(addDressingCount == 1 && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("追加ドレッシングは元のドレッシングと違うものにしてください")
                         .setNegativeButton("はい", null)
@@ -197,7 +197,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 price = sumPrice.text.toString().toInt()
                                 editTime = sdf.format(c.time)
                                 sandwich = spinnerSand.selectedItem as String
-                                footLong = checkBoxFootLong.isChecked
+                                footLong = if(spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
                                 bread = spinnerBread.selectedItem as String
                                 toast = checkBoxToast.isChecked
                                 cheese = checkBoxcheese.isChecked
