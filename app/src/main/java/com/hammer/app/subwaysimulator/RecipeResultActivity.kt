@@ -160,8 +160,8 @@ class RecipeResultActivity : AppCompatActivity() {
         textViewSandType.text = recipe.sandwich
         if(recipe.footLong) textViewSandType.append("(フットロング)")
 
-        var toast = ""
-        var breadText = ""
+        val toast: String
+        val breadText :String
         when{
             recipe.bread == "無し(サラダ, + 300円)" -> breadText = "無し(サラダ)"
             recipe.toast -> {
@@ -198,8 +198,7 @@ class RecipeResultActivity : AppCompatActivity() {
         if(recipe.hotpepper != "無し") textViewFreeToppingAmount.append("ホットペッパー：${recipe.hotpepper}")
         if(recipe.olive == "無し" && recipe.pickles == "無し" && recipe.hotpepper == "無し") textViewFreeToppingAmount.text = "無し"
 
-        var dressingText = ""
-        dressingText = when(recipe.dressing[0]){
+        val dressingText: String = when(recipe.dressing[0]){
             "無し" -> recipe.dressing[0]
             else -> "${recipe.dressing[0]}(量:${recipe.dressingAmount[0]})"
         }

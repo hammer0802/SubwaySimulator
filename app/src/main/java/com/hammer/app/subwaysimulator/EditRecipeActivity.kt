@@ -1,5 +1,6 @@
 package com.hammer.app.subwaysimulator
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -17,6 +18,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
     val key: String by lazy { intentFromResult.getStringExtra("key")}
     private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
+    @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_recipe)
@@ -53,39 +55,39 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             checkBoxroastbeef.isChecked = roastbeef
             if (cheese){
                 countercheese.visibility = View.VISIBLE
-                valuecheese.setText(cheeseAmount.toString())
+                valuecheese.text = cheeseAmount.toString()
             }
             if (cream){
                 countercream.visibility = View.VISIBLE
-                valuecream.setText(creamAmount.toString())
+                valuecream.text = creamAmount.toString()
             }
             if (mascar){
                 countermascar.visibility = View.VISIBLE
-                valuemascar.setText(mascarAmount.toString())
+                valuemascar.text = mascarAmount.toString()
             }
             if (egg){
                 counteregg.visibility = View.VISIBLE
-                valueegg.setText(eggAmount.toString())
+                valueegg.text = eggAmount.toString()
             }
             if (bacon){
                 counterbacon.visibility = View.VISIBLE
-                valuebacon.setText(baconAmount.toString())
+                valuebacon.text = baconAmount.toString()
             }
             if (tuna){
                 countertuna.visibility = View.VISIBLE
-                valuetuna.setText(tunaAmount.toString())
+                valuetuna.text = tunaAmount.toString()
             }
             if (shrimp){
                 countershrimp.visibility = View.VISIBLE
-                valueshrimp.setText(shrimpAmount.toString())
+                valueshrimp.text = shrimpAmount.toString()
             }
             if (avocado){
                 counteravocado.visibility = View.VISIBLE
-                valueavocado.setText(avocadoAmount.toString())
+                valueavocado.text = avocadoAmount.toString()
             }
             if (roastbeef){
                 counterroastbeef.visibility = View.VISIBLE
-                valueroastbeef.setText(roastbeefAmount.toString())
+                valueroastbeef.text = roastbeefAmount.toString()
             }
             spinnerLettuce.setSelection(Amounts.values().filter { lettuce == it.amount }[0].number)
             spinnerTomato.setSelection(Amounts.values().filter { tomato == it.amount }[0].number)

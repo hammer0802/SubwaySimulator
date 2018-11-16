@@ -15,7 +15,7 @@ import com.google.gson.Gson
 
 class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecyclerViewHolder>() {
     private val preference: SharedPreferences by lazy { activity.getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-    val gson = Gson()
+    private val gson = Gson()
     val list: MutableList<Recipe> = mutableListOf()
     fun reload(){
         list.clear()
@@ -32,14 +32,14 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
     }
 
     override fun getItemCount(): Int {
-        return list.size ?: 0
+        return list.size
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewHolder, position: Int) {
         val listTitle = "${list[position].name}\n${list[position].sandwich}"
         holder.v.findViewById<TextView>(R.id.recipe_name).text = listTitle
 
-        holder.v.setOnClickListener{_ ->
+        holder.v.setOnClickListener{
             holder.v.isEnabled = false
             val handler = Handler()
             val runnable = Runnable {

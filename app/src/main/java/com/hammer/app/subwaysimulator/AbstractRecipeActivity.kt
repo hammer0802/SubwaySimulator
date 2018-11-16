@@ -1,5 +1,6 @@
 package com.hammer.app.subwaysimulator
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.create_recipe.*
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import android.text.InputFilter
-import android.widget.EditText
+import android.widget.TextView
 
 abstract class AbstractRecipeActivity: AppCompatActivity(){
     val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
@@ -182,10 +183,10 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     val counterViewId2 = resources.getIdentifier("counter${toppingName2.engName}", "id", packageName)
                     val counter2 = findViewById<LinearLayout>(counterViewId2)
                     val valueViewId = resources.getIdentifier("value${toppingName2.engName}", "id", packageName)
-                    val valueEditText = findViewById<EditText>(valueViewId)
+                    val valueTextView = findViewById<TextView>(valueViewId)
                     if (checkbox2.isChecked) {
                         counter2.visibility = View.VISIBLE
-                        toppingPrice += toppingName2.price * valueEditText.text.toString().toInt()
+                        toppingPrice += toppingName2.price * valueTextView.text.toString().toInt()
                     }else{
                         counter2.visibility = View.INVISIBLE
                     }
@@ -204,26 +205,26 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val upBtnViewId = resources.getIdentifier("up${toppingName.engName}", "id", packageName)
             val upBtn = findViewById<ImageButton>(upBtnViewId)
             val valueViewId = resources.getIdentifier("value${toppingName.engName}", "id", packageName)
-            val valueEditText = findViewById<EditText>(valueViewId)
+            val valueTextView = findViewById<TextView>(valueViewId)
             val downBtnViewId = resources.getIdentifier("down${toppingName.engName}", "id", packageName)
             val downBtn = findViewById<ImageButton>(downBtnViewId)
             val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
-            valueEditText.filters = arrayOf<InputFilter>(MinMaxFilter("1", "9"))
-            var v = valueEditText.text.toString().toInt()
+            valueTextView.filters = arrayOf<InputFilter>(MinMaxFilter("1", "9"))
+            var v = valueTextView.text.toString().toInt()
             upBtn.setOnClickListener{
                 textViewName.clearFocus()
                 upBtn.isEnabled = v < 9
                 v++
-                valueEditText.setText(v.toString())
+                valueTextView.text = v.toString()
             }
             downBtn.setOnClickListener{
                 textViewName.clearFocus()
                 downBtn.isEnabled = v >= 1
                 v--
-                valueEditText.setText(v.toString())
+                valueTextView.text = v.toString()
             }
 
-            valueEditText.addTextChangedListener(object : TextWatcher {
+            valueTextView.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(text: Editable?) {
                 }
 
@@ -232,12 +233,11 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
                 override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     if (text.isNullOrBlank()) {
-                        valueEditText.setText("1")
+                        valueTextView.text = "1"
                     } else {
                         downBtn.isEnabled = v > 1
                         upBtn.isEnabled = v < 9
                     }
-                    valueEditText.setSelection(valueEditText.length())
 
                     toppingPrice = 0
                     toppings.forEach{topping2 ->
@@ -245,8 +245,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         val viewId = resources.getIdentifier("checkBox${toppingName2.engName}", "id", packageName)
                         val checkbox = findViewById<CheckBox>(viewId)
                         val valueViewId2 = resources.getIdentifier("value${toppingName2.engName}", "id", packageName)
-                        val valueEditText2 = findViewById<EditText>(valueViewId2)
-                        if (checkbox.isChecked) toppingPrice += toppingName2.price * valueEditText2.text.toString().toInt()
+                        val valueTextView2 = findViewById<TextView>(valueViewId2)
+                        if (checkbox.isChecked) toppingPrice += toppingName2.price * valueTextView2.text.toString().toInt()
                     }
                     var sum = sandPrice + toppingPrice
                     if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
@@ -257,6 +257,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
+    @SuppressLint("InflateParams")
     protected fun initAddDressingBtn(){
         addDressing.setOnClickListener{addBtn ->
             textViewName.clearFocus()
@@ -347,13 +348,12 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
     }
 
-override fun onBackPressed() {
-
+    override fun onBackPressed() {
         val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                 .setTitle("確認")
                 .setMessage("作成途中で終了するとレシピは保存されません。"+ "\n" +"終了しますか？")
                 .setPositiveButton("はい") { _, _ ->
-                    super.onBackPressed()
+                super.onBackPressed()
                 }
                 .setNegativeButton("キャンセル", null)
                 .show()

@@ -2,7 +2,6 @@
 
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -200,6 +199,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/countercream"
                 app:layout_constraintRight_toRightOf="parent"
@@ -211,15 +211,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null" />
 
-                <EditText
+                <TextView
                     android:id="@+id/valuecheese"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -229,7 +229,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -250,6 +251,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/countermascar"
                 app:layout_constraintRight_toRightOf="parent"
@@ -261,15 +263,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/valuecream"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -279,7 +281,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -300,6 +303,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/counteregg"
                 app:layout_constraintRight_toRightOf="parent"
@@ -311,15 +315,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/valuemascar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -329,7 +333,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -350,6 +355,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/counterbacon"
                 app:layout_constraintRight_toRightOf="parent"
@@ -361,15 +367,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/valueegg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -379,7 +385,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -400,6 +407,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/countertuna"
                 app:layout_constraintRight_toRightOf="parent"
@@ -411,15 +419,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/valuebacon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -429,7 +437,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -450,6 +459,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/countershrimp"
                 app:layout_constraintRight_toRightOf="parent"
@@ -461,15 +471,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/valuetuna"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -479,7 +489,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -500,6 +511,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/counteravocado"
                 app:layout_constraintRight_toRightOf="parent"
@@ -511,15 +523,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/valueshrimp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -529,7 +541,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -550,6 +563,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/counterroastbeef"
                 app:layout_constraintRight_toRightOf="parent"
@@ -561,15 +575,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/valueavocado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -579,7 +593,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -600,6 +615,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="center"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
                 app:layout_constraintRight_toRightOf="parent"
@@ -611,15 +627,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp" />
+                    android:background="@drawable/ic_remove_circle_36dp"
+                    android:contentDescription="@null"/>
 
-                <EditText
+                <TextView
                     android:id="@+id/valueroastbeef"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:inputType="number"
                     android:maxLength="1"
                     android:text="@string/one" />
 
@@ -629,7 +645,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp" />
+                    android:background="@drawable/ic_add_circle_36dp"
+                    android:contentDescription="@null"/>
 
             </LinearLayout>
 
@@ -1006,10 +1023,10 @@
                 android:background="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select_dressing_container"
-                app:srcCompat="@drawable/ic_add_box_black_36dp" />
+                app:srcCompat="@drawable/ic_add_box_black_36dp"
+                android:contentDescription="@null"/>
 
             <TextView
                 android:id="@+id/addDressingText"
@@ -1034,7 +1051,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/select_dressing_container"
-                app:srcCompat="@drawable/ic_add_box_black_36dp" />
+                app:srcCompat="@drawable/ic_add_box_black_36dp"
+                android:contentDescription="@null"/>
 
             <TextView
                 android:id="@+id/addDressingText2"
