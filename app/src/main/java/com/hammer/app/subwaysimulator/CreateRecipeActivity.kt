@@ -101,6 +101,9 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
                                     val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
                                     howToDress = checkedRadioBtn.text.toString()
+                                }else {
+                                    dressing.add("")
+                                    dressingAmount.add("")
                                 }
                                 this.uuid = uuid
                                 e.putString(uuid, gson.toJson(this))

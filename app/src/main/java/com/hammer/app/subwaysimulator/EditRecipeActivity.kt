@@ -104,7 +104,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 checkBoxRecommend.isChecked = false
             }
             if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(AmountsDressing.values().filter { dressingAmount[0] == it.amount }[0].number)
-            if (dressing.count() == 2){
+            if (dressing[1] != ""){
                 addDressingCount++
                 val selectDressingItemView = LayoutInflater.from(this@EditRecipeActivity).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
                 selectDressingItemView.id = selectDressingItemView.hashCode()
@@ -200,8 +200,8 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                     dressingAmount[0] = spinnerDressingAmount.selectedItem as String
                                 }
                                 if(addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
-                                    if (dressing.count() == 1) dressing.add(spinnerDressing2.selectedItem as String) else dressing[1] = spinnerDressing2.selectedItem as String
-                                    if (dressingAmount.count() == 1) dressingAmount.add(spinnerDressingAmount2.selectedItem as String) else dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
+                                    dressing[1] = spinnerDressing2.selectedItem as String
+                                    dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
                                     val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
                                     howToDress = checkedRadioBtn.text.toString()
