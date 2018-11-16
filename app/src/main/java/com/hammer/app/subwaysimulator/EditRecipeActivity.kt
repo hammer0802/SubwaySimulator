@@ -239,6 +239,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                     val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
                                     howToDress = checkedRadioBtn.text.toString()
                                 }
+                                if(addDressing2.visibility == View.VISIBLE){
+                                    dressing[1] = ""
+                                    dressingAmount[1] = ""
+                                }
                                 e.putString(key, gson.toJson(this))
                             }
                             e.apply()
