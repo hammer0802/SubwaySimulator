@@ -200,8 +200,8 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                     dressingAmount[0] = spinnerDressingAmount.selectedItem as String
                                 }
                                 if(addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
-                                    dressing[1] = spinnerDressing2.selectedItem as String
-                                    dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
+                                    if (dressing.count() == 1) dressing.add(spinnerDressing2.selectedItem as String) else dressing[1] = spinnerDressing2.selectedItem as String
+                                    if (dressingAmount.count() == 1) dressingAmount.add(spinnerDressingAmount2.selectedItem as String) else dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
                                     val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
                                     howToDress = checkedRadioBtn.text.toString()
