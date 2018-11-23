@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
+import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +32,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+
+        if(BuildConfig.DEBUG){
+            //テスト用アプリID
+            MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
+        }else{
+            //本番アプリID
+             MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424~8280793083")
+        }
+        val mAdView = findViewById<AdView>(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         TutorialActivity.showIfNeeded(this, Bundle())
 
@@ -81,16 +95,6 @@ class MainActivity : AppCompatActivity() {
             val intentToCreate= Intent(this, CreateRecipeActivity::class.java)
             this.startActivity(intentToCreate)
         }
-        if(BuildConfig.DEBUG){
-            //テスト用アプリID
-            MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
-        }else{
-            //本番アプリID
-            MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424~8280793083")
-        }
-        val mAdView = findViewById<AdView>(R.id.adView)
-        val adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
