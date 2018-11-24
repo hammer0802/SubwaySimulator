@@ -3,25 +3,22 @@ package com.hammer.app.subwaysimulator
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
-import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-
-
 
 class MainActivity : AppCompatActivity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
@@ -32,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
 
         if(BuildConfig.DEBUG){
             //テスト用アプリID
@@ -106,8 +102,12 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> {
                 TutorialActivity.showForcibly(this)
-                true}
+                true
+            }
             R.id.action_policy -> {
+                val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
+                val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intentToPolicy)
                 true
             }
             else -> super.onOptionsItemSelected(item)
