@@ -64,12 +64,13 @@ class RecipeResultActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_edit -> {
                 val intent= Intent(this, EditRecipeActivity::class.java)
-                if(Sandwiches.values().filter{it.sandName == recipe.sandwich}[0].limitedFlag
-                        || Breads.values().filter{it.breadName == recipe.bread}[0].limitedFlag
-                        || Dressings.values().filter{it.dressingName == recipe.dressing[0]}[0].limitedFlag
-                        || recipe.dressing[1] != "" && Dressings.values().filter{it.dressingName == recipe.dressing[1]}[0].limitedFlag) {
+                val isSandwichEnabled = Sandwiches.values().single{ it.sandName == recipe.sandwich }.isEnabled
+                val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread }.isEnabled
+                val isDressing0Enabled = Dressings.values().filter { it.dressingName == recipe.dressing[0] }[0].isEnabled
+                val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values().filter { it.dressingName == recipe.dressing[1] }[0].isEnabled
+                if(!isSandwichEnabled || ! isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) {
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                            .setMessage("このレシピは期間限定メニューを含みます" + "\n" + "期間が終了している場合、元のレシピに戻せません" + "\n" + "編集しますか？")
+                            .setMessage("このレシピは販売終了メニューを含みます" + "\n" + "編集した場合、元のレシピに戻せません" + "\n" + "編集しますか？")
                             .setPositiveButton("はい"){_, _ ->
                                 intent.putExtra("key", key)
                                 startActivityForResult(intent, RESULT_EDIT)

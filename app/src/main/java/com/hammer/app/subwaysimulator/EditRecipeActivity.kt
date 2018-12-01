@@ -40,7 +40,8 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         checkBoxFootLong()
         recipe.apply {
             textViewName.setText(name)
-            spinnerSand.setSelection(Sandwiches.values().filter { sandwich == it.sandName }[0].number)
+            if(!Sandwiches.values().contains(Sandwiches.values().filter { sandwich == it.sandName }[0])) spinnerSand.setSelection(0)
+             else spinnerSand.setSelection(Sandwiches.values().filter { sandwich == it.sandName }[0].number)
             checkBoxFootLong.isChecked = footLong
             spinnerBread.setSelection(Breads.values().filter { bread == it.breadName }[0].number)
             checkBoxToast.isChecked = toast
