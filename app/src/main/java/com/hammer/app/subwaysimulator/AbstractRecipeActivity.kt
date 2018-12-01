@@ -56,6 +56,13 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     sumPrice.text = sum.toString()
                     if (checkboxRecommend.isChecked){
                         spinnerDressing.setSelection(selectedSand.recommendDressing)
+
+                        //期間限定処理始まり
+                        if (selectedSand.sandName == Sandwiches.KINKAKU_BURG.sandName || selectedSand.sandName == Sandwiches.KINKAKU_DX.sandName) {
+                            spinnerBread.setSelection(Breads.ONION_SESAME.number)
+                        }
+                        //期間限定処理終わり
+
                     }
                 }
                 if(itemName == "bread"){
