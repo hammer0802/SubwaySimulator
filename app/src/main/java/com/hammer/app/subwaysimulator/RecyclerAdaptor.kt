@@ -53,7 +53,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
         holder.v.setOnLongClickListener{
             val alertDialog = AlertDialog.Builder(activity, R.style.MyAlertDialogStyle)
                     .setTitle("確認")
-                    .setMessage("1度削除したレシピは復元できません。"+ "\n" +"このレシピを削除しますか？")
+                    .setMessage("1度削除したレシピは復元できません。"+ "\n" +"レシピ名: ${list[position].name} を削除しますか？")
                     .setPositiveButton("はい") { _, _ ->
                         val deleteName = list[position].name
                         val e = preference.edit()
