@@ -179,7 +179,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         }
 
         completeButton.setOnClickListener {
-            if (textViewName.text.toString() == "") {
+            if (textViewName.text.toString().isEmpty() || textViewName.text.toString().isBlank()) {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("レシピの名前を入力してください")
                         .setNegativeButton("はい", null)

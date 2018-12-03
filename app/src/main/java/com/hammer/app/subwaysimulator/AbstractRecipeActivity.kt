@@ -51,16 +51,16 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     val selectedSand = Sandwiches.values().single{ it.sandName == item }
                     sandPrice = selectedSand.price
                     var sum = sandPrice + toppingPrice
-                    if(checkBoxFootLong.isChecked) sum += 300
+                    if(checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
                     if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
                     sumPrice.text = sum.toString()
                     if (checkboxRecommend.isChecked){
                         spinnerDressing.setSelection(selectedSand.recommendDressing)
 
                         //期間限定処理始まり
-//                        if (selectedSand.sandName == Sandwiches.KINKAKU_BURG.sandName || selectedSand.sandName == Sandwiches.KINKAKU_DX.sandName) {
-//                            spinnerBread.setSelection(Breads.ONION_SESAME.number)
-//                        }
+                        if (selectedSand.sandName == Sandwiches.KINKAKU_BURG.sandName || selectedSand.sandName == Sandwiches.KINKAKU_DX.sandName) {
+                            spinnerBread.setSelection(Breads.ONION_SESAME.number)
+                        }
                         //期間限定処理終わり
 
                     }
@@ -76,7 +76,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         checkBoxToast.visibility = View.VISIBLE
                         checkBoxFootLong.visibility = View.VISIBLE
                         var sum = sandPrice + toppingPrice
-                        if (checkBoxFootLong.isChecked) sum += 300
+                        if (checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
                         sumPrice.text = sum.toString()
                     }
                 }
@@ -198,7 +198,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 }
                 var sum = sandPrice + toppingPrice
                 if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
-                if(checkBoxFootLong.isChecked) sum += 300
+                if(checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
                 sumPrice.text = sum.toString()
             }
         }
@@ -255,7 +255,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     }
                     var sum = sandPrice + toppingPrice
                     if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
-                    if(checkBoxFootLong.isChecked) sum += 300
+                    if(checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
                     sumPrice.text = sum.toString()
                 }
             })
@@ -335,7 +335,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         checkBoxFootLong.setOnClickListener{
             textViewName.clearFocus()
             if(checkBoxFootLong.isChecked){ 
-                val sum = sandPrice + toppingPrice + 300
+                val sum = sandPrice + toppingPrice + FootLong.FOOT_LONG.price
                 sumPrice.text = sum.toString()
             }else{ 
                 val sum = sandPrice + toppingPrice
