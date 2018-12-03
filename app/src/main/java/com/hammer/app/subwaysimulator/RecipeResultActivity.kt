@@ -66,8 +66,8 @@ class RecipeResultActivity : AppCompatActivity() {
                 val intent= Intent(this, EditRecipeActivity::class.java)
                 val isSandwichEnabled = Sandwiches.values().single{ it.sandName == recipe.sandwich }.isEnabled
                 val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread }.isEnabled
-                val isDressing0Enabled = Dressings.values().filter { it.dressingName == recipe.dressing[0] }[0].isEnabled
-                val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values().filter { it.dressingName == recipe.dressing[1] }[0].isEnabled
+                val isDressing0Enabled = Dressings.values().single { it.dressingName == recipe.dressing[0] }.isEnabled
+                val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values().single { it.dressingName == recipe.dressing[1] }.isEnabled
                 if(!isSandwichEnabled || ! isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) {
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                             .setMessage("このレシピは販売終了メニューを含みます" + "\n" + "編集した場合、元のレシピに戻せません" + "\n" + "編集しますか？")

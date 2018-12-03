@@ -48,7 +48,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 val spinner2 = parent as Spinner
                 val item = spinner2.selectedItem as String
                 if (itemName == "sandwich") {
-                    val selectedSand = Sandwiches.values().filter { it.sandName == item }[0]
+                    val selectedSand = Sandwiches.values().single{ it.sandName == item }
                     sandPrice = selectedSand.price
                     var sum = sandPrice + toppingPrice
                     if(checkBoxFootLong.isChecked) sum += 300
@@ -115,8 +115,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                             addDressingText.visibility = View.VISIBLE
                         }
                     }
-                    val selectedSand =  Sandwiches.values().filter { spinnerSand.selectedItem == it.sandName }[0]
-                    val recommendDress = Dressings.values().filter { selectedSand.recommendDressing == it.number }[0].dressingName
+                    val selectedSand =  Sandwiches.values().single { spinnerSand.selectedItem == it.sandName }
+                    val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it.number }.dressingName
                     if(checkboxRecommend.isChecked && spinner.selectedItem != recommendDress){
                         checkboxRecommend.isChecked = false
                     }
@@ -169,7 +169,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
     protected fun checkBox() {
         toppings.forEach {topping ->
-            val toppingName = Toppings.values().filter {tpp -> tpp.toppingName == topping }[0]
+            val toppingName = Toppings.values().single {tpp -> tpp.toppingName == topping }
             val viewId = resources.getIdentifier("checkBox${toppingName.engName}", "id", packageName)
             val checkbox = findViewById<CheckBox>(viewId)
             val counterViewId = resources.getIdentifier("counter${toppingName.engName}", "id", packageName)
@@ -182,7 +182,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 textViewName.clearFocus()
                 toppingPrice = 0
                 toppings.forEach {topping2 ->
-                    val toppingName2 = Toppings.values().filter { tpp2 -> tpp2.toppingName == topping2 }[0]
+                    val toppingName2 = Toppings.values().single { tpp2 -> tpp2.toppingName == topping2 }
                     val viewId2 = resources.getIdentifier("checkBox${toppingName2.engName}", "id", packageName)
                     val checkbox2 = findViewById<CheckBox>(viewId2)
                     val counterViewId2 = resources.getIdentifier("counter${toppingName2.engName}", "id", packageName)
@@ -206,7 +206,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
     protected fun counterBtn(){
         toppings.forEach{topping ->
-            val toppingName = Toppings.values().filter {tpp -> tpp.toppingName == topping }[0]
+            val toppingName = Toppings.values().single {tpp -> tpp.toppingName == topping }
             val upBtnViewId = resources.getIdentifier("up${toppingName.engName}", "id", packageName)
             val upBtn = findViewById<ImageButton>(upBtnViewId)
             val valueViewId = resources.getIdentifier("value${toppingName.engName}", "id", packageName)
@@ -246,7 +246,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
                     toppingPrice = 0
                     toppings.forEach{topping2 ->
-                        val toppingName2 = Toppings.values().filter { tpp2 -> tpp2.toppingName == topping2 }[0]
+                        val toppingName2 = Toppings.values().single { tpp2 -> tpp2.toppingName == topping2 }
                         val viewId = resources.getIdentifier("checkBox${toppingName2.engName}", "id", packageName)
                         val checkbox = findViewById<CheckBox>(viewId)
                         val valueViewId2 = resources.getIdentifier("value${toppingName2.engName}", "id", packageName)
