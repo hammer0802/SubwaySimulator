@@ -19,6 +19,7 @@ import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 import android.support.v4.app.ShareCompat
+import android.widget.CheckBox
 import android.widget.Toast
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
@@ -68,7 +69,8 @@ class RecipeResultActivity : AppCompatActivity() {
                 val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread }.isEnabled
                 val isDressing0Enabled = Dressings.values().single { it.dressingName == recipe.dressing[0] }.isEnabled
                 val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values().single { it.dressingName == recipe.dressing[1] }.isEnabled
-                if(!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) {
+
+                if(!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) { //販売終了判定
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                             .setMessage("このレシピは販売終了メニューを含みます" + "\n" + "編集した場合、元のレシピに戻せません" + "\n" + "編集しますか？")
                             .setPositiveButton("はい"){_, _ ->
@@ -198,10 +200,13 @@ class RecipeResultActivity : AppCompatActivity() {
         if(recipe.tuna)textViewToppingSelect.append("ツナ × ${recipe.tunaAmount}\n")
         if(recipe.shrimp)textViewToppingSelect.append("えび × ${recipe.shrimpAmount}\n")
         if(recipe.avocado)textViewToppingSelect.append("アボカド × ${recipe.avocadoAmount}\n")
-        if(recipe.roastbeef)textViewToppingSelect.append("ローストビーフ × ${recipe.roastbeefAmount}")
+        if(recipe.roastbeef)textViewToppingSelect.append("ローストビーフ × ${recipe.roastbeefAmount}\n")
+
+        //期間限定トッピング
+        if(recipe.shredded)textViewToppingSelect.append("シュレッドチーズ × ${recipe.shreddedAmount}")
 
         val none = Amounts.NONE.amount
-        if(!recipe.cheese && !recipe.cream && !recipe.mascar && !recipe.egg && !recipe.bacon && !recipe.tuna && !recipe.shrimp && !recipe.avocado && !recipe.roastbeef) textViewToppingSelect.text = none
+        if(!recipe.cheese && !recipe.cream && !recipe.mascar && !recipe.egg && !recipe.bacon && !recipe.tuna && !recipe.shrimp && !recipe.avocado && !recipe.roastbeef && !recipe.shredded) textViewToppingSelect.text = none
 
         val normal = Amounts.NORMAL.amount
         if(recipe.lettuce != normal) textViewVegetableAmount.append("レタス：${recipe.lettuce} ")

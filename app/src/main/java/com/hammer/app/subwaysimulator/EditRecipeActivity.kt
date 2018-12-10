@@ -57,6 +57,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             checkBoxshrimp.isChecked = shrimp
             checkBoxavocado.isChecked = avocado
             checkBoxroastbeef.isChecked = roastbeef
+
             if (cheese){
                 countercheese.visibility = View.VISIBLE
                 valuecheese.text = cheeseAmount.toString()
@@ -93,6 +94,14 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 counterroastbeef.visibility = View.VISIBLE
                 valueroastbeef.text = roastbeefAmount.toString()
             }
+
+            //期間限定
+            checkBoxshredded.isChecked = shredded
+            if (shredded){
+                countershredded.visibility = View.VISIBLE
+                valueshredded.text = shreddedAmount.toString()
+            }
+
             spinnerLettuce.setSelection(Amounts.values().single { lettuce == it.amount }.number)
             spinnerTomato.setSelection(Amounts.values().single { tomato == it.amount }.number)
             spinnerGreenpepper.setSelection(Amounts.values().single { greenpepper == it.amount }.number)
@@ -224,6 +233,11 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 shrimpAmount = valueshrimp.text.toString().toInt()
                                 avocadoAmount = valueavocado.text.toString().toInt()
                                 roastbeefAmount = valueroastbeef.text.toString().toInt()
+
+                                //期間限定トッピング
+                                shredded = checkBoxshredded.isChecked
+                                shreddedAmount = valueshredded.text.toString().toInt()
+
                                 lettuce = spinnerLettuce.selectedItem as String
                                 tomato = spinnerTomato.selectedItem as String
                                 greenpepper = spinnerGreenpepper.selectedItem as String

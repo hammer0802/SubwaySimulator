@@ -81,6 +81,11 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 shrimpAmount = valueshrimp.text.toString().toInt()
                                 avocadoAmount = valueavocado.text.toString().toInt()
                                 roastbeefAmount = valueroastbeef.text.toString().toInt()
+
+                                //期間限定トッピング
+                                shredded = checkBoxshredded.isChecked
+                                shreddedAmount = valueshredded.text.toString().toInt()
+
                                 lettuce = spinnerLettuce.selectedItem as String
                                 tomato = spinnerTomato.selectedItem as String
                                 greenpepper = spinnerGreenpepper.selectedItem as String

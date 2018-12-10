@@ -21,6 +21,8 @@ enum class Sandwiches(val number: Int, val sandName: String, val price: Int, val
     VEGE_DE_LIGHT(14,"ベジーデライト",300, Dressings.OIL_VINEGAR.number),
     KINKAKU_BURG(15,"金格バーグ(期間限定)",890, Dressings.WAFU.number),
     KINKAKU_DX(16,"金格DX(期間限定)",990, Dressings.WAFU.number),
+    BACON_CHICKEN_MELT(17, "ベーコンチキンメルト(期間限定)", 510, Dressings.RANCH.number),
+    CHICKEN_MELT(18, "チキンメルト(期間限定)", 450, Dressings.RANCH.number),
 }
 
 enum class Breads(val number: Int, val breadName: String, val price: Int = 0, val isEnabled:Boolean = true) {
@@ -44,6 +46,7 @@ enum class Toppings(val toppingName: String, val price: Int, val engName: String
     SHRIMP("えび(+ 100円)",100, "shrimp"),
     AVOCADO("アボカド(+ 110円)",110,"avocado"),
     ROAST_BEEF("ローストビーフ(+ 350円)", 350, "roastbeef"),
+    SHREDDED_CHEESE("シュレッドチーズ(+ 40円)", 40, "shredded"),
 }
 
 //NONEを最後にしないとエラるのでFalseのclassの直前にする
@@ -60,7 +63,8 @@ enum class Dressings(val number: Int, val dressingName: String, val isEnabled:Bo
     SALT_PEPPER(9, "塩・こしょう"),
     PEPPER(10, "こしょう"),
     WAFU(11, "特製和風ソース(期間限定)"),
-    NONE(12, "無し"),
+    RANCH(12, "ランチドレッシング(期間限定)"),
+    NONE(13, "無し"),
 
 }
 
