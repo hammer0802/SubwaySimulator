@@ -1,6 +1,9 @@
 package com.hammer.app.subwaysimulator
 
-enum class Sandwiches(val number: Int, val sandName: String, val price: Int, val recommendDressing: Int){
+
+//isEnabled == Falseのclassは最後列に移動する
+
+enum class Sandwiches(val number: Int, val sandName: String, val price: Int, val recommendDressing: Int, val isEnabled:Boolean = true){
     BLT(0,"BLT", 420, Dressings.CAESAR.number),
     EBI_AVOCADO(1,"えびアボカド", 500, Dressings.CREAMY.number),
     NAMA_HAM(2,"生ハム＆マスカルポーネ", 520, Dressings.BASIL.number),
@@ -15,19 +18,25 @@ enum class Sandwiches(val number: Int, val sandName: String, val price: Int, val
     EGG(11, "たまご",390, Dressings.SALT_PEPPER.number),
     AVOCADO_VEGE(12,"アボカドベジー", 410, Dressings.CREAMY.number),
     VEGE_CHEESE(13, "ベジー＆チーズ",340, Dressings.CREAMY.number),
-    VEGE_DE_LIGHT(14,"ベジーデライト",300, Dressings.OIL_VINEGAR.number)
+    VEGE_DE_LIGHT(14,"ベジーデライト",300, Dressings.OIL_VINEGAR.number),
+    KINKAKU_BURG(15,"金格バーグ(期間限定)",890, Dressings.WAFU.number),
+    KINKAKU_DX(16,"金格DX(期間限定)",990, Dressings.WAFU.number),
+    BACON_CHICKEN_MELT(17, "ベーコンチキンメルト(期間限定)", 510, Dressings.RANCH.number),
+    CHICKEN_MELT(18, "チキンメルト(期間限定)", 450, Dressings.RANCH.number),
 }
 
-enum class Breads(val number: Int, val breadName: String, val price: Int) {
-    WHEAT(0, "ウィート", 0),
-    WHITE(1, "ホワイト", 0),
-    SESAME(2,"セサミ",0),
-    HONEY_OATES(3, "ハニーオーツ",0),
-    FLAT_BREAD(4, "フラットブレッド", 0),
-    NONE(5,"無し(サラダ, + 300円)", 300)
+enum class Breads(val number: Int, val breadName: String, val price: Int = 0, val isEnabled:Boolean = true) {
+    WHEAT(0, "ウィート"),
+    WHITE(1, "ホワイト"),
+    SESAME(2,"セサミ"),
+    HONEY_OATES(3, "ハニーオーツ"),
+    FLAT_BREAD(4, "フラットブレッド"),
+    NONE(5,"無し(サラダ, + 300円)", 300),
+    ONION_SESAME(6,"オニオンセサミペッパー(期間限定)",0),
+
 }
 
-enum class Toppings(val toppingName: String, val price: Int, val engName: String) {
+enum class Toppings(val toppingName: String, val price: Int, val engName: String, val isEnabled:Boolean = true) {
     NATURAL_CHEESE("ナチュラルスライスチーズ(+ 40円)", 40, "cheese"),
     CREAM_CHEESE("クリームタイプチーズ(+ 60円)", 60, "cream"),
     MASCARPONE_CHEESE("マスカルポーネチーズ(+ 90円)", 90, "mascar"),
@@ -36,10 +45,12 @@ enum class Toppings(val toppingName: String, val price: Int, val engName: String
     TUNA("ツナ(+ 80円)",80, "tuna"),
     SHRIMP("えび(+ 100円)",100, "shrimp"),
     AVOCADO("アボカド(+ 110円)",110,"avocado"),
-    ROAST_BEEF("ローストビーフ(+ 350円)", 350, "roastbeef")
+    ROAST_BEEF("ローストビーフ(+ 350円)", 350, "roastbeef"),
+    SHREDDED_CHEESE("シュレッドチーズ(+ 40円)", 40, "shredded"),
 }
 
-enum class Dressings(val number: Int, val dressingName: String){
+//NONEを最後にしないとエラるのでFalseのclassの直前にする
+enum class Dressings(val number: Int, val dressingName: String, val isEnabled:Boolean = true){
     OIL_VINEGAR(0, "オイル&ビネガー　塩・こしょう"),
     CAESAR(1, "シーザードレッシング"),
     CREAMY(2,"野菜クリーミードレッシング"),
@@ -51,7 +62,10 @@ enum class Dressings(val number: Int, val dressingName: String){
     CHILI(8,"チリソース（激辛)"),
     SALT_PEPPER(9, "塩・こしょう"),
     PEPPER(10, "こしょう"),
-    NONE(11, "無し")
+    WAFU(11, "特製和風ソース(期間限定)"),
+    RANCH(12, "ランチドレッシング(期間限定)"),
+    NONE(13, "無し"),
+
 }
 
 enum class Amounts(val number: Int, val amount: String){
@@ -59,7 +73,7 @@ enum class Amounts(val number: Int, val amount: String){
     LITTLE(1,"少なめ"),
     NORMAL(2, "普通"),
     MANY(3,"多め"),
-    MAX(4,"上限")
+    MAX(4,"上限"),
 }
 
 enum class AmountsDressing(val number: Int, val amount: String){
@@ -68,91 +82,20 @@ enum class AmountsDressing(val number: Int, val amount: String){
     MANY(2,"多め"),
 }
 
-val sandwiches = arrayOf(
-        "BLT",
-        "えびアボカド",
-        "生ハム＆マスカルポーネ",
-        "ローストチキン",
-        "ローストビーフ　～プレミアム製法～",
-        "ターキーベーコンエッグ",
-        "チーズローストチキン",
-        "てり焼きチキン",
-        "チリチキン",
-        "ターキーブレスト",
-        "ツナ",
-        "たまご",
-        "アボカドベジー",
-        "ベジー＆チーズ",
-        "ベジーデライト"
-)
+enum class FootLong(val price: Int){
+    FOOT_LONG(300)
+}
 
-val breads = arrayOf(
-        "ウィート",
-        "ホワイト",
-        "セサミ",
-        "ハニーオーツ",
-        "フラットブレッド",
-        "無し(サラダ, + 300円)"
-)
+val sandwiches = Sandwiches.values().filter { it.isEnabled }.map { it.sandName }.toTypedArray()
 
-val toppings = arrayOf(
-        "ナチュラルスライスチーズ(+ 40円)",
-        "クリームタイプチーズ(+ 60円)",
-        "マスカルポーネチーズ(+ 90円)",
-        "たまご(+ 60円)",
-        "ベーコン(+ 60円)",
-        "ツナ(+ 80円)",
-        "えび(+ 100円)",
-        "アボカド(+ 110円)",
-        "ローストビーフ(+ 350円)"
-)
+val breads = Breads.values().filter { it.isEnabled }.map { it.breadName }.toTypedArray()
 
-val dressings = arrayOf(
-        "オイル&ビネガー　塩・こしょう",
-        "シーザードレッシング",
-        "野菜クリーミードレッシング",
-        "ハニーマスタードソース",
-        "わさび醤油ソース",
-        "バジルソース",
-        "バルサミコソース",
-        "マヨネーズタイプ",
-        "チリソース（激辛)",
-        "塩・こしょう",
-        "こしょう",
-        "無し"
-)
+val toppings = Toppings.values().filter { it.isEnabled }.map { it.toppingName }.toTypedArray()
 
-val dressingsWoNothing = arrayOf(
-        "オイル&ビネガー　塩・こしょう",
-        "シーザードレッシング",
-        "野菜クリーミードレッシング",
-        "ハニーマスタードソース",
-        "わさび醤油ソース",
-        "バジルソース",
-        "バルサミコソース",
-        "マヨネーズタイプ",
-        "チリソース（激辛)",
-        "塩・こしょう",
-        "こしょう"
-)
+val dressings = Dressings.values().filter { it.isEnabled }.map { it.dressingName }.toTypedArray()
 
-val amounts = arrayOf(
-        "無し",
-        "少なめ",
-        "普通",
-        "多め",
-        "上限"
-)
+val dressingsWoNothing = Dressings.values().filter { it.isEnabled && it != Dressings.NONE }.map { it.dressingName }.toTypedArray()
 
-val amountsDressing = arrayOf(
-        "少なめ",
-        "普通",
-        "多め"
-)
+val amounts = Amounts.values().map { it.amount }.toTypedArray()
 
-val shareApp = arrayOf(
-        "Twitter",
-        "Facebook",
-        "LINE",
-        "その他"
-)
+val amountsDressing = AmountsDressing.values().map { it.amount }.toTypedArray()

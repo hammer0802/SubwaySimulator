@@ -26,6 +26,11 @@ class Recipe {
     var shrimpAmount = 1
     var avocadoAmount = 1
     var roastbeefAmount = 1
+
+    //期間限定トッピング
+    var shredded = false
+    var shreddedAmount = 1
+
     //野菜
     var lettuce = ""
     var tomato = ""

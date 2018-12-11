@@ -40,9 +40,13 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         checkBoxFootLong()
         recipe.apply {
             textViewName.setText(name)
-            spinnerSand.setSelection(Sandwiches.values().filter { sandwich == it.sandName }[0].number)
+            val selectedSand = Sandwiches.values().single { sandwich == it.sandName }
+            if(selectedSand.isEnabled) spinnerSand.setSelection(selectedSand.number)
+             else spinnerSand.setSelection(0)
             checkBoxFootLong.isChecked = footLong
-            spinnerBread.setSelection(Breads.values().filter { bread == it.breadName }[0].number)
+            val selectedBread = Breads.values().single { bread == it.breadName }
+            if(selectedBread.isEnabled) spinnerBread.setSelection(selectedBread.number)
+            else spinnerSand.setSelection(0)
             checkBoxToast.isChecked = toast
             checkBoxcheese.isChecked = cheese
             checkBoxcream.isChecked = cream
@@ -53,6 +57,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             checkBoxshrimp.isChecked = shrimp
             checkBoxavocado.isChecked = avocado
             checkBoxroastbeef.isChecked = roastbeef
+
             if (cheese){
                 countercheese.visibility = View.VISIBLE
                 valuecheese.text = cheeseAmount.toString()
@@ -89,21 +94,31 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 counterroastbeef.visibility = View.VISIBLE
                 valueroastbeef.text = roastbeefAmount.toString()
             }
-            spinnerLettuce.setSelection(Amounts.values().filter { lettuce == it.amount }[0].number)
-            spinnerTomato.setSelection(Amounts.values().filter { tomato == it.amount }[0].number)
-            spinnerGreenpepper.setSelection(Amounts.values().filter { greenpepper == it.amount }[0].number)
-            spinnerRedonion.setSelection(Amounts.values().filter { redonion == it.amount }[0].number)
-            spinnerCarrot.setSelection(Amounts.values().filter { carrot == it.amount }[0].number)
-            spinnerPickles.setSelection(Amounts.values().filter { pickles == it.amount }[0].number)
-            spinnerOlive.setSelection(Amounts.values().filter { olive == it.amount }[0].number)
-            spinnerHotpepper.setSelection(Amounts.values().filter { hotpepper == it.amount }[0].number)
-            spinnerDressing.setSelection(Dressings.values().filter { dressing[0] == it.dressingName }[0].number)
-            val selectedSand =  Sandwiches.values().filter { spinnerSand.selectedItem == it.sandName }[0]
-            val recommendDress = Dressings.values().filter { selectedSand.recommendDressing == it.number }[0].dressingName
+
+            //期間限定
+            checkBoxshredded.isChecked = shredded
+            if (shredded){
+                countershredded.visibility = View.VISIBLE
+                valueshredded.text = shreddedAmount.toString()
+            }
+
+            spinnerLettuce.setSelection(Amounts.values().single { lettuce == it.amount }.number)
+            spinnerTomato.setSelection(Amounts.values().single { tomato == it.amount }.number)
+            spinnerGreenpepper.setSelection(Amounts.values().single { greenpepper == it.amount }.number)
+            spinnerRedonion.setSelection(Amounts.values().single { redonion == it.amount }.number)
+            spinnerCarrot.setSelection(Amounts.values().single { carrot == it.amount }.number)
+            spinnerPickles.setSelection(Amounts.values().single { pickles == it.amount }.number)
+            spinnerOlive.setSelection(Amounts.values().single { olive == it.amount }.number)
+            spinnerHotpepper.setSelection(Amounts.values().single { hotpepper == it.amount }.number)
+            val selected0Dressing = Dressings.values().single { dressing[0] == it.dressingName }
+            if (selected0Dressing.isEnabled) spinnerDressing.setSelection(selected0Dressing.number)
+            else spinnerDressing.setSelection(0)
+
+            val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it.number }.dressingName
             if(checkBoxRecommend.isChecked && spinnerDressing.selectedItem != recommendDress){
                 checkBoxRecommend.isChecked = false
             }
-            if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(AmountsDressing.values().filter { dressingAmount[0] == it.amount }[0].number)
+            if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(AmountsDressing.values().single { dressingAmount[0] == it.amount }.number)
             if (dressing[1] != ""){
                 addDressingCount++
                 val selectDressingItemView = LayoutInflater.from(this@EditRecipeActivity).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
@@ -113,7 +128,6 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 val adapterDressing = ArrayAdapter<String>(this@EditRecipeActivity, android.R.layout.simple_spinner_item, dressingsWoNothing)
                 adapterDressing.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerDressing2.adapter = adapterDressing
-                spinnerDressing2.setSelection(0)
                 spinnerDressing2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>, view: View,
                                                 posi: Int, id: Long) {
@@ -125,7 +139,6 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 val adapterDressingAmount = ArrayAdapter<String>(this@EditRecipeActivity, android.R.layout.simple_spinner_item, amountsDressing)
                 adapterDressingAmount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerDressingAmount2.adapter = adapterDressingAmount
-                spinnerDressingAmount2.setSelection(1)
                 spinnerDressingAmount2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>, view: View,
                                                 posi: Int, id: Long) {
@@ -134,8 +147,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 }
                 addDressing.visibility = View.GONE
                 addDressingText.visibility = View.GONE
-                spinnerDressing2.setSelection(Dressings.values().filter { dressing[1] == it.dressingName }[0].number)
-                spinnerDressingAmount2.setSelection(AmountsDressing.values().filter { dressingAmount[1] == it.amount }[0].number)
+                val selected1Dressing = Dressings.values().single { dressing[1] == it.dressingName }
+                if(selected1Dressing.isEnabled) spinnerDressing2.setSelection(selected1Dressing.number)
+                else spinnerDressing2.setSelection(0)
+                spinnerDressingAmount2.setSelection(AmountsDressing.values().single { dressingAmount[1] == it.amount }.number)
 
                 val howToDressRadioGroup = findViewById<RadioGroup>(R.id.howToDress)
 
@@ -173,7 +188,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         }
 
         completeButton.setOnClickListener {
-            if (textViewName.text.toString() == "") {
+            if (textViewName.text.toString().isEmpty() || textViewName.text.toString().isBlank()) {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("レシピの名前を入力してください")
                         .setNegativeButton("はい", null)
@@ -218,6 +233,11 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 shrimpAmount = valueshrimp.text.toString().toInt()
                                 avocadoAmount = valueavocado.text.toString().toInt()
                                 roastbeefAmount = valueroastbeef.text.toString().toInt()
+
+                                //期間限定トッピング
+                                shredded = checkBoxshredded.isChecked
+                                shreddedAmount = valueshredded.text.toString().toInt()
+
                                 lettuce = spinnerLettuce.selectedItem as String
                                 tomato = spinnerTomato.selectedItem as String
                                 greenpepper = spinnerGreenpepper.selectedItem as String

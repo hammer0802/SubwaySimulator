@@ -35,7 +35,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
         checkBoxFootLong()
 
         completeButton.setOnClickListener {
-            if (textViewName.text.toString() == "") {
+            if (textViewName.text.toString().isEmpty() || textViewName.text.toString().isBlank()) {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setTitle("レシピの名前を入力してください")
                         .setNegativeButton("はい", null)
@@ -81,6 +81,11 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 shrimpAmount = valueshrimp.text.toString().toInt()
                                 avocadoAmount = valueavocado.text.toString().toInt()
                                 roastbeefAmount = valueroastbeef.text.toString().toInt()
+
+                                //期間限定トッピング
+                                shredded = checkBoxshredded.isChecked
+                                shreddedAmount = valueshredded.text.toString().toInt()
+
                                 lettuce = spinnerLettuce.selectedItem as String
                                 tomato = spinnerTomato.selectedItem as String
                                 greenpepper = spinnerGreenpepper.selectedItem as String
