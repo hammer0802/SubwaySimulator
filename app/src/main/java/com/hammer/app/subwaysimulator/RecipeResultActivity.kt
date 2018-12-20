@@ -100,7 +100,7 @@ class RecipeResultActivity : AppCompatActivity() {
                 builder.setChooserTitle("共有アプリを選択してください")
                 builder.setType("image/png")
                 builder.setStream(contentUri)
-                builder.setText("#SubwaySimulator")
+                builder.setText(" #SUBWAYシミュレーター https://subwaysimulator.page.link/kK5p")
                 builder.startChooser()
                 true
             }
