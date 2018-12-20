@@ -32,20 +32,20 @@ class TutorialActivity : WelcomeActivity() {
                 .page(TitlePage(R.drawable.icon, "SUBWAYシミュレーターへ"+ "\n" +"ようこそ！"))
                 .page(BasicPage(
                         R.drawable.capture1,
-                        "お気に入りのサンドウィッチを忘れないように…",
-                        "このアプリではSUBWAYのサンドウィッチ・レシピを作成・保存することができます。")
+                        "お気に入りを忘れないように", "このアプリではSUBWAYのサンドウィッチ・レシピを作成・保存することができます")
                         .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
                 .page(BasicPage(
                         R.drawable.capture2,
-                        "あなたのご要望を叶えます",
-                        "野菜の増減やパン無し・ドレッシング無しなどの細かいご指定も、タップするだけで簡単にできます。")
+                        "あなただけのレシピを作りましょう","SUBWAYの裏技完全対応！タップするだけでオリジナルレシピが作れます")
                         .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
                 .page(BasicPage(
                         R.drawable.capture3,
-                        "あなたのお気に入りレシピを友人に教えてあげましょう！",
-                        "SNS連携機能を使って、作成したレシピを共有することができます。")
-                        .background(BackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary)))
-                )
+                        "レシピを作ったら","作ったレシピは編集したり、画像として保存や友達へ共有もできます")
+                        .background(BackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))))
+                .page(BasicPage(
+                        R.drawable.capture4,
+                        "レシピを削除したい場合は","レシピリストを長押しすることで削除できます")
+                        .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
                 .swipeToDismiss(true)
                 .build()
     }
