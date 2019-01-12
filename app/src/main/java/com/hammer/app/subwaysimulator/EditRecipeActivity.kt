@@ -95,12 +95,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 valueroastbeef.text = roastbeefAmount.toString()
             }
 
-            //期間限定
-            checkBoxshredded.isChecked = shredded
-            if (shredded){
-                countershredded.visibility = View.VISIBLE
-                valueshredded.text = shreddedAmount.toString()
-            }
+
 
             spinnerLettuce.setSelection(Amounts.values().single { lettuce == it.amount }.number)
             spinnerTomato.setSelection(Amounts.values().single { tomato == it.amount }.number)
@@ -234,9 +229,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 avocadoAmount = valueavocado.text.toString().toInt()
                                 roastbeefAmount = valueroastbeef.text.toString().toInt()
 
-                                //期間限定トッピング
-                                shredded = checkBoxshredded.isChecked
-                                shreddedAmount = valueshredded.text.toString().toInt()
+                                if(shredded) shredded = false
 
                                 lettuce = spinnerLettuce.selectedItem as String
                                 tomato = spinnerTomato.selectedItem as String

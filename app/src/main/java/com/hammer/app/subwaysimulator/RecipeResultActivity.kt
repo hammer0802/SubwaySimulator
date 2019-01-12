@@ -70,7 +70,7 @@ class RecipeResultActivity : AppCompatActivity() {
                 val isDressing0Enabled = Dressings.values().single { it.dressingName == recipe.dressing[0] }.isEnabled
                 val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values().single { it.dressingName == recipe.dressing[1] }.isEnabled
 
-                if(!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) { //販売終了判定
+                if(!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled || recipe.shredded) { //販売終了判定
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                             .setMessage("このレシピは販売終了メニューを含みます" + "\n" + "編集した場合、元のレシピに戻せません" + "\n" + "編集しますか？")
                             .setPositiveButton("はい"){_, _ ->
