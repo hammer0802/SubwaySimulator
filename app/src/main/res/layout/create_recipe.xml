@@ -605,7 +605,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/checkBoxshredded"
+                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/checkBoxavocado" />
 
@@ -617,7 +617,7 @@
                 android:layout_marginEnd="8dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/checkBoxshredded"
+                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/counteravocado">
 
@@ -650,59 +650,7 @@
 
             </LinearLayout>
 
-            <!--期間限定-->
-            <CheckBox
-                android:id="@+id/checkBoxshredded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxroastbeef" />
 
-            <LinearLayout
-                android:id="@+id/countershredded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/textViewVegetable"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/counterroastbeef">
-
-                <ImageButton
-                    android:id="@+id/downshredded"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_remove_circle_36dp"
-                    android:contentDescription="@null"/>
-
-                <TextView
-                    android:id="@+id/valueshredded"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:maxLength="1"
-                    android:text="@string/one" />
-
-                <ImageButton
-                    android:id="@+id/upshredded"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/ic_add_circle_36dp"
-                    android:contentDescription="@null"/>
-
-            </LinearLayout>
-            <!--期間限定終わり-->
 
             <TextView
                 android:id="@+id/textViewVegetable"
@@ -720,7 +668,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/textViewVegetableAmount"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/checkBoxshredded" />
+                app:layout_constraintTop_toBottomOf="@+id/checkBoxroastbeef" />
 
             <TextView
                 android:id="@+id/textViewVegetableAmount"
