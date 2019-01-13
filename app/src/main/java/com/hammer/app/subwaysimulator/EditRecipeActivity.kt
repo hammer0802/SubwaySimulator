@@ -109,8 +109,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             if (selected0Dressing.isEnabled) spinnerDressing.setSelection(selected0Dressing.ordinal)
             else spinnerDressing.setSelection(0)
 
-            val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it.ordinal }.dressingName
-            if(checkBoxRecommend.isChecked && spinnerDressing.selectedItem != recommendDress){
+            if(checkBoxRecommend.isChecked && spinnerDressing.selectedItem != selectedSand.recommendDressing.dressingName){
                 checkBoxRecommend.isChecked = false
             }
             if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(AmountsDressing.values().single { dressingAmount[0] == it.amount }.ordinal)
