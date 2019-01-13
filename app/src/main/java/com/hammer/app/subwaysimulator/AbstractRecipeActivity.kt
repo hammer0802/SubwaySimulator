@@ -110,7 +110,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         }
                     }
                     val selectedSand =  Sandwiches.values().single { spinnerSand.selectedItem == it.sandName }
-                    val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it.number }.dressingName
+                    val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it.ordinal }.dressingName
                     if(checkboxRecommend.isChecked && spinner.selectedItem != recommendDress){
                         checkboxRecommend.isChecked = false
                     }

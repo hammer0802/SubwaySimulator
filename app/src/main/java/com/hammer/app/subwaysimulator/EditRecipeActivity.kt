@@ -41,11 +41,11 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         recipe.apply {
             textViewName.setText(name)
             val selectedSand = Sandwiches.values().single { sandwich == it.sandName }
-            if(selectedSand.isEnabled) spinnerSand.setSelection(selectedSand.number)
+            if(selectedSand.isEnabled) spinnerSand.setSelection(selectedSand.ordinal)
              else spinnerSand.setSelection(0)
             checkBoxFootLong.isChecked = footLong
             val selectedBread = Breads.values().single { bread == it.breadName }
-            if(selectedBread.isEnabled) spinnerBread.setSelection(selectedBread.number)
+            if(selectedBread.isEnabled) spinnerBread.setSelection(selectedBread.ordinal)
             else spinnerSand.setSelection(0)
             checkBoxToast.isChecked = toast
             checkBoxcheese.isChecked = cheese
@@ -97,23 +97,23 @@ class EditRecipeActivity : AbstractRecipeActivity() {
 
 
 
-            spinnerLettuce.setSelection(Amounts.values().single { lettuce == it.amount }.number)
-            spinnerTomato.setSelection(Amounts.values().single { tomato == it.amount }.number)
-            spinnerGreenpepper.setSelection(Amounts.values().single { greenpepper == it.amount }.number)
-            spinnerRedonion.setSelection(Amounts.values().single { redonion == it.amount }.number)
-            spinnerCarrot.setSelection(Amounts.values().single { carrot == it.amount }.number)
-            spinnerPickles.setSelection(Amounts.values().single { pickles == it.amount }.number)
-            spinnerOlive.setSelection(Amounts.values().single { olive == it.amount }.number)
-            spinnerHotpepper.setSelection(Amounts.values().single { hotpepper == it.amount }.number)
+            spinnerLettuce.setSelection(Amounts.values().single { lettuce == it.amount }.ordinal)
+            spinnerTomato.setSelection(Amounts.values().single { tomato == it.amount }.ordinal)
+            spinnerGreenpepper.setSelection(Amounts.values().single { greenpepper == it.amount }.ordinal)
+            spinnerRedonion.setSelection(Amounts.values().single { redonion == it.amount }.ordinal)
+            spinnerCarrot.setSelection(Amounts.values().single { carrot == it.amount }.ordinal)
+            spinnerPickles.setSelection(Amounts.values().single { pickles == it.amount }.ordinal)
+            spinnerOlive.setSelection(Amounts.values().single { olive == it.amount }.ordinal)
+            spinnerHotpepper.setSelection(Amounts.values().single { hotpepper == it.amount }.ordinal)
             val selected0Dressing = Dressings.values().single { dressing[0] == it.dressingName }
-            if (selected0Dressing.isEnabled) spinnerDressing.setSelection(selected0Dressing.number)
+            if (selected0Dressing.isEnabled) spinnerDressing.setSelection(selected0Dressing.ordinal)
             else spinnerDressing.setSelection(0)
 
-            val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it.number }.dressingName
+            val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it.ordinal }.dressingName
             if(checkBoxRecommend.isChecked && spinnerDressing.selectedItem != recommendDress){
                 checkBoxRecommend.isChecked = false
             }
-            if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(AmountsDressing.values().single { dressingAmount[0] == it.amount }.number)
+            if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(AmountsDressing.values().single { dressingAmount[0] == it.amount }.ordinal)
             if (dressing[1] != ""){
                 addDressingCount++
                 val selectDressingItemView = LayoutInflater.from(this@EditRecipeActivity).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
@@ -143,9 +143,9 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 addDressing.visibility = View.GONE
                 addDressingText.visibility = View.GONE
                 val selected1Dressing = Dressings.values().single { dressing[1] == it.dressingName }
-                if(selected1Dressing.isEnabled) spinnerDressing2.setSelection(selected1Dressing.number)
+                if(selected1Dressing.isEnabled) spinnerDressing2.setSelection(selected1Dressing.ordinal)
                 else spinnerDressing2.setSelection(0)
-                spinnerDressingAmount2.setSelection(AmountsDressing.values().single { dressingAmount[1] == it.amount }.number)
+                spinnerDressingAmount2.setSelection(AmountsDressing.values().single { dressingAmount[1] == it.amount }.ordinal)
 
                 val howToDressRadioGroup = findViewById<RadioGroup>(R.id.howToDress)
 
