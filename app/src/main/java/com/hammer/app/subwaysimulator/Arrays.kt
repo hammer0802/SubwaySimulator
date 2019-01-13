@@ -3,41 +3,41 @@ package com.hammer.app.subwaysimulator
 
 //isEnabled == Falseのclassは最後列に移動する
 
-enum class Sandwiches(val number: Int, val sandName: String, val price: Int, val recommendDressing: Int, val isEnabled:Boolean = true){
-    BLT(0,"BLT", 420, Dressings.CAESAR.number),
-    EBI_AVOCADO(1,"えびアボカド", 500, Dressings.CREAMY.number),
-    NAMA_HAM(2,"生ハム＆マスカルポーネ", 520, Dressings.BASIL.number),
-    ROAST_CHICKEN(3, "ローストチキン", 420, Dressings.HONEY_MUSTARD.number),
-    ROAST_BEEF(4,"ローストビーフ　～プレミアム製法～", 590, Dressings.WASABI.number),
-    TURKEY_BACON_EGG(5,"ターキーベーコンエッグ", 490, Dressings.CAESAR.number),
-    CHEESE_ROAST_CHICKEN(6,"チーズローストチキン",480, Dressings.NONE.number),
-    TERIYAKI_CHICKEN(7,"てり焼きチキン", 480, Dressings.MAYONNAISE.number),
-    CHILI_CHICKEN(8,"チリチキン",410, Dressings.MAYONNAISE.number),
-    TURKEY(9, "ターキーブレスト",450, Dressings.BALSAMICO.number),
-    TUNA(10,"ツナ",430, Dressings.PEPPER.number),
-    EGG(11, "たまご",390, Dressings.SALT_PEPPER.number),
-    AVOCADO_VEGE(12,"アボカドベジー", 410, Dressings.CREAMY.number),
-    VEGE_CHEESE(13, "ベジー＆チーズ",340, Dressings.CREAMY.number),
-    VEGE_DE_LIGHT(14,"ベジーデライト",300, Dressings.OIL_VINEGAR.number),
-    MOZZARELLA_CHIKEN(15, "大人モッツァレラ・チキン(期間限定)", 490, Dressings.BASIL.number),
+enum class Sandwiches(val sandName: String, val price: Int, val recommendDressing: Int, val isEnabled:Boolean = true){
+    BLT("BLT", 420, Dressings.CAESAR.ordinal),
+    EBI_AVOCADO("えびアボカド", 500, Dressings.CREAMY.ordinal),
+    NAMA_HAM("生ハム＆マスカルポーネ", 520, Dressings.BASIL.ordinal),
+    ROAST_CHICKEN("ローストチキン", 420, Dressings.HONEY_MUSTARD.ordinal),
+    ROAST_BEEF("ローストビーフ　～プレミアム製法～", 590, Dressings.WASABI.ordinal),
+    TURKEY_BACON_EGG("ターキーベーコンエッグ", 490, Dressings.CAESAR.ordinal),
+    CHEESE_ROAST_CHICKEN("チーズローストチキン",480, Dressings.NONE.ordinal),
+    TERIYAKI_CHICKEN("てり焼きチキン", 480, Dressings.MAYONNAISE.ordinal),
+    CHILI_CHICKEN("チリチキン",410, Dressings.MAYONNAISE.ordinal),
+    TURKEY("ターキーブレスト",450, Dressings.BALSAMICO.ordinal),
+    TUNA("ツナ",430, Dressings.PEPPER.ordinal),
+    EGG("たまご",390, Dressings.SALT_PEPPER.ordinal),
+    AVOCADO_VEGE("アボカドベジー", 410, Dressings.CREAMY.ordinal),
+    VEGE_CHEESE("ベジー＆チーズ",340, Dressings.CREAMY.ordinal),
+    VEGE_DE_LIGHT("ベジーデライト",300, Dressings.OIL_VINEGAR.ordinal),
+    MOZZARELLA_CHICKEN("大人モッツァレラ・チキン(期間限定)", 490, Dressings.BASIL.ordinal),
 
     //期間終了
-    KINKAKU_BURG(16,"金格バーグ(期間限定)",890, Dressings.WAFU.number, false),
-    KINKAKU_DX(17,"金格DX(期間限定)",990, Dressings.WAFU.number, false),
-    BACON_CHICKEN_MELT(18, "ベーコンチキンメルト(期間限定)", 510, Dressings.RANCH.number, false),
-    CHICKEN_MELT(19, "チキンメルト(期間限定)", 450, Dressings.RANCH.number, false),
+    KINKAKU_BURG("金格バーグ(期間限定)",890, Dressings.WAFU.ordinal, false),
+    KINKAKU_DX("金格DX(期間限定)",990, Dressings.WAFU.ordinal, false),
+    BACON_CHICKEN_MELT("ベーコンチキンメルト(期間限定)", 510, Dressings.RANCH.ordinal, false),
+    CHICKEN_MELT("チキンメルト(期間限定)", 450, Dressings.RANCH.ordinal, false),
 }
 
-enum class Breads(val number: Int, val breadName: String, val price: Int = 0, val isEnabled:Boolean = true) {
-    WHEAT(0, "ウィート"),
-    WHITE(1, "ホワイト"),
-    SESAME(2,"セサミ"),
-    HONEY_OATES(3, "ハニーオーツ"),
-    FLAT_BREAD(4, "フラットブレッド"),
-    NONE(5,"無し(サラダ, + 300円)", 300),
+enum class Breads(val breadName: String, val price: Int = 0, val isEnabled:Boolean = true) {
+    WHEAT("ウィート"),
+    WHITE("ホワイト"),
+    SESAME("セサミ"),
+    HONEY_OATES("ハニーオーツ"),
+    FLAT_BREAD("フラットブレッド"),
+    NONE("無し(サラダ, + 300円)", 300),
 
     //期間終了
-    ONION_SESAME(6,"オニオンセサミペッパー(期間限定)", 0, false),
+    ONION_SESAME("オニオンセサミペッパー(期間限定)", 0, false),
 
 }
 
@@ -57,38 +57,38 @@ enum class Toppings(val toppingName: String, val price: Int, val engName: String
 }
 
 //NONEを最後にしないとエラるのでFalseのclassの直前にする
-enum class Dressings(val number: Int, val dressingName: String, val isEnabled:Boolean = true){
-    OIL_VINEGAR(0, "オイル&ビネガー　塩・こしょう"),
-    CAESAR(1, "シーザードレッシング"),
-    CREAMY(2,"野菜クリーミードレッシング"),
-    HONEY_MUSTARD(3,"ハニーマスタードソース"),
-    WASABI(4,"わさび醤油ソース"),
-    BASIL(5,"バジルソース"),
-    BALSAMICO(6,"バルサミコソース"),
-    MAYONNAISE(7,"マヨネーズタイプ"),
-    CHILI(8,"チリソース（激辛)"),
-    SALT_PEPPER(9, "塩・こしょう"),
-    PEPPER(10, "こしょう"),
-    NONE(11, "無し"),
+enum class Dressings(val dressingName: String, val isEnabled:Boolean = true){
+    OIL_VINEGAR("オイル&ビネガー　塩・こしょう"),
+    CAESAR("シーザードレッシング"),
+    CREAMY("野菜クリーミードレッシング"),
+    HONEY_MUSTARD("ハニーマスタードソース"),
+    WASABI("わさび醤油ソース"),
+    BASIL("バジルソース"),
+    BALSAMICO("バルサミコソース"),
+    MAYONNAISE("マヨネーズタイプ"),
+    CHILI("チリソース（激辛)"),
+    SALT_PEPPER("塩・こしょう"),
+    PEPPER("こしょう"),
+    NONE("無し"),
 
     //期間終了
-    WAFU(12, "特製和風ソース(期間限定)", false),
-    RANCH(13, "ランチドレッシング(期間限定)", false),
+    WAFU("特製和風ソース(期間限定)", false),
+    RANCH("ランチドレッシング(期間限定)", false),
 
 }
 
-enum class Amounts(val number: Int, val amount: String){
-    NONE(0,"無し"),
-    LITTLE(1,"少なめ"),
-    NORMAL(2, "普通"),
-    MANY(3,"多め"),
-    MAX(4,"上限"),
+enum class Amounts(val amount: String){
+    NONE("無し"),
+    LITTLE("少なめ"),
+    NORMAL("普通"),
+    MANY("多め"),
+    MAX("上限"),
 }
 
-enum class AmountsDressing(val number: Int, val amount: String){
-    LITTLE(0,"少なめ"),
-    NORMAL(1, "普通"),
-    MANY(2,"多め"),
+enum class AmountsDressing(val amount: String){
+    LITTLE("少なめ"),
+    NORMAL("普通"),
+    MANY("多め"),
 }
 
 enum class FootLong(val price: Int){
