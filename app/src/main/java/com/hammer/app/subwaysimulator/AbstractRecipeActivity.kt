@@ -55,7 +55,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
                     sumPrice.text = sum.toString()
                     if (checkboxRecommend.isChecked){
-                        spinnerDressing.setSelection(selectedSand.recommendDressing)
+                        spinnerDressing.setSelection(selectedSand.recommendDressing.ordinal)
 
                     }
                 }
@@ -110,10 +110,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         }
                     }
                     val selectedSand =  Sandwiches.values().single { spinnerSand.selectedItem == it.sandName }
-                    val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it.ordinal }.dressingName
-                    if(checkboxRecommend.isChecked && spinner.selectedItem != recommendDress){
-                        checkboxRecommend.isChecked = false
-                    }
+                    if(checkboxRecommend.isChecked && spinner.selectedItem != selectedSand.recommendDressing.dressingName) checkboxRecommend.isChecked = false
                 }
             }
             override fun onNothingSelected(arg0: AdapterView<*>) {}
