@@ -110,10 +110,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         }
                     }
                     val selectedSand =  Sandwiches.values().single { spinnerSand.selectedItem == it.sandName }
-                    val recommendDress = Dressings.values().single { selectedSand.recommendDressing == it }.dressingName
-                    if(checkboxRecommend.isChecked && spinner.selectedItem != recommendDress){
-                        checkboxRecommend.isChecked = false
-                    }
+                    if(checkboxRecommend.isChecked && spinner.selectedItem != selectedSand.recommendDressing.dressingName) checkboxRecommend.isChecked = false
                 }
             }
             override fun onNothingSelected(arg0: AdapterView<*>) {}
