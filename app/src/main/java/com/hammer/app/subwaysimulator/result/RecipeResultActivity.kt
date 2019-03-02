@@ -68,10 +68,10 @@ class RecipeResultActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_edit -> {
                 val intent= Intent(this, EditRecipeActivity::class.java)
-                val isSandwichEnabled = Sandwiches.values().single{ it.sandName == recipe.sandwich }.isEnabled
-                val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread }.isEnabled
-                val isDressing0Enabled = Dressings.values().single { it.dressingName == recipe.dressing[0] }.isEnabled
-                val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values().single { it.dressingName == recipe.dressing[1] }.isEnabled
+                val isSandwichEnabled = Sandwich.values().single{ it.sandName == recipe.sandwich }.isEnabled
+                val isBreadEnabled = Bread.values().single { it.breadName == recipe.bread }.isEnabled
+                val isDressing0Enabled = Dressing.values().single { it.dressingName == recipe.dressing[0] }.isEnabled
+                val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressing.values().single { it.dressingName == recipe.dressing[1] }.isEnabled
 
                 if(!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled || recipe.shredded) { //販売終了判定
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
@@ -183,7 +183,7 @@ class RecipeResultActivity : AppCompatActivity() {
         val toast: String
         val breadText :String
         when{
-            recipe.bread == Breads.NONE.breadName -> breadText = "無し(サラダ)"
+            recipe.bread == Bread.NONE.breadName -> breadText = "無し(サラダ)"
             recipe.toast -> {
                 toast = "トースト有り"
                 breadText = "${recipe.bread}($toast)"
@@ -208,10 +208,10 @@ class RecipeResultActivity : AppCompatActivity() {
         //期間限定トッピング
         if(recipe.shredded)textViewToppingSelect.append("シュレッドチーズ × ${recipe.shreddedAmount}")
 
-        val none = Amounts.NONE.amount
+        val none = Amount.NONE.amount
         if(!recipe.cheese && !recipe.cream && !recipe.mascar && !recipe.egg && !recipe.bacon && !recipe.tuna && !recipe.shrimp && !recipe.avocado && !recipe.roastbeef && !recipe.shredded) textViewToppingSelect.text = none
 
-        val normal = Amounts.NORMAL.amount
+        val normal = Amount.NORMAL.amount
         if(recipe.lettuce != normal) textViewVegetableAmount.append("レタス：${recipe.lettuce} ")
         if(recipe.tomato != normal) textViewVegetableAmount.append("トマト：${recipe.tomato} ")
         if(recipe.greenpepper != normal) textViewVegetableAmount.append("ピーマン：${recipe.greenpepper} ")

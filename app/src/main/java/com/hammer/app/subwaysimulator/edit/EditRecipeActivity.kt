@@ -43,11 +43,11 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         checkBoxFootLong()
         recipe.apply {
             textViewName.setText(name)
-            val selectedSand = Sandwiches.values().single { sandwich == it.sandName }
+            val selectedSand = Sandwich.values().single { sandwich == it.sandName }
             if(selectedSand.isEnabled) spinnerSand.setSelection(selectedSand.ordinal)
              else spinnerSand.setSelection(0)
             checkBoxFootLong.isChecked = footLong
-            val selectedBread = Breads.values().single { bread == it.breadName }
+            val selectedBread = Bread.values().single { bread == it.breadName }
             if(selectedBread.isEnabled) spinnerBread.setSelection(selectedBread.ordinal)
             else spinnerSand.setSelection(0)
             checkBoxToast.isChecked = toast
@@ -100,22 +100,22 @@ class EditRecipeActivity : AbstractRecipeActivity() {
 
 
 
-            spinnerLettuce.setSelection(Amounts.values().single { lettuce == it.amount }.ordinal)
-            spinnerTomato.setSelection(Amounts.values().single { tomato == it.amount }.ordinal)
-            spinnerGreenpepper.setSelection(Amounts.values().single { greenpepper == it.amount }.ordinal)
-            spinnerRedonion.setSelection(Amounts.values().single { redonion == it.amount }.ordinal)
-            spinnerCarrot.setSelection(Amounts.values().single { carrot == it.amount }.ordinal)
-            spinnerPickles.setSelection(Amounts.values().single { pickles == it.amount }.ordinal)
-            spinnerOlive.setSelection(Amounts.values().single { olive == it.amount }.ordinal)
-            spinnerHotpepper.setSelection(Amounts.values().single { hotpepper == it.amount }.ordinal)
-            val selected0Dressing = Dressings.values().single { dressing[0] == it.dressingName }
+            spinnerLettuce.setSelection(Amount.values().single { lettuce == it.amount }.ordinal)
+            spinnerTomato.setSelection(Amount.values().single { tomato == it.amount }.ordinal)
+            spinnerGreenpepper.setSelection(Amount.values().single { greenpepper == it.amount }.ordinal)
+            spinnerRedonion.setSelection(Amount.values().single { redonion == it.amount }.ordinal)
+            spinnerCarrot.setSelection(Amount.values().single { carrot == it.amount }.ordinal)
+            spinnerPickles.setSelection(Amount.values().single { pickles == it.amount }.ordinal)
+            spinnerOlive.setSelection(Amount.values().single { olive == it.amount }.ordinal)
+            spinnerHotpepper.setSelection(Amount.values().single { hotpepper == it.amount }.ordinal)
+            val selected0Dressing = Dressing.values().single { dressing[0] == it.dressingName }
             if (selected0Dressing.isEnabled) spinnerDressing.setSelection(selected0Dressing.ordinal)
             else spinnerDressing.setSelection(0)
 
             if(checkBoxRecommend.isChecked && spinnerDressing.selectedItem != selectedSand.recommendDressing.dressingName){
                 checkBoxRecommend.isChecked = false
             }
-            if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(AmountsDressing.values().single { dressingAmount[0] == it.amount }.ordinal)
+            if (dressing[0] != Dressing.NONE.dressingName) spinnerDressingAmount.setSelection(AmountDressing.values().single { dressingAmount[0] == it.amount }.ordinal)
             if (dressing[1] != ""){
                 addDressingCount++
                 val selectDressingItemView = LayoutInflater.from(this@EditRecipeActivity).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
@@ -144,10 +144,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 }
                 addDressing.visibility = View.GONE
                 addDressingText.visibility = View.GONE
-                val selected1Dressing = Dressings.values().single { dressing[1] == it.dressingName }
+                val selected1Dressing = Dressing.values().single { dressing[1] == it.dressingName }
                 if(selected1Dressing.isEnabled) spinnerDressing2.setSelection(selected1Dressing.ordinal)
                 else spinnerDressing2.setSelection(0)
-                spinnerDressingAmount2.setSelection(AmountsDressing.values().single { dressingAmount[1] == it.amount }.ordinal)
+                spinnerDressingAmount2.setSelection(AmountDressing.values().single { dressingAmount[1] == it.amount }.ordinal)
 
                 val howToDressRadioGroup = findViewById<RadioGroup>(R.id.howToDress)
 
@@ -168,7 +168,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 addDressing2.setOnClickListener {addBtn2 ->
                     textViewName.clearFocus()
                     addDressing2Count++
-                    if (spinnerDressing.selectedItem != Dressings.NONE.dressingName){
+                    if (spinnerDressing.selectedItem != Dressing.NONE.dressingName){
                         addBtn2.visibility = View.GONE
                         addDressingText2.visibility = View.GONE
                         textViewDressing2.visibility = View.VISIBLE
@@ -209,7 +209,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 price = sumPrice.text.toString().toInt()
                                 editTime = sdf.format(c.time)
                                 sandwich = spinnerSand.selectedItem as String
-                                footLong = if(spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
+                                footLong = if(spinnerBread.selectedItem.toString() == Bread.NONE.breadName) false else checkBoxFootLong.isChecked
                                 bread = spinnerBread.selectedItem as String
                                 toast = checkBoxToast.isChecked
                                 cheese = checkBoxcheese.isChecked
@@ -242,12 +242,12 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                                 olive = spinnerOlive.selectedItem as String
                                 hotpepper = spinnerHotpepper.selectedItem as String
                                 dressing[0] = spinnerDressing.selectedItem as String
-                                if (dressing[0] == Dressings.NONE.dressingName) {
+                                if (dressing[0] == Dressing.NONE.dressingName) {
                                     dressingAmount[0] = "-"
                                 } else {
                                     dressingAmount[0] = spinnerDressingAmount.selectedItem as String
                                 }
-                                if(addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
+                                if(addDressingCount == 1 && dressing[0] != Dressing.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
                                     dressing[1] = spinnerDressing2.selectedItem as String
                                     dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)

@@ -63,7 +63,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 price = sumPrice.text.toString().toInt()
                                 createTime = sdf.format(c.time)
                                 sandwich = spinnerSand.selectedItem as String
-                                footLong = if(spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
+                                footLong = if(spinnerBread.selectedItem.toString() == Bread.NONE.breadName) false else checkBoxFootLong.isChecked
                                 bread = spinnerBread.selectedItem as String
                                 toast = checkBoxToast.isChecked
                                 cheese = checkBoxcheese.isChecked
@@ -95,12 +95,12 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 olive = spinnerOlive.selectedItem as String
                                 hotpepper = spinnerHotpepper.selectedItem as String
                                 dressing.add(spinnerDressing.selectedItem as String)
-                                if (dressing[0] == Dressings.NONE.dressingName) {
+                                if (dressing[0] == Dressing.NONE.dressingName) {
                                     dressingAmount.add("-")
                                 } else {
                                     dressingAmount.add(spinnerDressingAmount.selectedItem as String)
                                 }
-                                if(addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE){
+                                if(addDressingCount == 1 && dressing[0] != Dressing.NONE.dressingName && removeDressing.visibility == View.VISIBLE){
                                     dressing.add(spinnerDressing2.selectedItem as String)
                                     dressingAmount.add(spinnerDressingAmount2.selectedItem as String)
                                     val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
