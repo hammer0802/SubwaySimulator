@@ -1,8 +1,9 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.tutorial
 
 import android.app.Activity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import com.hammer.app.subwaysimulator.R
 import com.stephentuso.welcome.*
 
 class TutorialActivity : WelcomeActivity() {
@@ -41,7 +42,7 @@ class TutorialActivity : WelcomeActivity() {
                 .page(BasicPage(
                         R.drawable.capture3,
                         "レシピを作ったら","作ったレシピは編集したり、画像として保存や友達へ共有もできます")
-                        .background(BackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))))
+                        .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
                 .page(BasicPage(
                         R.drawable.capture4,
                         "レシピを削除したい場合は","レシピリストを長押しすることで削除できます")

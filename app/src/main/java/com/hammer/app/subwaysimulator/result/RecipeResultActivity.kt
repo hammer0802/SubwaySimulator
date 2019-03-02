@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.result
 
 import android.app.AlertDialog
 import android.content.*
@@ -19,11 +19,14 @@ import android.support.v4.content.FileProvider
 import java.io.File
 import java.io.FileOutputStream
 import android.support.v4.app.ShareCompat
-import android.widget.CheckBox
 import android.widget.Toast
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.hammer.app.subwaysimulator.BuildConfig
+import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.edit.EditRecipeActivity
+import com.hammer.app.subwaysimulator.model.*
 import net.taptappun.taku.kobayashi.runtimepermissionchecker.RuntimePermissionChecker
 
 const val REQUEST_CODE = 1
@@ -35,7 +38,7 @@ class RecipeResultActivity : AppCompatActivity() {
     private val gson = Gson()
     private val intentFromList: Intent by lazy { this.intent }
     val key: String by lazy { intentFromList.getStringExtra("key")}
-    private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
+    private val recipe: Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
@@ -169,7 +172,7 @@ class RecipeResultActivity : AppCompatActivity() {
         contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
     }
 
-    private fun setRecipeText(recipe:Recipe){
+    private fun setRecipeText(recipe: Recipe){
         recipeName.append(":${recipe.name}")
 
         recipePrice.append(":${recipe.price}円")

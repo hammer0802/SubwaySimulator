@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.main
 
 import android.content.Context
 import android.content.Intent
@@ -19,6 +19,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.hammer.app.subwaysimulator.BuildConfig
+import com.hammer.app.subwaysimulator.MyRecyclerAdapter
+import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.create.CreateRecipeActivity
+import com.hammer.app.subwaysimulator.model.Recipe
+import com.hammer.app.subwaysimulator.tutorial.TutorialActivity
 
 class MainActivity : AppCompatActivity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }

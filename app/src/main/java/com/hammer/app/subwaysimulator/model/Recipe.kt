@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.model
 
 class Recipe {
     var name = ""  //レシピ名

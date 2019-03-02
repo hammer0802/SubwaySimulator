@@ -12,8 +12,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
+import com.hammer.app.subwaysimulator.main.MainActivity
+import com.hammer.app.subwaysimulator.model.Recipe
+import com.hammer.app.subwaysimulator.result.RecipeResultActivity
 
-class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecyclerViewHolder>() {
+class MyRecyclerAdapter(val activity: MainActivity):RecyclerView.Adapter<MyRecyclerViewHolder>() {
     private val preference: SharedPreferences by lazy { activity.getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     private val gson = Gson()
     val list: MutableList<Recipe> = mutableListOf()
@@ -46,7 +49,7 @@ class MyRecyclerAdapter(val activity:MainActivity):RecyclerView.Adapter<MyRecycl
                 holder.v.isEnabled = true
             }
             handler.postDelayed(runnable, 2000)
-            val intentToResult= Intent(activity,RecipeResultActivity::class.java)
+            val intentToResult= Intent(activity, RecipeResultActivity::class.java)
             intentToResult.putExtra("key", list[position].uuid)
             activity.startActivity(intentToResult)
         }

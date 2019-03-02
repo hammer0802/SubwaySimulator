@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.create
 
 import android.os.Bundle
 import android.app.AlertDialog
@@ -6,6 +6,9 @@ import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
+import com.hammer.app.subwaysimulator.AbstractRecipeActivity
+import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.model.*
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
