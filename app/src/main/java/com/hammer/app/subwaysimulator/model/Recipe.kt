@@ -17,6 +17,7 @@ class Recipe {
 
     var howToDress = HowToDress.SEPARATE
     var editTime :Date = Date() //編集日時
+    var createTime :Date = Date() //作成日時
 
     val price get() = 10 //TODO:料金計算
 }
