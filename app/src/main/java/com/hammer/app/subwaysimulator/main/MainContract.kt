@@ -5,7 +5,6 @@ import com.hammer.app.subwaysimulator.BaseView
 
 interface MainContract {
     interface View : BaseView<Presenter> {
-        fun showRecipeList()
     }
 
     interface Presenter : BasePresenter {
