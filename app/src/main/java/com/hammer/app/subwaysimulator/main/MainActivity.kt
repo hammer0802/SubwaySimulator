@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             val countPreference = getSharedPreferences("countPreference", Context.MODE_PRIVATE)
             var count = countPreference.getInt("count", 0)
             if (count == 0) {
+                //TODO TapTargetContractを作ってTestabilityを上げたい
                 val sequence = TapTargetSequence(this)
                         .targets(
                                 TapTarget.forView(findViewById<View>(R.id.create), "まずはこちらのボタンを押してレシピを作成しましょう！")
