@@ -34,7 +34,7 @@ class RecipeResultActivity : AppCompatActivity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     private val gson = Gson()
     private val intentFromList: Intent by lazy { this.intent }
-    val key: String by lazy { intentFromList.getStringExtra("key")}
+    val key: String? by lazy { intentFromList.getStringExtra("key")}
     private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

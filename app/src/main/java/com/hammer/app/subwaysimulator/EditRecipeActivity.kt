@@ -15,7 +15,7 @@ import java.util.*
 
 class EditRecipeActivity : AbstractRecipeActivity() {
     private val intentFromResult: Intent by lazy { this.intent }
-    val key: String by lazy { intentFromResult.getStringExtra("key")}
+    val key: String? by lazy { intentFromResult.getStringExtra("key")}
     private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
     @SuppressLint("InflateParams")
