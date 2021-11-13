@@ -2,7 +2,7 @@ package com.hammer.app.subwaysimulator
 
 import android.app.Activity
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import com.stephentuso.welcome.*
 
 class TutorialActivity : WelcomeActivity() {

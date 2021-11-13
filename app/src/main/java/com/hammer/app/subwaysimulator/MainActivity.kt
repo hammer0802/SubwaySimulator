@@ -6,8 +6,8 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
