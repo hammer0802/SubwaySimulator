@@ -16,18 +16,18 @@ android {
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
     }
-    signingConfigs {
-        def releaseSettingGradleFile = new File("${project.rootDir}/release.gradle")
-        apply from: releaseSettingGradleFile, to: android
-    }
-    buildTypes {
-        release {
-            multiDexEnabled false
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-    }
+//    signingConfigs {
+//        def releaseSettingGradleFile = new File("${project.rootDir}/release.gradle")
+//        apply from: releaseSettingGradleFile, to: android
+//    }
+//    buildTypes {
+//        release {
+//            multiDexEnabled false
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
+//        }
+//    }
 }
 
 repositories {
