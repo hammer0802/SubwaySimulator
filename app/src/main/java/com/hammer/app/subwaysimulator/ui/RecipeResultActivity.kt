@@ -19,12 +19,12 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.gson.Gson
-import com.hammer.app.subwaysimulator.model.Amounts
-import com.hammer.app.subwaysimulator.model.Breads
+import com.hammer.app.subwaysimulator.localdata.Amounts
+import com.hammer.app.subwaysimulator.localdata.Breads
 import com.hammer.app.subwaysimulator.BuildConfig
-import com.hammer.app.subwaysimulator.model.Dressings
+import com.hammer.app.subwaysimulator.localdata.Dressings
 import com.hammer.app.subwaysimulator.R
-import com.hammer.app.subwaysimulator.model.Sandwiches
+import com.hammer.app.subwaysimulator.localdata.Sandwiches
 import com.hammer.app.subwaysimulator.model.Recipe
 import kotlinx.android.synthetic.main.activity_recipe_result.*
 import kotlinx.android.synthetic.main.content_recipe_result.*
