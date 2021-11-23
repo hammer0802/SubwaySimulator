@@ -73,7 +73,7 @@ class RecipeResultActivity : AppCompatActivity() {
             R.id.action_edit -> {
                 val intent = Intent(this, EditRecipeActivity::class.java)
                 val isSandwichEnabled = Sandwiches.values().single { it.sandName == recipe.sandwich.type.sandName }.isEnabled
-                val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread }.isEnabled
+                val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread.type.breadName }.isEnabled
                 val isDressing0Enabled = Dressings.values().single { it.dressingName == recipe.dressing[0] }.isEnabled
                 val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values()
                     .single { it.dressingName == recipe.dressing[1] }.isEnabled
@@ -209,8 +209,8 @@ class RecipeResultActivity : AppCompatActivity() {
         val toast: String
         val breadText: String
         when {
-            recipe.bread == Breads.NONE.breadName -> breadText = "無し(サラダ)"
-            recipe.toast -> {
+            recipe.bread.type == Breads.NONE -> breadText = "無し(サラダ)"
+            recipe.bread.isToasted -> {
                 toast = "トースト有り"
                 breadText = "${recipe.bread}($toast)"
             }

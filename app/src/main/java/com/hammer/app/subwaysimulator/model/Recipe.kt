@@ -7,8 +7,7 @@ data class Recipe (
     var name: String = "",  //レシピ名
     var price: Int = 0,  //合計金額
     val sandwich: Sandwich,
-    var bread: String = "",  //パンの種類
-    var toast: Boolean = false, //トーストの有無
+    val bread: Bread,
     //トッピング、煩雑なのでToppingクラスでまとめる？
     var cheese: Boolean = false,
     var cream: Boolean = false,

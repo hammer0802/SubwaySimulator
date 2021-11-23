@@ -8,12 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.localdata.Amounts
 import com.hammer.app.subwaysimulator.localdata.AmountsDressing
 import com.hammer.app.subwaysimulator.localdata.Breads
 import com.hammer.app.subwaysimulator.localdata.Dressings
-import com.hammer.app.subwaysimulator.R
-import com.hammer.app.subwaysimulator.model.Recipe
 import com.hammer.app.subwaysimulator.localdata.Sandwiches
 import com.hammer.app.subwaysimulator.localdata.amounts
 import com.hammer.app.subwaysimulator.localdata.amountsDressing
@@ -21,6 +20,8 @@ import com.hammer.app.subwaysimulator.localdata.breads
 import com.hammer.app.subwaysimulator.localdata.dressings
 import com.hammer.app.subwaysimulator.localdata.dressingsWoNothing
 import com.hammer.app.subwaysimulator.localdata.sandwiches
+import com.hammer.app.subwaysimulator.model.Bread
+import com.hammer.app.subwaysimulator.model.Recipe
 import com.hammer.app.subwaysimulator.model.Sandwich
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
@@ -29,7 +30,7 @@ import java.util.*
 
 class EditRecipeActivity : AbstractRecipeActivity() {
     private val intentFromResult: Intent by lazy { this.intent }
-    val key: String? by lazy { intentFromResult.getStringExtra("key")}
+    val key: String? by lazy { intentFromResult.getStringExtra("key") }
     private val recipe: Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
     @SuppressLint("InflateParams")
@@ -55,13 +56,13 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         recipe.apply {
             textViewName.setText(name)
             val selectedSand = Sandwiches.values().single { sandwich.type.sandName == it.sandName }
-            if(selectedSand.isEnabled) spinnerSand.setSelection(selectedSand.ordinal)
-             else spinnerSand.setSelection(0)
-            checkBoxFootLong.isChecked = sandwich.isFootLong
-            val selectedBread = Breads.values().single { bread == it.breadName }
-            if(selectedBread.isEnabled) spinnerBread.setSelection(selectedBread.ordinal)
+            if (selectedSand.isEnabled) spinnerSand.setSelection(selectedSand.ordinal)
             else spinnerSand.setSelection(0)
-            checkBoxToast.isChecked = toast
+            checkBoxFootLong.isChecked = sandwich.isFootLong
+            val selectedBread = Breads.values().single { bread.type.breadName == it.breadName }
+            if (selectedBread.isEnabled) spinnerBread.setSelection(selectedBread.ordinal)
+            else spinnerSand.setSelection(0)
+            checkBoxToast.isChecked = bread.isToasted
             checkBoxcheese.isChecked = cheese
             checkBoxcream.isChecked = cream
             checkBoxmascar.isChecked = mascar
@@ -72,39 +73,39 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             checkBoxavocado.isChecked = avocado
             checkBoxroastbeef.isChecked = roastbeef
 
-            if (cheese){
+            if (cheese) {
                 countercheese.visibility = View.VISIBLE
                 valuecheese.text = cheeseAmount.toString()
             }
-            if (cream){
+            if (cream) {
                 countercream.visibility = View.VISIBLE
                 valuecream.text = creamAmount.toString()
             }
-            if (mascar){
+            if (mascar) {
                 countermascar.visibility = View.VISIBLE
                 valuemascar.text = mascarAmount.toString()
             }
-            if (egg){
+            if (egg) {
                 counteregg.visibility = View.VISIBLE
                 valueegg.text = eggAmount.toString()
             }
-            if (bacon){
+            if (bacon) {
                 counterbacon.visibility = View.VISIBLE
                 valuebacon.text = baconAmount.toString()
             }
-            if (tuna){
+            if (tuna) {
                 countertuna.visibility = View.VISIBLE
                 valuetuna.text = tunaAmount.toString()
             }
-            if (shrimp){
+            if (shrimp) {
                 countershrimp.visibility = View.VISIBLE
                 valueshrimp.text = shrimpAmount.toString()
             }
-            if (avocado){
+            if (avocado) {
                 counteravocado.visibility = View.VISIBLE
                 valueavocado.text = avocadoAmount.toString()
             }
-            if (roastbeef){
+            if (roastbeef) {
                 counterroastbeef.visibility = View.VISIBLE
                 valueroastbeef.text = roastbeefAmount.toString()
             }
@@ -120,46 +121,56 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             if (selected0Dressing.isEnabled) spinnerDressing.setSelection(selected0Dressing.ordinal)
             else spinnerDressing.setSelection(0)
 
-            if(checkBoxRecommend.isChecked && spinnerDressing.selectedItem != selectedSand.recommendDressing.dressingName){
+            if (checkBoxRecommend.isChecked && spinnerDressing.selectedItem != selectedSand.recommendDressing.dressingName) {
                 checkBoxRecommend.isChecked = false
             }
-            if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(AmountsDressing.values().single { dressingAmount[0] == it.amount }.ordinal)
-            if (dressing[1] != ""){
+            if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(
+                AmountsDressing.values().single { dressingAmount[0] == it.amount }.ordinal
+            )
+            if (dressing[1] != "") {
                 addDressingCount++
-                val selectDressingItemView = LayoutInflater.from(this@EditRecipeActivity).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
+                val selectDressingItemView = LayoutInflater.from(this@EditRecipeActivity)
+                    .inflate(R.layout.select_dressing_item, null, false) as ViewGroup
                 selectDressingItemView.id = selectDressingItemView.hashCode()
                 select_dressing_container.addView(selectDressingItemView)
 
-                val adapterDressing = ArrayAdapter<String>(this@EditRecipeActivity, android.R.layout.simple_spinner_item, dressingsWoNothing)
+                val adapterDressing =
+                    ArrayAdapter<String>(this@EditRecipeActivity, android.R.layout.simple_spinner_item, dressingsWoNothing)
                 adapterDressing.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerDressing2.adapter = adapterDressing
                 spinnerDressing2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                                posi: Int, id: Long) {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>, view: View,
+                        posi: Int, id: Long
+                    ) {
                     }
 
                     override fun onNothingSelected(arg0: AdapterView<*>) {}
                 }
 
-                val adapterDressingAmount = ArrayAdapter<String>(this@EditRecipeActivity, android.R.layout.simple_spinner_item, amountsDressing)
+                val adapterDressingAmount =
+                    ArrayAdapter<String>(this@EditRecipeActivity, android.R.layout.simple_spinner_item, amountsDressing)
                 adapterDressingAmount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 spinnerDressingAmount2.adapter = adapterDressingAmount
                 spinnerDressingAmount2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                                posi: Int, id: Long) {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>, view: View,
+                        posi: Int, id: Long
+                    ) {
                     }
+
                     override fun onNothingSelected(arg0: AdapterView<*>) {}
                 }
                 addDressing.visibility = View.GONE
                 addDressingText.visibility = View.GONE
                 val selected1Dressing = Dressings.values().single { dressing[1] == it.dressingName }
-                if(selected1Dressing.isEnabled) spinnerDressing2.setSelection(selected1Dressing.ordinal)
+                if (selected1Dressing.isEnabled) spinnerDressing2.setSelection(selected1Dressing.ordinal)
                 else spinnerDressing2.setSelection(0)
                 spinnerDressingAmount2.setSelection(AmountsDressing.values().single { dressingAmount[1] == it.amount }.ordinal)
 
                 val howToDressRadioGroup = findViewById<RadioGroup>(R.id.howToDress)
 
-                removeDressing.setOnClickListener{removeBtn ->
+                removeDressing.setOnClickListener { removeBtn ->
                     textViewName.clearFocus()
                     addDressing2.visibility = View.VISIBLE
                     addDressingText2.visibility = View.VISIBLE
@@ -173,10 +184,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                     removeDressingText.visibility = View.GONE
                 }
 
-                addDressing2.setOnClickListener {addBtn2 ->
+                addDressing2.setOnClickListener { addBtn2 ->
                     textViewName.clearFocus()
                     addDressing2Count++
-                    if (spinnerDressing.selectedItem != Dressings.NONE.dressingName){
+                    if (spinnerDressing.selectedItem != Dressings.NONE.dressingName) {
                         addBtn2.visibility = View.GONE
                         addDressingText2.visibility = View.GONE
                         textViewDressing2.visibility = View.VISIBLE
@@ -195,85 +206,89 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         completeButton.setOnClickListener {
             if (textViewName.text.toString().isEmpty() || textViewName.text.toString().isBlank()) {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                        .setTitle("レシピの名前を入力してください")
-                        .setNegativeButton("はい", null)
-                        .show()
-            } else if(addDressingCount == 1 && spinnerDressing.selectedItem == spinnerDressing2.selectedItem){
+                    .setTitle("レシピの名前を入力してください")
+                    .setNegativeButton("はい", null)
+                    .show()
+            } else if (addDressingCount == 1 && spinnerDressing.selectedItem == spinnerDressing2.selectedItem) {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                        .setTitle("追加ドレッシングは元のドレッシングと違うものにしてください")
-                        .setNegativeButton("はい", null)
-                        .show()
+                    .setTitle("追加ドレッシングは元のドレッシングと違うものにしてください")
+                    .setNegativeButton("はい", null)
+                    .show()
             } else {
                 val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                        .setTitle("確認")
-                        .setMessage("レシピ編集を完了しますか？")
-                        .setPositiveButton("はい") { _, _ ->
-                            val intentToResult = Intent()
-                            val e = preference.edit()
-                            val c = Calendar.getInstance()
-                            val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
-                            Recipe(sandwich = Sandwich.from(spinnerSand.selectedItem as String, if(spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked)).apply {
-                                name = textViewName.text.toString()
-                                price = sumPrice.text.toString().toInt()
-                                editTime = sdf.format(c.time)
-                                bread = spinnerBread.selectedItem as String
-                                toast = checkBoxToast.isChecked
-                                cheese = checkBoxcheese.isChecked
-                                cream = checkBoxcream.isChecked
-                                mascar = checkBoxmascar.isChecked
-                                egg = checkBoxegg.isChecked
-                                bacon = checkBoxbacon.isChecked
-                                tuna = checkBoxtuna.isChecked
-                                shrimp = checkBoxshrimp.isChecked
-                                avocado = checkBoxavocado.isChecked
-                                roastbeef = checkBoxroastbeef.isChecked
-                                cheeseAmount = valuecheese.text.toString().toInt()
-                                creamAmount = valuecream.text.toString().toInt()
-                                mascarAmount = valuemascar.text.toString().toInt()
-                                eggAmount = valueegg.text.toString().toInt()
-                                baconAmount = valuebacon.text.toString().toInt()
-                                tunaAmount = valuetuna.text.toString().toInt()
-                                shrimpAmount = valueshrimp.text.toString().toInt()
-                                avocadoAmount = valueavocado.text.toString().toInt()
-                                roastbeefAmount = valueroastbeef.text.toString().toInt()
+                    .setTitle("確認")
+                    .setMessage("レシピ編集を完了しますか？")
+                    .setPositiveButton("はい") { _, _ ->
+                        val intentToResult = Intent()
+                        val e = preference.edit()
+                        val c = Calendar.getInstance()
+                        val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
+                        Recipe(
+                            sandwich = Sandwich.from(
+                                spinnerSand.selectedItem as String,
+                                if (spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
+                            ),
+                            bread = Bread.from(spinnerBread.selectedItem as String, checkBoxToast.isChecked)
+                        ).apply {
+                            name = textViewName.text.toString()
+                            price = sumPrice.text.toString().toInt()
+                            editTime = sdf.format(c.time)
+                            cheese = checkBoxcheese.isChecked
+                            cream = checkBoxcream.isChecked
+                            mascar = checkBoxmascar.isChecked
+                            egg = checkBoxegg.isChecked
+                            bacon = checkBoxbacon.isChecked
+                            tuna = checkBoxtuna.isChecked
+                            shrimp = checkBoxshrimp.isChecked
+                            avocado = checkBoxavocado.isChecked
+                            roastbeef = checkBoxroastbeef.isChecked
+                            cheeseAmount = valuecheese.text.toString().toInt()
+                            creamAmount = valuecream.text.toString().toInt()
+                            mascarAmount = valuemascar.text.toString().toInt()
+                            eggAmount = valueegg.text.toString().toInt()
+                            baconAmount = valuebacon.text.toString().toInt()
+                            tunaAmount = valuetuna.text.toString().toInt()
+                            shrimpAmount = valueshrimp.text.toString().toInt()
+                            avocadoAmount = valueavocado.text.toString().toInt()
+                            roastbeefAmount = valueroastbeef.text.toString().toInt()
 
-                                if(shredded) shredded = false
+                            if (shredded) shredded = false
 
-                                lettuce = spinnerLettuce.selectedItem as String
-                                tomato = spinnerTomato.selectedItem as String
-                                greenpepper = spinnerGreenpepper.selectedItem as String
-                                redonion = spinnerRedonion.selectedItem as String
-                                carrot = spinnerCarrot.selectedItem as String
-                                pickles = spinnerPickles.selectedItem as String
-                                olive = spinnerOlive.selectedItem as String
-                                hotpepper = spinnerHotpepper.selectedItem as String
-                                dressing[0] = spinnerDressing.selectedItem as String
-                                if (dressing[0] == Dressings.NONE.dressingName) {
-                                    dressingAmount[0] = "-"
-                                } else {
-                                    dressingAmount[0] = spinnerDressingAmount.selectedItem as String
-                                }
-                                if(addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
-                                    dressing[1] = spinnerDressing2.selectedItem as String
-                                    dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
-                                    val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
-                                    val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
-                                    howToDress = checkedRadioBtn.text.toString()
-                                }
-                                if(addDressing2.visibility == View.VISIBLE){
-                                    dressing[1] = ""
-                                    dressingAmount[1] = ""
-                                }
-                                e.putString(key, gson.toJson(this))
+                            lettuce = spinnerLettuce.selectedItem as String
+                            tomato = spinnerTomato.selectedItem as String
+                            greenpepper = spinnerGreenpepper.selectedItem as String
+                            redonion = spinnerRedonion.selectedItem as String
+                            carrot = spinnerCarrot.selectedItem as String
+                            pickles = spinnerPickles.selectedItem as String
+                            olive = spinnerOlive.selectedItem as String
+                            hotpepper = spinnerHotpepper.selectedItem as String
+                            dressing[0] = spinnerDressing.selectedItem as String
+                            if (dressing[0] == Dressings.NONE.dressingName) {
+                                dressingAmount[0] = "-"
+                            } else {
+                                dressingAmount[0] = spinnerDressingAmount.selectedItem as String
                             }
-                            e.apply()
-                            intentToResult.putExtra("key", key)
-                            Toast.makeText(this, "レシピを編集しました", Toast.LENGTH_SHORT).show()
-                            setResult(RESULT_OK, intentToResult)
-                            finish()
+                            if (addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
+                                dressing[1] = spinnerDressing2.selectedItem as String
+                                dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
+                                val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
+                                val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
+                                howToDress = checkedRadioBtn.text.toString()
+                            }
+                            if (addDressing2.visibility == View.VISIBLE) {
+                                dressing[1] = ""
+                                dressingAmount[1] = ""
+                            }
+                            e.putString(key, gson.toJson(this))
                         }
-                        .setNegativeButton("いいえ", null)
-                        .show()
+                        e.apply()
+                        intentToResult.putExtra("key", key)
+                        Toast.makeText(this, "レシピを編集しました", Toast.LENGTH_SHORT).show()
+                        setResult(RESULT_OK, intentToResult)
+                        finish()
+                    }
+                    .setNegativeButton("いいえ", null)
+                    .show()
             }
         }
     }
