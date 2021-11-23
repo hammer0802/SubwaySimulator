@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.model
 
 
 //isEnabled == Falseのclassは最後列に移動する

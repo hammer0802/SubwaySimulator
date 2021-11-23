@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.ui
 
 import android.app.AlertDialog
 import android.content.Context
@@ -12,8 +12,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
+import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.model.Recipe
 
-class MyRecyclerAdapter(val activity:MainActivity): RecyclerView.Adapter<MyRecyclerViewHolder>() {
+class MyRecyclerAdapter(val activity: MainActivity): RecyclerView.Adapter<MyRecyclerViewHolder>() {
     private val preference: SharedPreferences by lazy { activity.getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     private val gson = Gson()
     val list: MutableList<Recipe> = mutableListOf()

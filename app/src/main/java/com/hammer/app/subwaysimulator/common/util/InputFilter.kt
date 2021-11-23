@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.common.util
 
 import android.text.Spanned
 import android.text.InputFilter
