@@ -59,7 +59,6 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                         .setTitle("確認")
                         .setMessage("レシピを保存しますか？")
                         .setPositiveButton("はい") { _, _ ->
-                            val uuid = UUID.randomUUID().toString()
                             val e = preference.edit()
                             val c = Calendar.getInstance()
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
@@ -115,8 +114,7 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                     dressing.add("")
                                     dressingAmount.add("")
                                 }
-                                this.uuid = uuid
-                                e.putString(uuid, gson.toJson(this))
+                                e.putString(recipeId.id, gson.toJson(this))
                             }
                             e.apply()
                             Toast.makeText(this, "レシピ名: ${recipe.name} を作成しました", Toast.LENGTH_SHORT).show()

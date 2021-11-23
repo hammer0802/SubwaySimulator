@@ -37,7 +37,7 @@
             android:label="レシピ作成"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RecipeResultActivity"
+            android:name=".ui.RecipeResultActivity"
             android:screenOrientation="portrait"
             android:label="レシピ詳細"
             android:theme="@style/AppTheme.NoActionBar" />
