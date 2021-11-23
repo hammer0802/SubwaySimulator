@@ -24,6 +24,7 @@ import com.hammer.app.subwaysimulator.localdata.dressings
 import com.hammer.app.subwaysimulator.localdata.dressingsWoNothing
 import com.hammer.app.subwaysimulator.localdata.sandwiches
 import com.hammer.app.subwaysimulator.model.Bread
+import com.hammer.app.subwaysimulator.model.Dressing
 import com.hammer.app.subwaysimulator.model.Recipe
 import com.hammer.app.subwaysimulator.model.Sandwich
 import com.hammer.app.subwaysimulator.model.Topping
@@ -126,17 +127,17 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             spinnerPickles.setSelection(Amounts.values().single { accentVegetableMap[AccentVegetables.pickles] == it }.ordinal)
             spinnerOlive.setSelection(Amounts.values().single { accentVegetableMap[AccentVegetables.olive] == it }.ordinal)
             spinnerHotpepper.setSelection(Amounts.values().single { accentVegetableMap[AccentVegetables.hotpepper] == it }.ordinal)
-            val selected0Dressing = Dressings.values().single { dressing[0] == it.dressingName }
+            val selected0Dressing = Dressings.values().single { dressing[0].type == it }
             if (selected0Dressing.isEnabled) spinnerDressing.setSelection(selected0Dressing.ordinal)
             else spinnerDressing.setSelection(0)
 
             if (checkBoxRecommend.isChecked && spinnerDressing.selectedItem != selectedSand.recommendDressing.dressingName) {
                 checkBoxRecommend.isChecked = false
             }
-            if (dressing[0] != Dressings.NONE.dressingName) spinnerDressingAmount.setSelection(
-                AmountsDressing.values().single { dressingAmount[0] == it.amount }.ordinal
+            if (dressing[0].type != Dressings.NONE) spinnerDressingAmount.setSelection(
+                AmountsDressing.values().single { dressing[0].amounts == it }.ordinal
             )
-            if (dressing[1] != "") {
+            if (dressing[1].type != Dressings.NONE) {
                 addDressingCount++
                 val selectDressingItemView = LayoutInflater.from(this@EditRecipeActivity)
                     .inflate(R.layout.select_dressing_item, null, false) as ViewGroup
@@ -172,10 +173,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 }
                 addDressing.visibility = View.GONE
                 addDressingText.visibility = View.GONE
-                val selected1Dressing = Dressings.values().single { dressing[1] == it.dressingName }
+                val selected1Dressing = Dressings.values().single { dressing[1].type == it }
                 if (selected1Dressing.isEnabled) spinnerDressing2.setSelection(selected1Dressing.ordinal)
                 else spinnerDressing2.setSelection(0)
-                spinnerDressingAmount2.setSelection(AmountsDressing.values().single { dressingAmount[1] == it.amount }.ordinal)
+                spinnerDressingAmount2.setSelection(AmountsDressing.values().single { dressing[1].amounts == it }.ordinal)
 
                 val howToDressRadioGroup = findViewById<RadioGroup>(R.id.howToDress)
 
@@ -289,18 +290,35 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                             )
                         }
                         val vegetableMap = mapOf(
-                            Vegetables.lettuce to Amounts.from(spinnerLettuce.selectedItem as String)!!,
-                            Vegetables.lettuce to Amounts.from(spinnerLettuce.selectedItem as String)!!,
-                            Vegetables.tomato to Amounts.from(spinnerTomato.selectedItem as String)!!,
-                            Vegetables.greenpepper to Amounts.from(spinnerGreenpepper.selectedItem as String)!!,
-                            Vegetables.redonion to Amounts.from(spinnerRedonion.selectedItem as String)!!,
-                            Vegetables.carrot to Amounts.from(spinnerCarrot.selectedItem as String)!!
+                            Vegetables.lettuce to Amounts.from(spinnerLettuce.selectedItem as String),
+                            Vegetables.lettuce to Amounts.from(spinnerLettuce.selectedItem as String),
+                            Vegetables.tomato to Amounts.from(spinnerTomato.selectedItem as String),
+                            Vegetables.greenpepper to Amounts.from(spinnerGreenpepper.selectedItem as String),
+                            Vegetables.redonion to Amounts.from(spinnerRedonion.selectedItem as String),
+                            Vegetables.carrot to Amounts.from(spinnerCarrot.selectedItem as String)
                         )
                         val accentVegetableMap = mapOf(
-                            AccentVegetables.pickles to Amounts.from(spinnerPickles.selectedItem as String)!!,
-                            AccentVegetables.olive to Amounts.from(spinnerOlive.selectedItem as String)!!,
-                            AccentVegetables.hotpepper to Amounts.from(spinnerHotpepper.selectedItem as String)!!,
+                            AccentVegetables.pickles to Amounts.from(spinnerPickles.selectedItem as String),
+                            AccentVegetables.olive to Amounts.from(spinnerOlive.selectedItem as String),
+                            AccentVegetables.hotpepper to Amounts.from(spinnerHotpepper.selectedItem as String),
                         )
+                        val dressing = mutableListOf<Dressing>()
+                        val firstAmountDressing =
+                            if (spinnerDressing.selectedItem as String == Dressings.NONE.dressingName)
+                                AmountsDressing.NONE
+                            else
+                                AmountsDressing.from(spinnerDressingAmount.selectedItem as String)
+                        dressing.add(Dressing(Dressings.from(spinnerDressing.selectedItem as String), firstAmountDressing))
+                        if (addDressingCount == 1 && dressing[0].type != Dressings.NONE && removeDressing.visibility == View.VISIBLE) {
+                            dressing.add(
+                                Dressing(
+                                    Dressings.from(spinnerDressing2.selectedItem as String),
+                                    AmountsDressing.from(spinnerDressingAmount2.selectedItem as String)
+                                )
+                            )
+                        } else {
+                            dressing.add(Dressing(Dressings.NONE, AmountsDressing.NONE))
+                        }
                         Recipe(
                             sandwich = Sandwich.from(
                                 spinnerSand.selectedItem as String,
@@ -309,28 +327,15 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                             bread = Bread.from(spinnerBread.selectedItem as String, checkBoxToast.isChecked),
                             toppingList = toppingList,
                             vegetableMap = vegetableMap,
-                            accentVegetableMap = accentVegetableMap
+                            accentVegetableMap = accentVegetableMap,
+                            dressing = dressing
                         ).apply {
                             name = textViewName.text.toString()
                             price = sumPrice.text.toString().toInt()
                             editTime = sdf.format(c.time)
-                            dressing[0] = spinnerDressing.selectedItem as String
-                            if (dressing[0] == Dressings.NONE.dressingName) {
-                                dressingAmount[0] = "-"
-                            } else {
-                                dressingAmount[0] = spinnerDressingAmount.selectedItem as String
-                            }
-                            if (addDressingCount == 1 && dressing[0] != Dressings.NONE.dressingName && removeDressing.visibility == View.VISIBLE) {
-                                dressing[1] = spinnerDressing2.selectedItem as String
-                                dressingAmount[1] = spinnerDressingAmount2.selectedItem as String
-                                val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
-                                val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
-                                howToDress = checkedRadioBtn.text.toString()
-                            }
-                            if (addDressing2.visibility == View.VISIBLE) {
-                                dressing[1] = ""
-                                dressingAmount[1] = ""
-                            }
+                            val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
+                            val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
+                            howToDress = checkedRadioBtn.text.toString()
                             e.putString(key, gson.toJson(this))
                         }
                         e.apply()

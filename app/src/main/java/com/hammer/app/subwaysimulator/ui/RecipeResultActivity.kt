@@ -28,6 +28,7 @@ import com.hammer.app.subwaysimulator.localdata.Dressings
 import com.hammer.app.subwaysimulator.localdata.Sandwiches
 import com.hammer.app.subwaysimulator.localdata.Toppings
 import com.hammer.app.subwaysimulator.localdata.Vegetables
+import com.hammer.app.subwaysimulator.model.Dressing
 import com.hammer.app.subwaysimulator.model.Recipe
 import kotlinx.android.synthetic.main.activity_recipe_result.*
 import kotlinx.android.synthetic.main.content_recipe_result.*
@@ -77,9 +78,9 @@ class RecipeResultActivity : AppCompatActivity() {
                 val intent = Intent(this, EditRecipeActivity::class.java)
                 val isSandwichEnabled = Sandwiches.values().single { it.sandName == recipe.sandwich.type.sandName }.isEnabled
                 val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread.type.breadName }.isEnabled
-                val isDressing0Enabled = Dressings.values().single { it.dressingName == recipe.dressing[0] }.isEnabled
-                val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values()
-                    .single { it.dressingName == recipe.dressing[1] }.isEnabled
+                val isDressing0Enabled = Dressings.values().single { it == recipe.dressing[0].type }.isEnabled
+                val isDressing1Enabled = recipe.dressing[1].type == Dressings.NONE || Dressings.values()
+                    .single { it == recipe.dressing[1].type }.isEnabled
 
                 if (!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) { //販売終了判定
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
@@ -277,13 +278,13 @@ class RecipeResultActivity : AppCompatActivity() {
             }
         }
 
-        val dressingText: String = when (recipe.dressing[0]) {
-            Amounts.NONE.amount -> recipe.dressing[0]
-            else -> "${recipe.dressing[0]}(量:${recipe.dressingAmount[0]})"
+        val dressingText: String = when (recipe.dressing[0].type) {
+            Dressings.NONE -> recipe.dressing[0].type.dressingName
+            else -> "${recipe.dressing[0].type.dressingName}(量:${recipe.dressing[0].amounts.amount})"
         }
         textViewDressingType.text = dressingText
-        if (!recipe.dressing[1].isEmpty() && recipe.dressing[0] != Amounts.NONE.amount) {
-            textViewDressingType.append("\n × ${recipe.dressing[1]}(量:${recipe.dressingAmount[1]})")
+        if (recipe.dressing[1].type != Dressings.NONE && recipe.dressing[0].type != Dressings.NONE) {
+            textViewDressingType.append("\n × ${recipe.dressing[1].type.dressingName}(量:${recipe.dressing[1].amounts.amount})")
             textViewDressingType.append("\nかけ方：${recipe.howToDress}")
         }
     }

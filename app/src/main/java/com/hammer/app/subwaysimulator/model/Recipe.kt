@@ -14,8 +14,7 @@ data class Recipe (
     val toppingList: List<Topping>,
     val vegetableMap: Map<Vegetables, Amounts>,
     val accentVegetableMap: Map<AccentVegetables, Amounts>,
-    var dressing: MutableList<String> = mutableListOf<String>(),  //ドレッシングの種類
-    var dressingAmount: MutableList<String> = mutableListOf<String>(), //ドレッシングの量
+    val dressing: List<Dressing>,
     var howToDress: String = "",
     var createTime: String = "", //作成日時
     var editTime: String = "", //編集日時
