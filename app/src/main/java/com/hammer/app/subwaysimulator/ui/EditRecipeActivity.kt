@@ -14,6 +14,7 @@ import com.hammer.app.subwaysimulator.localdata.AmountsDressing
 import com.hammer.app.subwaysimulator.localdata.Breads
 import com.hammer.app.subwaysimulator.localdata.Dressings
 import com.hammer.app.subwaysimulator.localdata.Sandwiches
+import com.hammer.app.subwaysimulator.localdata.Toppings
 import com.hammer.app.subwaysimulator.localdata.amounts
 import com.hammer.app.subwaysimulator.localdata.amountsDressing
 import com.hammer.app.subwaysimulator.localdata.breads
@@ -23,6 +24,7 @@ import com.hammer.app.subwaysimulator.localdata.sandwiches
 import com.hammer.app.subwaysimulator.model.Bread
 import com.hammer.app.subwaysimulator.model.Recipe
 import com.hammer.app.subwaysimulator.model.Sandwich
+import com.hammer.app.subwaysimulator.model.Topping
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
@@ -63,51 +65,56 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             if (selectedBread.isEnabled) spinnerBread.setSelection(selectedBread.ordinal)
             else spinnerSand.setSelection(0)
             checkBoxToast.isChecked = bread.isToasted
-            checkBoxcheese.isChecked = cheese
-            checkBoxcream.isChecked = cream
-            checkBoxmascar.isChecked = mascar
-            checkBoxegg.isChecked = egg
-            checkBoxbacon.isChecked = bacon
-            checkBoxtuna.isChecked = tuna
-            checkBoxshrimp.isChecked = shrimp
-            checkBoxavocado.isChecked = avocado
-            checkBoxroastbeef.isChecked = roastbeef
+            toppingList.forEach {
+                when(it.type) {
+                    Toppings.NATURAL_CHEESE -> {
+                        checkBoxcheese.isChecked = true
+                        countercheese.visibility = View.VISIBLE
+                        valuecheese.text = it.amount.toString()
+                    }
+                    Toppings.CREAM_CHEESE -> {
+                        checkBoxcream.isChecked = true
+                        countercream.visibility = View.VISIBLE
+                        valuecream.text = it.amount.toString()
+                    }
+                    Toppings.MASCARPONE_CHEESE -> {
+                        checkBoxmascar.isChecked = true
+                        countermascar.visibility = View.VISIBLE
+                        valuemascar.text = it.amount.toString()
+                    }
+                    Toppings.EGG -> {
+                        checkBoxegg.isChecked = true
+                        counteregg.visibility = View.VISIBLE
+                        valueegg.text = it.amount.toString()
 
-            if (cheese) {
-                countercheese.visibility = View.VISIBLE
-                valuecheese.text = cheeseAmount.toString()
-            }
-            if (cream) {
-                countercream.visibility = View.VISIBLE
-                valuecream.text = creamAmount.toString()
-            }
-            if (mascar) {
-                countermascar.visibility = View.VISIBLE
-                valuemascar.text = mascarAmount.toString()
-            }
-            if (egg) {
-                counteregg.visibility = View.VISIBLE
-                valueegg.text = eggAmount.toString()
-            }
-            if (bacon) {
-                counterbacon.visibility = View.VISIBLE
-                valuebacon.text = baconAmount.toString()
-            }
-            if (tuna) {
-                countertuna.visibility = View.VISIBLE
-                valuetuna.text = tunaAmount.toString()
-            }
-            if (shrimp) {
-                countershrimp.visibility = View.VISIBLE
-                valueshrimp.text = shrimpAmount.toString()
-            }
-            if (avocado) {
-                counteravocado.visibility = View.VISIBLE
-                valueavocado.text = avocadoAmount.toString()
-            }
-            if (roastbeef) {
-                counterroastbeef.visibility = View.VISIBLE
-                valueroastbeef.text = roastbeefAmount.toString()
+                    }
+                    Toppings.BACON -> {
+                        checkBoxbacon.isChecked = true
+                        counterbacon.visibility = View.VISIBLE
+                        valuebacon.text = it.amount.toString()
+                    }
+                    Toppings.TUNA -> {
+                        checkBoxtuna.isChecked = true
+                        countertuna.visibility = View.VISIBLE
+                        valuetuna.text = it.amount.toString()
+                    }
+                    Toppings.SHRIMP -> {
+                        checkBoxshrimp.isChecked = true
+                        countershrimp.visibility = View.VISIBLE
+                        valueshrimp.text = it.amount.toString()
+                    }
+                    Toppings.AVOCADO -> {
+                        checkBoxavocado.isChecked = true
+                        counteravocado.visibility = View.VISIBLE
+                        valueavocado.text = it.amount.toString()
+                    }
+                    Toppings.ROAST_BEEF -> {
+                        checkBoxroastbeef.isChecked = true
+                        counterroastbeef.visibility = View.VISIBLE
+                        valueroastbeef.text = it.amount.toString()
+                    }
+                    else -> Unit
+                }
             }
             spinnerLettuce.setSelection(Amounts.values().single { lettuce == it.amount }.ordinal)
             spinnerTomato.setSelection(Amounts.values().single { tomato == it.amount }.ordinal)
@@ -223,37 +230,73 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                         val e = preference.edit()
                         val c = Calendar.getInstance()
                         val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
+                        val toppingList = mutableListOf<Topping>().apply {
+                            if (checkBoxcheese.isChecked) add(
+                                Topping.from(
+                                    Toppings.NATURAL_CHEESE,
+                                    valuecheese.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxcream.isChecked) add(
+                                Topping.from(
+                                    Toppings.CREAM_CHEESE,
+                                    valuecream.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxmascar.isChecked) add(
+                                Topping.from(
+                                    Toppings.MASCARPONE_CHEESE,
+                                    valuemascar.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxegg.isChecked) add(
+                                Topping.from(
+                                    Toppings.EGG,
+                                    valueegg.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxbacon.isChecked) add(
+                                Topping.from(
+                                    Toppings.BACON,
+                                    valuebacon.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxtuna.isChecked) add(
+                                Topping.from(
+                                    Toppings.TUNA,
+                                    valuetuna.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxshrimp.isChecked) add(
+                                Topping.from(
+                                    Toppings.SHRIMP,
+                                    valueshrimp.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxavocado.isChecked) add(
+                                Topping.from(
+                                    Toppings.AVOCADO,
+                                    valueavocado.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxroastbeef.isChecked) add(
+                                Topping.from(
+                                    Toppings.ROAST_BEEF,
+                                    valueroastbeef.text.toString().toInt()
+                                )
+                            )
+                        }
                         Recipe(
                             sandwich = Sandwich.from(
                                 spinnerSand.selectedItem as String,
                                 if (spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
                             ),
-                            bread = Bread.from(spinnerBread.selectedItem as String, checkBoxToast.isChecked)
+                            bread = Bread.from(spinnerBread.selectedItem as String, checkBoxToast.isChecked),
+                            toppingList = toppingList
                         ).apply {
                             name = textViewName.text.toString()
                             price = sumPrice.text.toString().toInt()
                             editTime = sdf.format(c.time)
-                            cheese = checkBoxcheese.isChecked
-                            cream = checkBoxcream.isChecked
-                            mascar = checkBoxmascar.isChecked
-                            egg = checkBoxegg.isChecked
-                            bacon = checkBoxbacon.isChecked
-                            tuna = checkBoxtuna.isChecked
-                            shrimp = checkBoxshrimp.isChecked
-                            avocado = checkBoxavocado.isChecked
-                            roastbeef = checkBoxroastbeef.isChecked
-                            cheeseAmount = valuecheese.text.toString().toInt()
-                            creamAmount = valuecream.text.toString().toInt()
-                            mascarAmount = valuemascar.text.toString().toInt()
-                            eggAmount = valueegg.text.toString().toInt()
-                            baconAmount = valuebacon.text.toString().toInt()
-                            tunaAmount = valuetuna.text.toString().toInt()
-                            shrimpAmount = valueshrimp.text.toString().toInt()
-                            avocadoAmount = valueavocado.text.toString().toInt()
-                            roastbeefAmount = valueroastbeef.text.toString().toInt()
-
-                            if (shredded) shredded = false
-
                             lettuce = spinnerLettuce.selectedItem as String
                             tomato = spinnerTomato.selectedItem as String
                             greenpepper = spinnerGreenpepper.selectedItem as String

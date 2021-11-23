@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.localdata.Breads
 import com.hammer.app.subwaysimulator.localdata.Dressings
+import com.hammer.app.subwaysimulator.localdata.Toppings
 import com.hammer.app.subwaysimulator.localdata.amounts
 import com.hammer.app.subwaysimulator.localdata.breads
 import com.hammer.app.subwaysimulator.localdata.dressings
@@ -16,6 +17,7 @@ import com.hammer.app.subwaysimulator.localdata.sandwiches
 import com.hammer.app.subwaysimulator.model.Bread
 import com.hammer.app.subwaysimulator.model.Recipe
 import com.hammer.app.subwaysimulator.model.Sandwich
+import com.hammer.app.subwaysimulator.model.Topping
 import kotlinx.android.synthetic.main.create_recipe.checkBoxFootLong
 import kotlinx.android.synthetic.main.create_recipe.checkBoxToast
 import kotlinx.android.synthetic.main.create_recipe.checkBoxavocado
@@ -99,36 +101,73 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                         val e = preference.edit()
                         val c = Calendar.getInstance()
                         val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
+                        val toppingList = mutableListOf<Topping>().apply {
+                            if (checkBoxcheese.isChecked) add(
+                                Topping.from(
+                                    Toppings.NATURAL_CHEESE,
+                                    valuecheese.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxcream.isChecked) add(
+                                Topping.from(
+                                    Toppings.CREAM_CHEESE,
+                                    valuecream.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxmascar.isChecked) add(
+                                Topping.from(
+                                    Toppings.MASCARPONE_CHEESE,
+                                    valuemascar.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxegg.isChecked) add(
+                                Topping.from(
+                                    Toppings.EGG,
+                                    valueegg.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxbacon.isChecked) add(
+                                Topping.from(
+                                    Toppings.BACON,
+                                    valuebacon.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxtuna.isChecked) add(
+                                Topping.from(
+                                    Toppings.TUNA,
+                                    valuetuna.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxshrimp.isChecked) add(
+                                Topping.from(
+                                    Toppings.SHRIMP,
+                                    valueshrimp.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxavocado.isChecked) add(
+                                Topping.from(
+                                    Toppings.AVOCADO,
+                                    valueavocado.text.toString().toInt()
+                                )
+                            )
+                            if (checkBoxroastbeef.isChecked) add(
+                                Topping.from(
+                                    Toppings.ROAST_BEEF,
+                                    valueroastbeef.text.toString().toInt()
+                                )
+                            )
+                        }
                         val recipe = Recipe(
                             sandwich = Sandwich.from(
                                 spinnerSand.selectedItem as String,
                                 if (spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
                             ),
-                            bread = Bread.from(spinnerBread.selectedItem as String, checkBoxToast.isChecked)
+                            bread = Bread.from(spinnerBread.selectedItem as String, checkBoxToast.isChecked),
+                            toppingList = toppingList
                         ).apply {
                             name = textViewName.text.toString()
                             price = sumPrice.text.toString().toInt()
                             createTime = sdf.format(c.time)
-                            cheese = checkBoxcheese.isChecked
-                            cream = checkBoxcream.isChecked
-                            mascar = checkBoxmascar.isChecked
-                            egg = checkBoxegg.isChecked
-                            bacon = checkBoxbacon.isChecked
-                            tuna = checkBoxtuna.isChecked
-                            shrimp = checkBoxshrimp.isChecked
-                            avocado = checkBoxavocado.isChecked
-                            roastbeef = checkBoxroastbeef.isChecked
-                            cheeseAmount = valuecheese.text.toString().toInt()
-                            creamAmount = valuecream.text.toString().toInt()
-                            mascarAmount = valuemascar.text.toString().toInt()
-                            eggAmount = valueegg.text.toString().toInt()
-                            baconAmount = valuebacon.text.toString().toInt()
-                            tunaAmount = valuetuna.text.toString().toInt()
-                            shrimpAmount = valueshrimp.text.toString().toInt()
-                            avocadoAmount = valueavocado.text.toString().toInt()
-                            roastbeefAmount = valueroastbeef.text.toString().toInt()
-
-
                             lettuce = spinnerLettuce.selectedItem as String
                             tomato = spinnerTomato.selectedItem as String
                             greenpepper = spinnerGreenpepper.selectedItem as String

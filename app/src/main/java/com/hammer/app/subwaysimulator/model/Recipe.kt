@@ -8,29 +8,7 @@ data class Recipe (
     var price: Int = 0,  //合計金額
     val sandwich: Sandwich,
     val bread: Bread,
-    //トッピング、煩雑なのでToppingクラスでまとめる？
-    var cheese: Boolean = false,
-    var cream: Boolean = false,
-    var mascar: Boolean = false,
-    var egg: Boolean = false,
-    var bacon: Boolean = false,
-    var tuna: Boolean = false,
-    var shrimp: Boolean = false,
-    var avocado: Boolean = false,
-    var roastbeef: Boolean = false,
-    var cheeseAmount: Int = 1,
-    var creamAmount: Int = 1,
-    var mascarAmount: Int = 1,
-    var eggAmount: Int = 1,
-    var baconAmount: Int = 1,
-    var tunaAmount: Int = 1,
-    var shrimpAmount: Int = 1,
-    var avocadoAmount: Int = 1,
-    var roastbeefAmount: Int = 1,
-
-    //期間限定トッピング
-    var shredded: Boolean = false,
-    var shreddedAmount: Int = 1,
+    val toppingList: List<Topping>,
 
     //野菜
     var lettuce: String = "",

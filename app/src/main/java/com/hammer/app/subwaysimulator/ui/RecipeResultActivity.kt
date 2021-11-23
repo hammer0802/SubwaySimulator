@@ -25,6 +25,7 @@ import com.hammer.app.subwaysimulator.BuildConfig
 import com.hammer.app.subwaysimulator.localdata.Dressings
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.localdata.Sandwiches
+import com.hammer.app.subwaysimulator.localdata.Toppings
 import com.hammer.app.subwaysimulator.model.Recipe
 import kotlinx.android.synthetic.main.activity_recipe_result.*
 import kotlinx.android.synthetic.main.content_recipe_result.*
@@ -78,7 +79,7 @@ class RecipeResultActivity : AppCompatActivity() {
                 val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values()
                     .single { it.dressingName == recipe.dressing[1] }.isEnabled
 
-                if (!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled || recipe.shredded) { //販売終了判定
+                if (!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) { //販売終了判定
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setMessage("このレシピは販売終了メニューを含みます" + "\n" + "編集した場合、元のレシピに戻せません" + "\n" + "編集しますか？")
                         .setPositiveButton("はい") { _, _ ->
@@ -221,23 +222,28 @@ class RecipeResultActivity : AppCompatActivity() {
         }
         textViewBreadType.text = breadText
 
-        if (recipe.cheese) textViewToppingSelect.append("ナチュラルスライスチーズ × ${recipe.cheeseAmount}\n")
-        if (recipe.cream) textViewToppingSelect.append("クリームタイプチーズ × ${recipe.creamAmount}\n")
-        if (recipe.mascar) textViewToppingSelect.append("マスカルポーネチーズ × ${recipe.mascarAmount}\n")
-        if (recipe.egg) textViewToppingSelect.append("たまご × ${recipe.eggAmount}\n")
-        if (recipe.bacon) textViewToppingSelect.append("ベーコン × ${recipe.baconAmount}\n")
-        if (recipe.tuna) textViewToppingSelect.append("ツナ × ${recipe.tunaAmount}\n")
-        if (recipe.shrimp) textViewToppingSelect.append("えび × ${recipe.shrimpAmount}\n")
-        if (recipe.avocado) textViewToppingSelect.append("アボカド × ${recipe.avocadoAmount}\n")
-        if (recipe.roastbeef) textViewToppingSelect.append("ローストビーフ × ${recipe.roastbeefAmount}\n")
-
-        //期間限定トッピング
-        if (recipe.shredded) textViewToppingSelect.append("シュレッドチーズ × ${recipe.shreddedAmount}")
+        textViewToppingSelect.apply {
+            if(recipe.toppingList.isEmpty()) {
+                text = Amounts.NONE.amount
+                return@apply
+            }
+            recipe.toppingList.forEach {
+                when(it.type) {
+                    Toppings.NATURAL_CHEESE -> append("ナチュラルスライスチーズ × ${it.amount}\n")
+                    Toppings.CREAM_CHEESE -> append("クリームタイプチーズ × ${it.amount}\n")
+                    Toppings.MASCARPONE_CHEESE -> append("マスカルポーネチーズ × ${it.amount}\n")
+                    Toppings.EGG -> append("たまご × ${it.amount}\n")
+                    Toppings.BACON -> append("ベーコン × ${it.amount}\n")
+                    Toppings.TUNA -> append("ツナ × ${it.amount}\n")
+                    Toppings.SHRIMP -> append("えび × ${it.amount}\n")
+                    Toppings.AVOCADO -> append("アボカド × ${it.amount}\n")
+                    Toppings.ROAST_BEEF -> append("ローストビーフ × ${it.amount}\n")
+                    else -> Unit
+                }
+            }
+        }
 
         val none = Amounts.NONE.amount
-        if (!recipe.cheese && !recipe.cream && !recipe.mascar && !recipe.egg && !recipe.bacon && !recipe.tuna && !recipe.shrimp && !recipe.avocado && !recipe.roastbeef && !recipe.shredded) textViewToppingSelect.text =
-            none
-
         val normal = Amounts.NORMAL.amount
         if (recipe.lettuce != normal) textViewVegetableAmount.append("レタス：${recipe.lettuce} ")
         if (recipe.tomato != normal) textViewVegetableAmount.append("トマト：${recipe.tomato} ")
