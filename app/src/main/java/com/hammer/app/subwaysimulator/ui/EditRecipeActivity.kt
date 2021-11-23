@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator
+package com.hammer.app.subwaysimulator.ui
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -8,6 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.hammer.app.subwaysimulator.model.Amounts
+import com.hammer.app.subwaysimulator.model.AmountsDressing
+import com.hammer.app.subwaysimulator.model.Breads
+import com.hammer.app.subwaysimulator.model.Dressings
+import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.model.Recipe
+import com.hammer.app.subwaysimulator.model.Sandwiches
+import com.hammer.app.subwaysimulator.model.amounts
+import com.hammer.app.subwaysimulator.model.amountsDressing
+import com.hammer.app.subwaysimulator.model.breads
+import com.hammer.app.subwaysimulator.model.dressings
+import com.hammer.app.subwaysimulator.model.dressingsWoNothing
+import com.hammer.app.subwaysimulator.model.sandwiches
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
@@ -16,7 +29,7 @@ import java.util.*
 class EditRecipeActivity : AbstractRecipeActivity() {
     private val intentFromResult: Intent by lazy { this.intent }
     val key: String? by lazy { intentFromResult.getStringExtra("key")}
-    private val recipe:Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
+    private val recipe: Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
