@@ -192,8 +192,12 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                         } else {
                             dressing.add(Dressing(Dressings.NONE, AmountsDressing.NONE))
                         }
+                        val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
+                        val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
 
-                        val recipe = Recipe(
+                        val recipe = Recipe.from(
+                            name= textViewName.text.toString(),
+                            price = sumPrice.text.toString().toInt(),
                             sandwich = Sandwich.from(
                                 spinnerSand.selectedItem as String,
                                 if (spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
@@ -202,16 +206,11 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                             toppingList = toppingList,
                             vegetableMap = vegetableMap,
                             accentVegetableMap = accentVegetableMap,
-                            dressing = dressing
-                        ).apply {
-                            name = textViewName.text.toString()
-                            price = sumPrice.text.toString().toInt()
-                            val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
-                            val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
-                            howToDress = checkedRadioBtn.text.toString()
-                            createTime = sdf.format(c.time)
-                            e.putString(recipeId.id, gson.toJson(this))
-                        }
+                            dressing = dressing,
+                            howToDress = checkedRadioBtn.text.toString(),
+                            time = sdf.format(c.time)
+                        )
+                        e.putString(recipe.recipeId.id, gson.toJson(this))
                         e.apply()
                         Toast.makeText(this, "レシピ名: ${recipe.name} を作成しました", Toast.LENGTH_SHORT).show()
                         finish()

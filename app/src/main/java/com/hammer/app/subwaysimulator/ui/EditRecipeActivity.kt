@@ -319,7 +319,12 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                         } else {
                             dressing.add(Dressing(Dressings.NONE, AmountsDressing.NONE))
                         }
-                        Recipe(
+                        val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
+                        val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
+
+                        val newRecipe = recipe.copy(
+                            name = textViewName.text.toString(),
+                            price = sumPrice.text.toString().toInt(),
                             sandwich = Sandwich.from(
                                 spinnerSand.selectedItem as String,
                                 if (spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
@@ -328,16 +333,11 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                             toppingList = toppingList,
                             vegetableMap = vegetableMap,
                             accentVegetableMap = accentVegetableMap,
-                            dressing = dressing
-                        ).apply {
-                            name = textViewName.text.toString()
-                            price = sumPrice.text.toString().toInt()
+                            dressing = dressing,
+                            howToDress = checkedRadioBtn.text.toString(),
                             editTime = sdf.format(c.time)
-                            val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
-                            val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
-                            howToDress = checkedRadioBtn.text.toString()
-                            e.putString(key, gson.toJson(this))
-                        }
+                        )
+                        e.putString(key, gson.toJson(newRecipe))
                         e.apply()
                         intentToResult.putExtra("key", key)
                         Toast.makeText(this, "レシピを編集しました", Toast.LENGTH_SHORT).show()
