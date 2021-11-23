@@ -6,8 +6,7 @@ data class Recipe (
     val recipeId: RecipeId = RecipeId.createRecipeId(),
     var name: String = "",  //レシピ名
     var price: Int = 0,  //合計金額
-    var sandwich: String = "", //サンドウィッチの種類
-    var footLong: Boolean = false,
+    val sandwich: Sandwich,
     var bread: String = "",  //パンの種類
     var toast: Boolean = false, //トーストの有無
     //トッピング、煩雑なのでToppingクラスでまとめる？

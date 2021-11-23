@@ -14,13 +14,13 @@ import com.hammer.app.subwaysimulator.localdata.amounts
 import com.hammer.app.subwaysimulator.localdata.breads
 import com.hammer.app.subwaysimulator.localdata.dressings
 import com.hammer.app.subwaysimulator.localdata.sandwiches
+import com.hammer.app.subwaysimulator.model.Sandwich
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateRecipeActivity : AbstractRecipeActivity() {
-    private val recipe = Recipe()
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_recipe)
@@ -62,12 +62,10 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                             val e = preference.edit()
                             val c = Calendar.getInstance()
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
-                            recipe.apply { 
+                            val recipe = Recipe(sandwich = Sandwich.from(spinnerSand.selectedItem as String, if(spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked)).apply {
                                 name = textViewName.text.toString()
                                 price = sumPrice.text.toString().toInt()
                                 createTime = sdf.format(c.time)
-                                sandwich = spinnerSand.selectedItem as String
-                                footLong = if(spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
                                 bread = spinnerBread.selectedItem as String
                                 toast = checkBoxToast.isChecked
                                 cheese = checkBoxcheese.isChecked

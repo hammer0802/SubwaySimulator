@@ -21,6 +21,7 @@ import com.hammer.app.subwaysimulator.localdata.breads
 import com.hammer.app.subwaysimulator.localdata.dressings
 import com.hammer.app.subwaysimulator.localdata.dressingsWoNothing
 import com.hammer.app.subwaysimulator.localdata.sandwiches
+import com.hammer.app.subwaysimulator.model.Sandwich
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import java.text.SimpleDateFormat
@@ -53,10 +54,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
         checkBoxFootLong()
         recipe.apply {
             textViewName.setText(name)
-            val selectedSand = Sandwiches.values().single { sandwich == it.sandName }
+            val selectedSand = Sandwiches.values().single { sandwich.type.sandName == it.sandName }
             if(selectedSand.isEnabled) spinnerSand.setSelection(selectedSand.ordinal)
              else spinnerSand.setSelection(0)
-            checkBoxFootLong.isChecked = footLong
+            checkBoxFootLong.isChecked = sandwich.isFootLong
             val selectedBread = Breads.values().single { bread == it.breadName }
             if(selectedBread.isEnabled) spinnerBread.setSelection(selectedBread.ordinal)
             else spinnerSand.setSelection(0)
@@ -107,9 +108,6 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 counterroastbeef.visibility = View.VISIBLE
                 valueroastbeef.text = roastbeefAmount.toString()
             }
-
-
-
             spinnerLettuce.setSelection(Amounts.values().single { lettuce == it.amount }.ordinal)
             spinnerTomato.setSelection(Amounts.values().single { tomato == it.amount }.ordinal)
             spinnerGreenpepper.setSelection(Amounts.values().single { greenpepper == it.amount }.ordinal)
@@ -214,12 +212,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                             val e = preference.edit()
                             val c = Calendar.getInstance()
                             val sdf = SimpleDateFormat("yyyyMMddHHmmssSSS", Locale.JAPAN)
-                            recipe.apply {
+                            Recipe(sandwich = Sandwich.from(spinnerSand.selectedItem as String, if(spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked)).apply {
                                 name = textViewName.text.toString()
                                 price = sumPrice.text.toString().toInt()
                                 editTime = sdf.format(c.time)
-                                sandwich = spinnerSand.selectedItem as String
-                                footLong = if(spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
                                 bread = spinnerBread.selectedItem as String
                                 toast = checkBoxToast.isChecked
                                 cheese = checkBoxcheese.isChecked
