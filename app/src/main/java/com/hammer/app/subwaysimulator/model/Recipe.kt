@@ -1,5 +1,8 @@
 package com.hammer.app.subwaysimulator.model
 
+import com.hammer.app.subwaysimulator.localdata.AccentVegetables
+import com.hammer.app.subwaysimulator.localdata.Amounts
+import com.hammer.app.subwaysimulator.localdata.Vegetables
 import java.util.UUID
 
 data class Recipe (
@@ -9,16 +12,8 @@ data class Recipe (
     val sandwich: Sandwich,
     val bread: Bread,
     val toppingList: List<Topping>,
-
-    //野菜
-    var lettuce: String = "",
-    var tomato: String = "",
-    var greenpepper: String = "",
-    var redonion: String = "",
-    var carrot: String = "",
-    var olive: String = "",
-    var pickles: String = "",
-    var hotpepper: String = "",
+    val vegetableMap: Map<Vegetables, Amounts>,
+    val accentVegetableMap: Map<AccentVegetables, Amounts>,
     var dressing: MutableList<String> = mutableListOf<String>(),  //ドレッシングの種類
     var dressingAmount: MutableList<String> = mutableListOf<String>(), //ドレッシングの量
     var howToDress: String = "",

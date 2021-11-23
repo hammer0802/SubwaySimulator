@@ -7,9 +7,12 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.localdata.AccentVegetables
+import com.hammer.app.subwaysimulator.localdata.Amounts
 import com.hammer.app.subwaysimulator.localdata.Breads
 import com.hammer.app.subwaysimulator.localdata.Dressings
 import com.hammer.app.subwaysimulator.localdata.Toppings
+import com.hammer.app.subwaysimulator.localdata.Vegetables
 import com.hammer.app.subwaysimulator.localdata.amounts
 import com.hammer.app.subwaysimulator.localdata.breads
 import com.hammer.app.subwaysimulator.localdata.dressings
@@ -157,25 +160,32 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                                 )
                             )
                         }
+                        val vegetableMap = mapOf(
+                            Vegetables.lettuce to Amounts.from(spinnerLettuce.selectedItem as String)!!,
+                            Vegetables.lettuce to Amounts.from(spinnerLettuce.selectedItem as String)!!,
+                            Vegetables.tomato to Amounts.from(spinnerTomato.selectedItem as String)!!,
+                            Vegetables.greenpepper to Amounts.from(spinnerGreenpepper.selectedItem as String)!!,
+                            Vegetables.redonion to Amounts.from(spinnerRedonion.selectedItem as String)!!,
+                            Vegetables.carrot to Amounts.from(spinnerCarrot.selectedItem as String)!!,
+                        )
+                        val accentVegetableMap = mapOf(
+                            AccentVegetables.pickles to Amounts.from(spinnerPickles.selectedItem as String)!!,
+                            AccentVegetables.olive to Amounts.from(spinnerOlive.selectedItem as String)!!,
+                            AccentVegetables.hotpepper to Amounts.from(spinnerHotpepper.selectedItem as String)!!,
+                        )
                         val recipe = Recipe(
                             sandwich = Sandwich.from(
                                 spinnerSand.selectedItem as String,
                                 if (spinnerBread.selectedItem.toString() == Breads.NONE.breadName) false else checkBoxFootLong.isChecked
                             ),
                             bread = Bread.from(spinnerBread.selectedItem as String, checkBoxToast.isChecked),
-                            toppingList = toppingList
+                            toppingList = toppingList,
+                            vegetableMap = vegetableMap,
+                            accentVegetableMap = accentVegetableMap
                         ).apply {
                             name = textViewName.text.toString()
                             price = sumPrice.text.toString().toInt()
                             createTime = sdf.format(c.time)
-                            lettuce = spinnerLettuce.selectedItem as String
-                            tomato = spinnerTomato.selectedItem as String
-                            greenpepper = spinnerGreenpepper.selectedItem as String
-                            redonion = spinnerRedonion.selectedItem as String
-                            carrot = spinnerCarrot.selectedItem as String
-                            pickles = spinnerPickles.selectedItem as String
-                            olive = spinnerOlive.selectedItem as String
-                            hotpepper = spinnerHotpepper.selectedItem as String
                             dressing.add(spinnerDressing.selectedItem as String)
                             if (dressing[0] == Dressings.NONE.dressingName) {
                                 dressingAmount.add("-")
