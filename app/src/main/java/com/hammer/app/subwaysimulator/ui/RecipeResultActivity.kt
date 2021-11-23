@@ -19,12 +19,16 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.gson.Gson
-import com.hammer.app.subwaysimulator.model.Amounts
-import com.hammer.app.subwaysimulator.model.Breads
 import com.hammer.app.subwaysimulator.BuildConfig
-import com.hammer.app.subwaysimulator.model.Dressings
 import com.hammer.app.subwaysimulator.R
-import com.hammer.app.subwaysimulator.model.Sandwiches
+import com.hammer.app.subwaysimulator.localdata.AccentVegetables
+import com.hammer.app.subwaysimulator.localdata.Amounts
+import com.hammer.app.subwaysimulator.localdata.Breads
+import com.hammer.app.subwaysimulator.localdata.Dressings
+import com.hammer.app.subwaysimulator.localdata.Sandwiches
+import com.hammer.app.subwaysimulator.localdata.Toppings
+import com.hammer.app.subwaysimulator.localdata.Vegetables
+import com.hammer.app.subwaysimulator.model.Dressing
 import com.hammer.app.subwaysimulator.model.Recipe
 import kotlinx.android.synthetic.main.activity_recipe_result.*
 import kotlinx.android.synthetic.main.content_recipe_result.*
@@ -72,13 +76,13 @@ class RecipeResultActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_edit -> {
                 val intent = Intent(this, EditRecipeActivity::class.java)
-                val isSandwichEnabled = Sandwiches.values().single { it.sandName == recipe.sandwich }.isEnabled
-                val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread }.isEnabled
-                val isDressing0Enabled = Dressings.values().single { it.dressingName == recipe.dressing[0] }.isEnabled
-                val isDressing1Enabled = recipe.dressing[1].isEmpty() || Dressings.values()
-                    .single { it.dressingName == recipe.dressing[1] }.isEnabled
+                val isSandwichEnabled = Sandwiches.values().single { it.sandName == recipe.sandwich.type.sandName }.isEnabled
+                val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread.type.breadName }.isEnabled
+                val isDressing0Enabled = Dressings.values().single { it == recipe.dressing[0].type }.isEnabled
+                val isDressing1Enabled = recipe.dressing[1].type == Dressings.NONE || Dressings.values()
+                    .single { it == recipe.dressing[1].type }.isEnabled
 
-                if (!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled || recipe.shredded) { //販売終了判定
+                if (!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) { //販売終了判定
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setMessage("このレシピは販売終了メニューを含みます" + "\n" + "編集した場合、元のレシピに戻せません" + "\n" + "編集しますか？")
                         .setPositiveButton("はい") { _, _ ->
@@ -203,14 +207,14 @@ class RecipeResultActivity : AppCompatActivity() {
 
         recipePrice.append(":${recipe.price}円")
 
-        textViewSandType.text = recipe.sandwich
-        if (recipe.footLong) textViewSandType.append("(フットロング)")
+        textViewSandType.text = recipe.sandwich.type.sandName
+        if (recipe.sandwich.isFootLong) textViewSandType.append("(フットロング)")
 
         val toast: String
         val breadText: String
         when {
-            recipe.bread == Breads.NONE.breadName -> breadText = "無し(サラダ)"
-            recipe.toast -> {
+            recipe.bread.type == Breads.NONE -> breadText = "無し(サラダ)"
+            recipe.bread.isToasted -> {
                 toast = "トースト有り"
                 breadText = "${recipe.bread}($toast)"
             }
@@ -221,44 +225,66 @@ class RecipeResultActivity : AppCompatActivity() {
         }
         textViewBreadType.text = breadText
 
-        if (recipe.cheese) textViewToppingSelect.append("ナチュラルスライスチーズ × ${recipe.cheeseAmount}\n")
-        if (recipe.cream) textViewToppingSelect.append("クリームタイプチーズ × ${recipe.creamAmount}\n")
-        if (recipe.mascar) textViewToppingSelect.append("マスカルポーネチーズ × ${recipe.mascarAmount}\n")
-        if (recipe.egg) textViewToppingSelect.append("たまご × ${recipe.eggAmount}\n")
-        if (recipe.bacon) textViewToppingSelect.append("ベーコン × ${recipe.baconAmount}\n")
-        if (recipe.tuna) textViewToppingSelect.append("ツナ × ${recipe.tunaAmount}\n")
-        if (recipe.shrimp) textViewToppingSelect.append("えび × ${recipe.shrimpAmount}\n")
-        if (recipe.avocado) textViewToppingSelect.append("アボカド × ${recipe.avocadoAmount}\n")
-        if (recipe.roastbeef) textViewToppingSelect.append("ローストビーフ × ${recipe.roastbeefAmount}\n")
+        textViewToppingSelect.apply {
+            if (recipe.toppingList.isEmpty()) {
+                text = Amounts.NONE.amount
+                return@apply
+            }
+            recipe.toppingList.forEach {
+                when (it.type) {
+                    Toppings.NATURAL_CHEESE -> append("ナチュラルスライスチーズ × ${it.amount}\n")
+                    Toppings.CREAM_CHEESE -> append("クリームタイプチーズ × ${it.amount}\n")
+                    Toppings.MASCARPONE_CHEESE -> append("マスカルポーネチーズ × ${it.amount}\n")
+                    Toppings.EGG -> append("たまご × ${it.amount}\n")
+                    Toppings.BACON -> append("ベーコン × ${it.amount}\n")
+                    Toppings.TUNA -> append("ツナ × ${it.amount}\n")
+                    Toppings.SHRIMP -> append("えび × ${it.amount}\n")
+                    Toppings.AVOCADO -> append("アボカド × ${it.amount}\n")
+                    Toppings.ROAST_BEEF -> append("ローストビーフ × ${it.amount}\n")
+                    else -> Unit
+                }
+            }
+        }
+        textViewVegetableAmount.apply {
+            val vegetablesAmountNotNormal = recipe.vegetableMap.filterValues { it != Amounts.NORMAL }.keys
+            if (vegetablesAmountNotNormal.isEmpty()) {
+                text = "全ての量：普通"
+                return@apply
+            }
+            vegetablesAmountNotNormal.forEach {
+                val amount = recipe.vegetableMap[it]?.amount
+                when (it) {
+                    Vegetables.lettuce -> append("レタス：$amount ")
+                    Vegetables.tomato -> append("トマト：$amount ")
+                    Vegetables.greenpepper -> append("ピーマン：$amount ")
+                    Vegetables.redonion -> append("レッドオニオン：$amount ")
+                    Vegetables.carrot -> append("ニンジン：$amount")
+                }
+            }
+        }
+        textViewFreeToppingAmount.apply {
+            val noneVegetables = recipe.accentVegetableMap.filterValues { it != Amounts.NONE }.keys
+            if (noneVegetables.isEmpty()) {
+                text = Amounts.NONE.amount
+                return@apply
+            }
+            noneVegetables.forEach {
+                val amount = recipe.accentVegetableMap[it]?.amount
+                when (it) {
+                    AccentVegetables.olive -> append("オリーブ：$amount ")
+                    AccentVegetables.pickles -> append("ピクルス：$amount ")
+                    AccentVegetables.hotpepper -> append("ホットペッパー：$amount")
+                }
+            }
+        }
 
-        //期間限定トッピング
-        if (recipe.shredded) textViewToppingSelect.append("シュレッドチーズ × ${recipe.shreddedAmount}")
-
-        val none = Amounts.NONE.amount
-        if (!recipe.cheese && !recipe.cream && !recipe.mascar && !recipe.egg && !recipe.bacon && !recipe.tuna && !recipe.shrimp && !recipe.avocado && !recipe.roastbeef && !recipe.shredded) textViewToppingSelect.text =
-            none
-
-        val normal = Amounts.NORMAL.amount
-        if (recipe.lettuce != normal) textViewVegetableAmount.append("レタス：${recipe.lettuce} ")
-        if (recipe.tomato != normal) textViewVegetableAmount.append("トマト：${recipe.tomato} ")
-        if (recipe.greenpepper != normal) textViewVegetableAmount.append("ピーマン：${recipe.greenpepper} ")
-        if (recipe.redonion != normal) textViewVegetableAmount.append("レッドオニオン：${recipe.redonion} ")
-        if (recipe.carrot != normal) textViewVegetableAmount.append("ニンジン：${recipe.carrot}")
-        if (recipe.lettuce == normal && recipe.carrot == normal && recipe.greenpepper == normal && recipe.redonion == normal && recipe.carrot == normal) textViewVegetableAmount.text =
-            "全ての量：普通"
-
-        if (recipe.olive != none) textViewFreeToppingAmount.append("オリーブ：${recipe.olive} ")
-        if (recipe.pickles != none) textViewFreeToppingAmount.append("ピクルス：${recipe.pickles} ")
-        if (recipe.hotpepper != none) textViewFreeToppingAmount.append("ホットペッパー：${recipe.hotpepper}")
-        if (recipe.olive == none && recipe.pickles == none && recipe.hotpepper == none) textViewFreeToppingAmount.text = none
-
-        val dressingText: String = when (recipe.dressing[0]) {
-            none -> recipe.dressing[0]
-            else -> "${recipe.dressing[0]}(量:${recipe.dressingAmount[0]})"
+        val dressingText: String = when (recipe.dressing[0].type) {
+            Dressings.NONE -> recipe.dressing[0].type.dressingName
+            else -> "${recipe.dressing[0].type.dressingName}(量:${recipe.dressing[0].amounts.amount})"
         }
         textViewDressingType.text = dressingText
-        if (!recipe.dressing[1].isEmpty() && recipe.dressing[0] != none) {
-            textViewDressingType.append("\n × ${recipe.dressing[1]}(量:${recipe.dressingAmount[1]})")
+        if (recipe.dressing[1].type != Dressings.NONE && recipe.dressing[0].type != Dressings.NONE) {
+            textViewDressingType.append("\n × ${recipe.dressing[1].type.dressingName}(量:${recipe.dressing[1].amounts.amount})")
             textViewDressingType.append("\nかけ方：${recipe.howToDress}")
         }
     }

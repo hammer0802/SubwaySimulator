@@ -17,16 +17,16 @@ import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.select_dressing_item.*
 import android.text.InputFilter
 import android.widget.TextView
-import com.hammer.app.subwaysimulator.model.Breads
-import com.hammer.app.subwaysimulator.model.Dressings
-import com.hammer.app.subwaysimulator.model.FootLong
+import com.hammer.app.subwaysimulator.localdata.Breads
+import com.hammer.app.subwaysimulator.localdata.Dressings
+import com.hammer.app.subwaysimulator.localdata.FootLong
 import com.hammer.app.subwaysimulator.common.util.MinMaxFilter
 import com.hammer.app.subwaysimulator.R
-import com.hammer.app.subwaysimulator.model.Sandwiches
-import com.hammer.app.subwaysimulator.model.Toppings
-import com.hammer.app.subwaysimulator.model.amountsDressing
-import com.hammer.app.subwaysimulator.model.dressingsWoNothing
-import com.hammer.app.subwaysimulator.model.toppings
+import com.hammer.app.subwaysimulator.localdata.Sandwiches
+import com.hammer.app.subwaysimulator.localdata.Toppings
+import com.hammer.app.subwaysimulator.localdata.amountsDressing
+import com.hammer.app.subwaysimulator.localdata.dressingsWoNothing
+import com.hammer.app.subwaysimulator.localdata.toppings
 
 abstract class AbstractRecipeActivity: AppCompatActivity(){
     val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }

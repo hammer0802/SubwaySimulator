@@ -48,8 +48,8 @@ class MyRecyclerAdapter(val activity: MainActivity): RecyclerView.Adapter<MyRecy
                 holder.v.isEnabled = true
             }
             handler.postDelayed(runnable, 2000)
-            val intentToResult= Intent(activity,RecipeResultActivity::class.java)
-            intentToResult.putExtra("key", list[position].uuid)
+            val intentToResult= Intent(activity, RecipeResultActivity::class.java)
+            intentToResult.putExtra("key", list[position].recipeId.id)
             activity.startActivity(intentToResult)
         }
         holder.v.setOnLongClickListener{
@@ -59,7 +59,7 @@ class MyRecyclerAdapter(val activity: MainActivity): RecyclerView.Adapter<MyRecy
                     .setPositiveButton("はい") { _, _ ->
                         val deleteName = list[position].name
                         val e = preference.edit()
-                        e.remove(list[position].uuid)
+                        e.remove(list[position].recipeId.id)
                         e.apply()
                         list.removeAt(position)
                         notifyItemRemoved(position)

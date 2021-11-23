@@ -1,49 +1,59 @@
 package com.hammer.app.subwaysimulator.model
 
-class Recipe {
-    var name = ""  //レシピ名
-    var price = 0  //合計金額
-    var sandwich = "" //サンドウィッチの種類
-    var footLong = false
-    var bread = ""  //パンの種類
-    var toast = false //トーストの有無
-    //トッピング、煩雑なのでToppingクラスでまとめる？
-    var cheese = false
-    var cream = false
-    var mascar = false
-    var egg = false
-    var bacon = false
-    var tuna = false
-    var shrimp = false
-    var avocado = false
-    var roastbeef = false
-    var cheeseAmount = 1
-    var creamAmount = 1
-    var mascarAmount = 1
-    var eggAmount = 1
-    var baconAmount = 1
-    var tunaAmount = 1
-    var shrimpAmount = 1
-    var avocadoAmount = 1
-    var roastbeefAmount = 1
+import com.hammer.app.subwaysimulator.localdata.AccentVegetables
+import com.hammer.app.subwaysimulator.localdata.Amounts
+import com.hammer.app.subwaysimulator.localdata.Vegetables
+import java.util.UUID
 
-    //期間限定トッピング
-    var shredded = false
-    var shreddedAmount = 1
+data class Recipe(
+    val recipeId: RecipeId = RecipeId.createRecipeId(),
+    val name: String,
+    val price: Int,
+    val sandwich: Sandwich,
+    val bread: Bread,
+    val toppingList: List<Topping>,
+    val vegetableMap: Map<Vegetables, Amounts>,
+    val accentVegetableMap: Map<AccentVegetables, Amounts>,
+    val dressing: List<Dressing>,
+    val howToDress: String,
+    val createTime: String,
+    val editTime: String,
+) {
+    companion object {
+        fun from(
+            name: String,
+            price: Int,
+            sandwich: Sandwich,
+            bread: Bread,
+            toppingList: List<Topping>,
+            vegetableMap: Map<Vegetables, Amounts>,
+            accentVegetableMap: Map<AccentVegetables, Amounts>,
+            dressing: List<Dressing>,
+            howToDress: String,
+            time: String,
+        ): Recipe {
+            return Recipe(
+                name = name,
+                price = price,
+                sandwich = sandwich,
+                bread = bread,
+                toppingList = toppingList,
+                vegetableMap = vegetableMap,
+                accentVegetableMap = accentVegetableMap,
+                dressing = dressing,
+                howToDress = howToDress,
+                createTime = time,
+                editTime = time
+            )
+        }
+    }
+}
 
-    //野菜
-    var lettuce = ""
-    var tomato = ""
-    var greenpepper = ""
-    var redonion = ""
-    var carrot = ""
-    var olive = ""
-    var pickles = ""
-    var hotpepper = ""
-    var dressing = mutableListOf<String>()  //ドレッシングの種類
-    var dressingAmount = mutableListOf<String>() //ドレッシングの量
-    var howToDress = ""
-    var createTime = "" //作成日時
-    var editTime = "" //編集日時
-    var uuid = "" //UUID
+@JvmInline
+value class RecipeId(val id: String) {
+    companion object {
+        fun createRecipeId(): RecipeId {
+            return RecipeId(UUID.randomUUID().toString())
+        }
+    }
 }
