@@ -5,31 +5,30 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Handler
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import com.google.gson.Gson
+import androidx.recyclerview.widget.RecyclerView
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
+import kotlinx.serialization.json.Json
 
-class MyRecyclerAdapter(val activity: MainActivity): RecyclerView.Adapter<MyRecyclerViewHolder>() {
+class MyRecyclerAdapter(val activity: MainActivity) : RecyclerView.Adapter<MyRecyclerViewHolder>() {
     private val preference: SharedPreferences by lazy { activity.getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-    private val gson = Gson()
     val list: MutableList<Recipe> = mutableListOf()
-    fun reload(){
+    fun reload() {
         list.clear()
         list.addAll(preference.all.values.filterIsInstance(String::class.java).map { value ->
-           gson.fromJson<Recipe>(value, Recipe::class.java)
+            Json.decodeFromString(Recipe.serializer(), value)
         }.toMutableList())
-        list.sortBy{it.createTime}
+        list.sortBy { it.createTime }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyRecyclerViewHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_recipe, parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_recipe, parent, false)
         return MyRecyclerViewHolder(view)
     }
 
@@ -38,40 +37,40 @@ class MyRecyclerAdapter(val activity: MainActivity): RecyclerView.Adapter<MyRecy
     }
 
     override fun onBindViewHolder(holder: MyRecyclerViewHolder, position: Int) {
-        val listTitle = "${list[position].name}\n${list[position].sandwich}"
+        val listTitle = "${list[position].name}\n${list[position].sandwich.type.sandName}"
         holder.v.findViewById<TextView>(R.id.recipe_name).text = listTitle
 
-        holder.v.setOnClickListener{
+        holder.v.setOnClickListener {
             holder.v.isEnabled = false
             val handler = Handler()
             val runnable = Runnable {
                 holder.v.isEnabled = true
             }
             handler.postDelayed(runnable, 2000)
-            val intentToResult= Intent(activity, RecipeResultActivity::class.java)
+            val intentToResult = Intent(activity, RecipeResultActivity::class.java)
             intentToResult.putExtra("key", list[position].recipeId.id)
             activity.startActivity(intentToResult)
         }
-        holder.v.setOnLongClickListener{
+        holder.v.setOnLongClickListener {
             val alertDialog = AlertDialog.Builder(activity, R.style.MyAlertDialogStyle)
-                    .setTitle("確認")
-                    .setMessage("1度削除したレシピは復元できません。"+ "\n" +"レシピ名: ${list[position].name} を削除しますか？")
-                    .setPositiveButton("はい") { _, _ ->
-                        val deleteName = list[position].name
-                        val e = preference.edit()
-                        e.remove(list[position].recipeId.id)
-                        e.apply()
-                        list.removeAt(position)
-                        notifyItemRemoved(position)
-                        notifyItemRangeChanged(position, list.size)
-                        Toast.makeText(activity, "レシピ名: $deleteName を削除しました", Toast.LENGTH_SHORT).show()
-                    }
-                    .setNegativeButton("キャンセル", null)
-                    .show()
+                .setTitle("確認")
+                .setMessage("1度削除したレシピは復元できません。" + "\n" + "レシピ名: ${list[position].name} を削除しますか？")
+                .setPositiveButton("はい") { _, _ ->
+                    val deleteName = list[position].name
+                    val e = preference.edit()
+                    e.remove(list[position].recipeId.id)
+                    e.apply()
+                    list.removeAt(position)
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, list.size)
+                    Toast.makeText(activity, "レシピ名: $deleteName を削除しました", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("キャンセル", null)
+                .show()
             return@setOnLongClickListener true
         }
     }
 }
 
-class MyRecyclerViewHolder(val v: View): RecyclerView.ViewHolder(v)
+class MyRecyclerViewHolder(val v: View) : RecyclerView.ViewHolder(v)
 

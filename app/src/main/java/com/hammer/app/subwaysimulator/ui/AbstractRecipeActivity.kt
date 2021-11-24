@@ -4,39 +4,57 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.create_recipe.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.select_dressing_item.*
-import android.text.InputFilter
+import android.widget.Spinner
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.common.util.MinMaxFilter
 import com.hammer.app.subwaysimulator.localdata.Breads
 import com.hammer.app.subwaysimulator.localdata.Dressings
 import com.hammer.app.subwaysimulator.localdata.FootLong
-import com.hammer.app.subwaysimulator.common.util.MinMaxFilter
-import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.localdata.Sandwiches
 import com.hammer.app.subwaysimulator.localdata.Toppings
 import com.hammer.app.subwaysimulator.localdata.amountsDressing
 import com.hammer.app.subwaysimulator.localdata.dressingsWoNothing
 import com.hammer.app.subwaysimulator.localdata.toppings
+import kotlinx.android.synthetic.main.create_recipe.addDressing
+import kotlinx.android.synthetic.main.create_recipe.addDressing2
+import kotlinx.android.synthetic.main.create_recipe.addDressingText
+import kotlinx.android.synthetic.main.create_recipe.addDressingText2
+import kotlinx.android.synthetic.main.create_recipe.select_dressing_container
+import kotlinx.android.synthetic.main.create_recipe.spinnerBread
+import kotlinx.android.synthetic.main.create_recipe.spinnerDressing
+import kotlinx.android.synthetic.main.create_recipe.spinnerSand
+import kotlinx.android.synthetic.main.create_recipe.sumPrice
+import kotlinx.android.synthetic.main.create_recipe.textViewName
+import kotlinx.android.synthetic.main.select_dressing_item.howToDress
+import kotlinx.android.synthetic.main.select_dressing_item.removeDressing
+import kotlinx.android.synthetic.main.select_dressing_item.removeDressingText
+import kotlinx.android.synthetic.main.select_dressing_item.spinnerDressing2
+import kotlinx.android.synthetic.main.select_dressing_item.spinnerDressingAmount2
+import kotlinx.android.synthetic.main.select_dressing_item.textViewDressing2
+import kotlinx.android.synthetic.main.select_dressing_item.textViewDressingAmount2
+import kotlinx.android.synthetic.main.select_dressing_item.textViewDressingType2
 
-abstract class AbstractRecipeActivity: AppCompatActivity(){
+abstract class AbstractRecipeActivity : AppCompatActivity() {
     val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-    val gson = Gson()
     var sandPrice = 0
     var toppingPrice = 0
     var addDressingCount = 0
     var addDressing2Count = 0
 
-    protected fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String){
+    protected fun spinner(itemName: String, itemArray: Array<String>, spinnerName: String) {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val viewId = resources.getIdentifier(spinnerName, "id", packageName)
@@ -53,23 +71,24 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             false
         }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                        posi: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View,
+                posi: Int, id: Long
+            ) {
                 val spinner2 = parent as Spinner
                 val item = spinner2.selectedItem as String
                 if (itemName == "sandwich") {
-                    val selectedSand = Sandwiches.values().single{ it.sandName == item }
+                    val selectedSand = Sandwiches.values().single { it.sandName == item }
                     sandPrice = selectedSand.price
                     var sum = sandPrice + toppingPrice
-                    if(checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
-                    if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
+                    if (checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
+                    if (spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
                     sumPrice.text = sum.toString()
-                    if (checkboxRecommend.isChecked){
+                    if (checkboxRecommend.isChecked) {
                         spinnerDressing.setSelection(selectedSand.recommendDressing.ordinal)
-
                     }
                 }
-                if(itemName == "bread"){
+                if (itemName == "bread") {
                     val checkBoxToast = findViewById<CheckBox>(R.id.checkBoxToast)
                     if (spinner.selectedItem == Breads.NONE.breadName) {
                         checkBoxToast.visibility = View.GONE
@@ -90,7 +109,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     if (spinner.selectedItem == Dressings.NONE.dressingName) {
                         spinnerDressingAmount.visibility = View.GONE
                         textViewDressingAmount.visibility = View.GONE
-                        if (addDressingCount == 1){
+                        if (addDressingCount == 1) {
                             addDressing2.visibility = View.GONE
                             addDressingText2.visibility = View.GONE
                             spinnerDressing2.visibility = View.GONE
@@ -98,36 +117,38 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                             spinnerDressingAmount2.visibility = View.GONE
                             textViewDressingAmount2.visibility = View.GONE
                             howToDress.visibility = View.GONE
-                        }else{
+                        } else {
                             addDressing.visibility = View.GONE
                             addDressingText.visibility = View.GONE
                         }
                     } else {
                         spinnerDressingAmount.visibility = View.VISIBLE
                         textViewDressingAmount.visibility = View.VISIBLE
-                        if(addDressingCount == 1 && removeDressing.visibility == View.VISIBLE){
+                        if (addDressingCount == 1 && removeDressing.visibility == View.VISIBLE) {
                             spinnerDressing2.visibility = View.VISIBLE
                             textViewDressingType2.visibility = View.VISIBLE
                             spinnerDressingAmount2.visibility = View.VISIBLE
                             textViewDressingAmount2.visibility = View.VISIBLE
                             howToDress.visibility = View.VISIBLE
-                        }else if(addDressingCount == 1){
+                        } else if (addDressingCount == 1) {
                             addDressing2.visibility = View.VISIBLE
                             addDressingText2.visibility = View.VISIBLE
-                        }else if(addDressing2Count == 0 ){
+                        } else if (addDressing2Count == 0) {
                             addDressing.visibility = View.VISIBLE
                             addDressingText.visibility = View.VISIBLE
                         }
                     }
-                    val selectedSand =  Sandwiches.values().single { spinnerSand.selectedItem == it.sandName }
-                    if(checkboxRecommend.isChecked && spinner.selectedItem != selectedSand.recommendDressing.dressingName) checkboxRecommend.isChecked = false
+                    val selectedSand = Sandwiches.values().single { spinnerSand.selectedItem == it.sandName }
+                    if (checkboxRecommend.isChecked && spinner.selectedItem != selectedSand.recommendDressing.dressingName) checkboxRecommend.isChecked =
+                        false
                 }
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
     }
 
-    protected fun spinnerDefaultVege(itemArray: Array<String>, spinnerName: String){
+    protected fun spinnerDefaultVege(itemArray: Array<String>, spinnerName: String) {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemArray)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val viewId = resources.getIdentifier(spinnerName, "id", packageName)
@@ -141,15 +162,17 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
         }
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                        posi: Int, id: Long) {
-
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View,
+                posi: Int, id: Long
+            ) {
             }
+
             override fun onNothingSelected(arg0: AdapterView<*>) {}
         }
     }
 
-    protected fun dressingAmount(){
+    protected fun dressingAmount() {
         val adapterDressingAmount = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, amountsDressing)
         adapterDressingAmount.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         val spinnerDressingAmount = findViewById<Spinner>(R.id.spinnerDressingAmount)
@@ -160,8 +183,10 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             false
         }
         spinnerDressingAmount.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                        posi: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>, view: View,
+                posi: Int, id: Long
+            ) {
             }
 
             override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -169,8 +194,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
     }
 
     protected fun checkBox() {
-        toppings.forEach {topping ->
-            val toppingName = Toppings.values().single {tpp -> tpp.toppingName == topping }
+        toppings.forEach { topping ->
+            val toppingName = Toppings.values().single { tpp -> tpp.toppingName == topping }
             val viewId = resources.getIdentifier("checkBox${toppingName.engName}", "id", packageName)
             val checkbox = findViewById<CheckBox>(viewId)
             val counterViewId = resources.getIdentifier("counter${toppingName.engName}", "id", packageName)
@@ -182,7 +207,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             checkbox.setOnClickListener {
                 textViewName.clearFocus()
                 toppingPrice = 0
-                toppings.forEach {topping2 ->
+                toppings.forEach { topping2 ->
                     val toppingName2 = Toppings.values().single { tpp2 -> tpp2.toppingName == topping2 }
                     val viewId2 = resources.getIdentifier("checkBox${toppingName2.engName}", "id", packageName)
                     val checkbox2 = findViewById<CheckBox>(viewId2)
@@ -193,21 +218,21 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     if (checkbox2.isChecked) {
                         counter2.visibility = View.VISIBLE
                         toppingPrice += toppingName2.price * valueTextView.text.toString().toInt()
-                    }else{
+                    } else {
                         counter2.visibility = View.INVISIBLE
                     }
                 }
                 var sum = sandPrice + toppingPrice
-                if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
-                if(checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
+                if (spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
+                if (checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
                 sumPrice.text = sum.toString()
             }
         }
     }
 
-    protected fun counterBtn(){
-        toppings.forEach{topping ->
-            val toppingName = Toppings.values().single {tpp -> tpp.toppingName == topping }
+    protected fun counterBtn() {
+        toppings.forEach { topping ->
+            val toppingName = Toppings.values().single { tpp -> tpp.toppingName == topping }
             val upBtnViewId = resources.getIdentifier("up${toppingName.engName}", "id", packageName)
             val upBtn = findViewById<ImageButton>(upBtnViewId)
             val valueViewId = resources.getIdentifier("value${toppingName.engName}", "id", packageName)
@@ -217,13 +242,13 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
             valueTextView.filters = arrayOf<InputFilter>(MinMaxFilter("1", "9"))
             var v = valueTextView.text.toString().toInt()
-            upBtn.setOnClickListener{
+            upBtn.setOnClickListener {
                 textViewName.clearFocus()
                 upBtn.isEnabled = v < 9
                 v++
                 valueTextView.text = v.toString()
             }
-            downBtn.setOnClickListener{
+            downBtn.setOnClickListener {
                 textViewName.clearFocus()
                 downBtn.isEnabled = v >= 1
                 v--
@@ -246,7 +271,7 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     }
 
                     toppingPrice = 0
-                    toppings.forEach{topping2 ->
+                    toppings.forEach { topping2 ->
                         val toppingName2 = Toppings.values().single { tpp2 -> tpp2.toppingName == topping2 }
                         val viewId = resources.getIdentifier("checkBox${toppingName2.engName}", "id", packageName)
                         val checkbox = findViewById<CheckBox>(viewId)
@@ -255,8 +280,8 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                         if (checkbox.isChecked) toppingPrice += toppingName2.price * valueTextView2.text.toString().toInt()
                     }
                     var sum = sandPrice + toppingPrice
-                    if(spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
-                    if(checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
+                    if (spinnerBread.selectedItem == Breads.NONE.breadName) sum += Breads.NONE.price
+                    if (checkBoxFootLong.isChecked) sum += FootLong.FOOT_LONG.price
                     sumPrice.text = sum.toString()
                 }
             })
@@ -264,11 +289,12 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
     }
 
     @SuppressLint("InflateParams")
-    protected fun initAddDressingBtn(){
-        addDressing.setOnClickListener{addBtn ->
+    protected fun initAddDressingBtn() {
+        addDressing.setOnClickListener { addBtn ->
             textViewName.clearFocus()
             addDressingCount++
-            val selectDressingItemView = LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
+            val selectDressingItemView =
+                LayoutInflater.from(this).inflate(R.layout.select_dressing_item, null, false) as ViewGroup
             selectDressingItemView.id = selectDressingItemView.hashCode()
             select_dressing_container.addView(selectDressingItemView)
 
@@ -277,8 +303,10 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             spinnerDressing2.adapter = adapterDressing
             spinnerDressing2.setSelection(0)
             spinnerDressing2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                            posi: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View,
+                    posi: Int, id: Long
+                ) {
                 }
 
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
@@ -289,15 +317,18 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
             spinnerDressingAmount2.adapter = adapterDressingAmount
             spinnerDressingAmount2.setSelection(1)
             spinnerDressingAmount2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>, view: View,
-                                            posi: Int, id: Long) {
+                override fun onItemSelected(
+                    parent: AdapterView<*>, view: View,
+                    posi: Int, id: Long
+                ) {
                 }
+
                 override fun onNothingSelected(arg0: AdapterView<*>) {}
             }
             addBtn.visibility = View.GONE
             addDressingText.visibility = View.GONE
 
-            removeDressing.setOnClickListener{removeBtn ->
+            removeDressing.setOnClickListener { removeBtn ->
                 textViewName.clearFocus()
                 addDressing2.visibility = View.VISIBLE
                 addDressingText2.visibility = View.VISIBLE
@@ -310,11 +341,11 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                 removeBtn.visibility = View.GONE
                 removeDressingText.visibility = View.GONE
             }
-            
-            addDressing2.setOnClickListener {addBtn2 ->
+
+            addDressing2.setOnClickListener { addBtn2 ->
                 textViewName.clearFocus()
                 addDressing2Count++
-                if (spinnerDressing.selectedItem != Dressings.NONE.dressingName){
+                if (spinnerDressing.selectedItem != Dressings.NONE.dressingName) {
                     addBtn2.visibility = View.GONE
                     addDressingText2.visibility = View.GONE
                     textViewDressing2.visibility = View.VISIBLE
@@ -327,18 +358,18 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
                     removeDressingText.visibility = View.VISIBLE
                 }
             }
-            
+
         }
     }
-    
-    protected fun checkBoxFootLong(){
+
+    protected fun checkBoxFootLong() {
         val checkBoxFootLong = findViewById<CheckBox>(R.id.checkBoxFootLong)
-        checkBoxFootLong.setOnClickListener{
+        checkBoxFootLong.setOnClickListener {
             textViewName.clearFocus()
-            if(checkBoxFootLong.isChecked){ 
+            if (checkBoxFootLong.isChecked) {
                 val sum = sandPrice + toppingPrice + FootLong.FOOT_LONG.price
                 sumPrice.text = sum.toString()
-            }else{ 
+            } else {
                 val sum = sandPrice + toppingPrice
                 sumPrice.text = sum.toString()
             }
@@ -347,13 +378,13 @@ abstract class AbstractRecipeActivity: AppCompatActivity(){
 
     override fun onBackPressed() {
         val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                .setTitle("確認")
-                .setMessage("作成途中で終了するとレシピは保存されません。"+ "\n" +"終了しますか？")
-                .setPositiveButton("はい") { _, _ ->
+            .setTitle("確認")
+            .setMessage("作成途中で終了するとレシピは保存されません。" + "\n" + "終了しますか？")
+            .setPositiveButton("はい") { _, _ ->
                 super.onBackPressed()
-                }
-                .setNegativeButton("キャンセル", null)
-                .show()
+            }
+            .setNegativeButton("キャンセル", null)
+            .show()
     }
 }
 

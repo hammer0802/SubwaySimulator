@@ -1,7 +1,9 @@
 package com.hammer.app.subwaysimulator.model
 
 import com.hammer.app.subwaysimulator.localdata.Sandwiches
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Sandwich(
     val type: Sandwiches,
     val isFootLong: Boolean

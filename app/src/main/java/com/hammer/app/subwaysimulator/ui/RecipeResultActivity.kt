@@ -18,7 +18,6 @@ import androidx.core.content.FileProvider
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.gson.Gson
 import com.hammer.app.subwaysimulator.BuildConfig
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.localdata.AccentVegetables
@@ -28,10 +27,10 @@ import com.hammer.app.subwaysimulator.localdata.Dressings
 import com.hammer.app.subwaysimulator.localdata.Sandwiches
 import com.hammer.app.subwaysimulator.localdata.Toppings
 import com.hammer.app.subwaysimulator.localdata.Vegetables
-import com.hammer.app.subwaysimulator.model.Dressing
 import com.hammer.app.subwaysimulator.model.Recipe
 import kotlinx.android.synthetic.main.activity_recipe_result.*
 import kotlinx.android.synthetic.main.content_recipe_result.*
+import kotlinx.serialization.json.Json
 import net.taptappun.taku.kobayashi.runtimepermissionchecker.RuntimePermissionChecker
 import java.io.File
 import java.io.FileOutputStream
@@ -42,10 +41,9 @@ const val RESULT_EDIT = 1000
 class RecipeResultActivity : AppCompatActivity() {
 
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-    private val gson = Gson()
     private val intentFromList: Intent by lazy { this.intent }
     val key: String? by lazy { intentFromList.getStringExtra("key") }
-    private val recipe: Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
+    private val recipe: Recipe by lazy { Json.decodeFromString(Recipe.serializer(), preference.getString(key, "") ?: "") }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -175,7 +173,7 @@ class RecipeResultActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK && requestCode == RESULT_EDIT && null != intent) {
             clearRecipeText()
             val key = intent.getStringExtra("key")
-            val recipe = gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java)
+            val recipe = Json.decodeFromString(Recipe.serializer(), preference.getString(key, "") ?: "")
             setRecipeText(recipe)
         }
     }
@@ -216,11 +214,11 @@ class RecipeResultActivity : AppCompatActivity() {
             recipe.bread.type == Breads.NONE -> breadText = "無し(サラダ)"
             recipe.bread.isToasted -> {
                 toast = "トースト有り"
-                breadText = "${recipe.bread}($toast)"
+                breadText = "${recipe.bread.type.breadName}($toast)"
             }
             else -> {
                 toast = "トースト無し"
-                breadText = "${recipe.bread}($toast)"
+                breadText = "${recipe.bread.type.breadName}($toast)"
             }
         }
         textViewBreadType.text = breadText

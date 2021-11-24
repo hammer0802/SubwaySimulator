@@ -3,8 +3,10 @@ package com.hammer.app.subwaysimulator.model
 import com.hammer.app.subwaysimulator.localdata.AccentVegetables
 import com.hammer.app.subwaysimulator.localdata.Amounts
 import com.hammer.app.subwaysimulator.localdata.Vegetables
+import kotlinx.serialization.Serializable
 import java.util.UUID
 
+@Serializable
 data class Recipe(
     val recipeId: RecipeId = RecipeId.createRecipeId(),
     val name: String,
@@ -50,6 +52,7 @@ data class Recipe(
 }
 
 @JvmInline
+@Serializable
 value class RecipeId(val id: String) {
     companion object {
         fun createRecipeId(): RecipeId {
