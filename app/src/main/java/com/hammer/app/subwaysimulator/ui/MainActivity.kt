@@ -6,26 +6,26 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
 import com.google.android.gms.ads.AdRequest
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.hammer.app.subwaysimulator.BuildConfig
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
+import kotlinx.android.synthetic.main.activity_main.create
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.content_main.recycler_view
+import kotlinx.serialization.json.Json
 
 class MainActivity : AppCompatActivity() {
     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-    private val gson = Gson()
     val list: MutableList<Recipe> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +33,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             //テスト用アプリID
             MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
-        }else{
+        } else {
             //本番アプリID
-             MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424~8280793083")
+            MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424~8280793083")
         }
         val mAdView = findViewById<AdView>(R.id.adView)
         val adRequest = AdRequest.Builder().build()
@@ -51,25 +51,25 @@ class MainActivity : AppCompatActivity() {
             var count = countPreference.getInt("count", 0)
             if (count == 0) {
                 val sequence = TapTargetSequence(this)
-                        .targets(
-                                TapTarget.forView(findViewById<View>(R.id.create), "まずはこちらのボタンを押してレシピを作成しましょう！")
-                                        .outerCircleColor(R.color.colorPrimary)
-                                        .titleTextColor(android.R.color.white)
-                                        .drawShadow(true)
-                                        .outerCircleAlpha(0.97f)
-                                        .cancelable(false)
-                                        .tintTarget(false)
-                                        .id(1),
-                                TapTarget.forToolbarOverflow(toolbar, "操作方法を忘れた場合はこちらをクリック！", "もう一度チュートリアルを見ることができます。")
-                                        .outerCircleColor(R.color.colorAccent)
-                                        .titleTextColor(android.R.color.white)
-                                        .descriptionTextColor(android.R.color.white)
-                                        .descriptionTextAlpha(1.0f)
-                                        .drawShadow(true)
-                                        .outerCircleAlpha(0.97f)
-                                        .cancelable(true)
-                                        .id(2)
-                        )
+                    .targets(
+                        TapTarget.forView(findViewById<View>(R.id.create), "まずはこちらのボタンを押してレシピを作成しましょう！")
+                            .outerCircleColor(R.color.colorPrimary)
+                            .titleTextColor(android.R.color.white)
+                            .drawShadow(true)
+                            .outerCircleAlpha(0.97f)
+                            .cancelable(false)
+                            .tintTarget(false)
+                            .id(1),
+                        TapTarget.forToolbarOverflow(toolbar, "操作方法を忘れた場合はこちらをクリック！", "もう一度チュートリアルを見ることができます。")
+                            .outerCircleColor(R.color.colorAccent)
+                            .titleTextColor(android.R.color.white)
+                            .descriptionTextColor(android.R.color.white)
+                            .descriptionTextAlpha(1.0f)
+                            .drawShadow(true)
+                            .outerCircleAlpha(0.97f)
+                            .cancelable(true)
+                            .id(2)
+                    )
                 sequence.start()
                 count++
                 val e = countPreference.edit()
@@ -80,18 +80,18 @@ class MainActivity : AppCompatActivity() {
 
         list.clear()
         list.addAll(preference.all.values.filterIsInstance(String::class.java).map { value ->
-            gson.fromJson<Recipe>(value, Recipe::class.java)
+            Json.decodeFromString(Recipe.serializer(), value)
         }.toMutableList())
-        list.sortBy{it.createTime}
+        list.sortBy { it.createTime }
 
-        create.setOnClickListener{
+        create.setOnClickListener {
             create.isEnabled = false
             val handler = Handler()
             val runnable = Runnable {
                 create.isEnabled = true
             }
             handler.postDelayed(runnable, 2000)
-            val intentToCreate= Intent(this, CreateRecipeActivity::class.java)
+            val intentToCreate = Intent(this, CreateRecipeActivity::class.java)
             this.startActivity(intentToCreate)
         }
     }

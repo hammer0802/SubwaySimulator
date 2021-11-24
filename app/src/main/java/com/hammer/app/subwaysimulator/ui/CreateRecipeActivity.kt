@@ -3,8 +3,6 @@ package com.hammer.app.subwaysimulator.ui
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
-import android.widget.RadioButton
-import android.widget.RadioGroup
 import android.widget.Toast
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.localdata.AccentVegetables
@@ -61,6 +59,7 @@ import kotlinx.android.synthetic.main.create_recipe.valuetuna
 import kotlinx.android.synthetic.main.select_dressing_item.removeDressing
 import kotlinx.android.synthetic.main.select_dressing_item.spinnerDressing2
 import kotlinx.android.synthetic.main.select_dressing_item.spinnerDressingAmount2
+import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -192,11 +191,11 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                         } else {
                             dressing.add(Dressing(Dressings.NONE, AmountsDressing.NONE))
                         }
-                        val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
-                        val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
+                        // val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
+                        // val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
 
                         val recipe = Recipe.from(
-                            name= textViewName.text.toString(),
+                            name = textViewName.text.toString(),
                             price = sumPrice.text.toString().toInt(),
                             sandwich = Sandwich.from(
                                 spinnerSand.selectedItem as String,
@@ -207,10 +206,10 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                             vegetableMap = vegetableMap,
                             accentVegetableMap = accentVegetableMap,
                             dressing = dressing,
-                            howToDress = checkedRadioBtn.text.toString(),
+                            howToDress = "",
                             time = sdf.format(c.time)
                         )
-                        e.putString(recipe.recipeId.id, gson.toJson(this))
+                        e.putString(recipe.recipeId.id, Json.encodeToString(Recipe.serializer(), recipe))
                         e.apply()
                         Toast.makeText(this, "レシピ名: ${recipe.name} を作成しました", Toast.LENGTH_SHORT).show()
                         finish()

@@ -30,13 +30,14 @@ import com.hammer.app.subwaysimulator.model.Sandwich
 import com.hammer.app.subwaysimulator.model.Topping
 import kotlinx.android.synthetic.main.create_recipe.*
 import kotlinx.android.synthetic.main.select_dressing_item.*
+import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
 
 class EditRecipeActivity : AbstractRecipeActivity() {
     private val intentFromResult: Intent by lazy { this.intent }
     val key: String? by lazy { intentFromResult.getStringExtra("key") }
-    private val recipe: Recipe by lazy { gson.fromJson<Recipe>(preference.getString(key, ""), Recipe::class.java) }
+    private val recipe: Recipe by lazy { Json.decodeFromString(Recipe.serializer(), preference.getString(key, "") ?: "") }
 
     @SuppressLint("InflateParams")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -319,8 +320,6 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                         } else {
                             dressing.add(Dressing(Dressings.NONE, AmountsDressing.NONE))
                         }
-                        val howToDressRadioBtn = findViewById<RadioGroup>(R.id.howToDress)
-                        val checkedRadioBtn = findViewById<RadioButton>(howToDressRadioBtn.checkedRadioButtonId)
 
                         val newRecipe = recipe.copy(
                             name = textViewName.text.toString(),
@@ -334,10 +333,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                             vegetableMap = vegetableMap,
                             accentVegetableMap = accentVegetableMap,
                             dressing = dressing,
-                            howToDress = checkedRadioBtn.text.toString(),
+                            howToDress = "",
                             editTime = sdf.format(c.time)
                         )
-                        e.putString(key, gson.toJson(newRecipe))
+                        e.putString(key, Json.encodeToString(Recipe.serializer(), newRecipe))
                         e.apply()
                         intentToResult.putExtra("key", key)
                         Toast.makeText(this, "レシピを編集しました", Toast.LENGTH_SHORT).show()
