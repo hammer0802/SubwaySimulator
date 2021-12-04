@@ -79,6 +79,14 @@ fun TopScreen(recipeList: List<Recipe>) {
             },
             content = {
                 Column {
+                    LazyColumn(
+                        modifier = Modifier.weight(1F),
+                        contentPadding = PaddingValues(all = 8.dp)
+                    ) {
+                        items(items = recipeList) { recipe ->
+                            ListCard(recipe = recipe)
+                        }
+                    }
                     AndroidView(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -90,14 +98,6 @@ fun TopScreen(recipeList: List<Recipe>) {
                             adView
                         },
                     )
-                    LazyColumn(
-                        modifier = Modifier.weight(1F),
-                        contentPadding = PaddingValues(all = 8.dp)
-                    ) {
-                        items(items = recipeList) { recipe ->
-                            ListCard(recipe = recipe)
-                        }
-                    }
                 }
             },
             floatingActionButtonPosition = FabPosition.End,
@@ -107,7 +107,7 @@ fun TopScreen(recipeList: List<Recipe>) {
                     backgroundColor = colorResource(id = R.color.colorAccent),
                     contentColor = Color.White,
                 ) {
-                    Icon(Icons.Filled.Add, "")
+                    Icon(Icons.Filled.Add, "create recipe")
                 }
             }
         )
@@ -131,7 +131,7 @@ private fun ListCard(recipe: Recipe) {
                 Text(text = recipe.name)
                 Text(text = recipe.sandwich.type.sandName)
             }
-            Text(text = recipe.price.toString())
+            Text(text = "￥${recipe.price}")
         }
     }
 }
