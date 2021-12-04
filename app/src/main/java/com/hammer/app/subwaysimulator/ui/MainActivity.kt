@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
@@ -24,116 +25,18 @@ import com.hammer.app.subwaysimulator.ui.top.TopScreen
 import kotlinx.android.synthetic.main.activity_main.create
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.content_main.recycler_view
+import kotlinx.coroutines.delay
 import kotlinx.serialization.json.Json
 
 class MainActivity : AppCompatActivity() {
+    private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val recipeList = preference.all.values.filterIsInstance(String::class.java).map {value ->
+            Json.decodeFromString(Recipe.serializer(), value)
+        }.toList()
         setContent {
-            TopScreen()
+            TopScreen(recipeList.sortedBy { it.createTime })
         }
     }
 }
-
-// class MainActivity : AppCompatActivity() {
-//     private val preference: SharedPreferences by lazy { getSharedPreferences("recipe", Context.MODE_PRIVATE) }
-//     val list: MutableList<Recipe> = mutableListOf()
-//
-//     override fun onCreate(savedInstanceState: Bundle?) {
-//         super.onCreate(savedInstanceState)
-//         setContentView(R.layout.activity_main)
-//         setSupportActionBar(toolbar)
-//
-//         if (BuildConfig.DEBUG) {
-//             //テスト用アプリID
-//             MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
-//         } else {
-//             //本番アプリID
-//             MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424~8280793083")
-//         }
-//         val mAdView = findViewById<AdView>(R.id.adView)
-//         val adRequest = AdRequest.Builder().build()
-//         mAdView.loadAd(adRequest)
-//
-//         TutorialActivity.showIfNeeded(this, Bundle())
-//
-//         Handler().postDelayed({
-//             val countPreference = getSharedPreferences("countPreference", Context.MODE_PRIVATE)
-//             var count = countPreference.getInt("count", 0)
-//             if (count == 0) {
-//                 val sequence = TapTargetSequence(this)
-//                     .targets(
-//                         TapTarget.forView(findViewById<View>(R.id.create), "まずはこちらのボタンを押してレシピを作成しましょう！")
-//                             .outerCircleColor(R.color.colorPrimary)
-//                             .titleTextColor(android.R.color.white)
-//                             .drawShadow(true)
-//                             .outerCircleAlpha(0.97f)
-//                             .cancelable(false)
-//                             .tintTarget(false)
-//                             .id(1),
-//                         TapTarget.forToolbarOverflow(toolbar, "操作方法を忘れた場合はこちらをクリック！", "もう一度チュートリアルを見ることができます。")
-//                             .outerCircleColor(R.color.colorAccent)
-//                             .titleTextColor(android.R.color.white)
-//                             .descriptionTextColor(android.R.color.white)
-//                             .descriptionTextAlpha(1.0f)
-//                             .drawShadow(true)
-//                             .outerCircleAlpha(0.97f)
-//                             .cancelable(true)
-//                             .id(2)
-//                     )
-//                 sequence.start()
-//                 count++
-//                 val e = countPreference.edit()
-//                 e.putInt("count", count)
-//                 e.apply()
-//             }
-//         }, 1000)
-//
-//         list.clear()
-//         list.addAll(preference.all.values.filterIsInstance(String::class.java).map { value ->
-//             Json.decodeFromString(Recipe.serializer(), value)
-//         }.toMutableList())
-//         list.sortBy { it.createTime }
-//
-//         create.setOnClickListener {
-//             create.isEnabled = false
-//             val handler = Handler()
-//             val runnable = Runnable {
-//                 create.isEnabled = true
-//             }
-//             handler.postDelayed(runnable, 2000)
-//             val intentToCreate = Intent(this, CreateRecipeActivity::class.java)
-//             this.startActivity(intentToCreate)
-//         }
-//     }
-//
-//     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//         menuInflater.inflate(R.menu.menu_main, menu)
-//         return true
-//     }
-//
-//     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//         return when (item.itemId) {
-//             R.id.action_settings -> {
-//                 TutorialActivity.showForcibly(this)
-//                 true
-//             }
-//             R.id.action_policy -> {
-//                 val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
-//                 val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
-//                 startActivity(intentToPolicy)
-//                 true
-//             }
-//             else -> super.onOptionsItemSelected(item)
-//         }
-//     }
-//
-//     override fun onResume() {
-//         super.onResume()
-//         val recyclerAdaptor = MyRecyclerAdapter(this)
-//         recycler_view.layoutManager = LinearLayoutManager(this)
-//         recycler_view.adapter = recyclerAdaptor
-//         recyclerAdaptor.reload()
-//         recycler_view.adapter!!.notifyDataSetChanged()
-//     }
-// }

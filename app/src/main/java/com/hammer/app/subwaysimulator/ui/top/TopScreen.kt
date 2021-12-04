@@ -1,13 +1,19 @@
 package com.hammer.app.subwaysimulator.ui.top
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Divider
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -24,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -35,9 +42,11 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.model.Recipe
 
+@ExperimentalMaterialApi
 @Composable
-fun TopScreen() {
+fun TopScreen(recipeList: List<Recipe>) {
     var showMenu by remember { mutableStateOf(false) }
 
     MaterialTheme {
@@ -81,10 +90,12 @@ fun TopScreen() {
                             adView
                         },
                     )
-                    LazyColumn(modifier = Modifier.weight(1F)) {
-                        items(100) { item ->
-                            Text("item: $item")
-                            Divider(thickness = 0.8.dp)
+                    LazyColumn(
+                        modifier = Modifier.weight(1F),
+                        contentPadding = PaddingValues(all = 8.dp)
+                    ) {
+                        items(items = recipeList) { recipe ->
+                            ListCard(recipe = recipe)
                         }
                     }
                 }
@@ -103,8 +114,31 @@ fun TopScreen() {
     }
 }
 
+@ExperimentalMaterialApi
+@Composable
+private fun ListCard(recipe: Recipe) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = 4.dp,
+        onClick = {}
+    ) {
+        Row(
+            modifier = Modifier.padding(4.dp),
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text(text = recipe.name)
+                Text(text = recipe.sandwich.type.sandName)
+            }
+            Text(text = recipe.price.toString())
+        }
+    }
+}
+
+@ExperimentalMaterialApi
 @Preview
 @Composable
 fun PreviewTopScreen() {
-    TopScreen()
+    TopScreen(emptyList())
 }
