@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
             Json.decodeFromString(Recipe.serializer(), value)
         }.toList().sortedBy { it.createTime }
         setContent {
-            TopScreen(recipeList)
+            TopScreen(recipeList, this)
         }
     }
 }

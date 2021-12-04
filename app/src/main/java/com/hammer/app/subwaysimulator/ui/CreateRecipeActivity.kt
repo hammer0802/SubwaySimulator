@@ -1,6 +1,8 @@
 package com.hammer.app.subwaysimulator.ui
 
 import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -216,6 +218,13 @@ class CreateRecipeActivity : AbstractRecipeActivity() {
                     }
                     .setNegativeButton("いいえ", null)
                     .show()
+            }
+        }
+    }
+    companion object {
+        fun start(context: Context) {
+            Intent(context, CreateRecipeActivity::class.java).let {
+                context.startActivity(it)
             }
         }
     }

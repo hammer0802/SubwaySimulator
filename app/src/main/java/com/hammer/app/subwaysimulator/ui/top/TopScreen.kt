@@ -1,5 +1,9 @@
 package com.hammer.app.subwaysimulator.ui.top
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,18 +39,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat.startActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
+import com.hammer.app.subwaysimulator.ui.CreateRecipeActivity
+import com.hammer.app.subwaysimulator.ui.RecipeResultActivity
+import com.hammer.app.subwaysimulator.ui.TutorialActivity
 
 @ExperimentalMaterialApi
 @Composable
-fun TopScreen(recipeList: List<Recipe>) {
+fun TopScreen(recipeList: List<Recipe>, activity: Activity) {
     var showMenu by remember { mutableStateOf(false) }
 
     MaterialTheme {
@@ -64,10 +71,18 @@ fun TopScreen(recipeList: List<Recipe>) {
                             Icon(Icons.Filled.Menu, "menu")
                         }
                         DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                            DropdownMenuItem(onClick = { showMenu = false }) {
+                            DropdownMenuItem(onClick = {
+                                TutorialActivity.showForcibly(activity)
+                                showMenu = false
+                            }) {
                                 Text(text = stringResource(id = R.string.action_settings))
                             }
-                            DropdownMenuItem(onClick = { showMenu = false }) {
+                            DropdownMenuItem(onClick = {
+                                val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
+                                val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
+                                startActivity(activity, intentToPolicy, null)
+                                showMenu = false
+                            }) {
                                 Text(text = stringResource(id = R.string.action_policy))
                             }
                         }
@@ -84,7 +99,7 @@ fun TopScreen(recipeList: List<Recipe>) {
                         contentPadding = PaddingValues(all = 8.dp)
                     ) {
                         items(items = recipeList) { recipe ->
-                            ListCard(recipe = recipe)
+                            ListCard(recipe = recipe, activity = activity)
                         }
                     }
                     AndroidView(
@@ -103,7 +118,7 @@ fun TopScreen(recipeList: List<Recipe>) {
             floatingActionButtonPosition = FabPosition.End,
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {},
+                    onClick = { CreateRecipeActivity.start(activity) },
                     backgroundColor = colorResource(id = R.color.colorAccent),
                     contentColor = Color.White,
                 ) {
@@ -116,11 +131,15 @@ fun TopScreen(recipeList: List<Recipe>) {
 
 @ExperimentalMaterialApi
 @Composable
-private fun ListCard(recipe: Recipe) {
+private fun ListCard(recipe: Recipe, activity: Activity) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = 4.dp,
-        onClick = {}
+        onClick = {
+            val intentToResult = Intent(activity, RecipeResultActivity::class.java)
+            intentToResult.putExtra("key", recipe.recipeId.id)
+            activity.startActivity(intentToResult)
+        }
     ) {
         Row(
             modifier = Modifier.padding(4.dp),
@@ -134,11 +153,4 @@ private fun ListCard(recipe: Recipe) {
             Text(text = "￥${recipe.price}")
         }
     }
-}
-
-@ExperimentalMaterialApi
-@Preview
-@Composable
-fun PreviewTopScreen() {
-    TopScreen(emptyList())
 }
