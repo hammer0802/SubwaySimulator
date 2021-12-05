@@ -3,6 +3,7 @@ package com.hammer.app.subwaysimulator.ui.top
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hammer.app.subwaysimulator.core.navigation.NavigationEvent
+import com.hammer.app.subwaysimulator.model.Recipe
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -26,8 +27,8 @@ class TopViewModel @Inject constructor() : ViewModel() {
         sendEvent(Nav.OpenCreateRecipeScreen)
     }
 
-    fun openRecipeDetailScreen() {
-        sendEvent(Nav.OpenRecipeDetailScreen)
+    fun openRecipeDetailScreen(recipe: Recipe) {
+        sendEvent(Nav.OpenRecipeDetailScreen(recipe))
     }
 
     private fun sendEvent(nav: Nav) {
@@ -40,6 +41,6 @@ class TopViewModel @Inject constructor() : ViewModel() {
         object OpenTutorial : Nav()
         object OpenPrivacyPolicy : Nav()
         object OpenCreateRecipeScreen : Nav()
-        object OpenRecipeDetailScreen : Nav()
+        data class OpenRecipeDetailScreen(val recipe: Recipe) : Nav()
     }
 }

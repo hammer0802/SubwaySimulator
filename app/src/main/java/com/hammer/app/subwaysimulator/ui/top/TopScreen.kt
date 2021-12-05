@@ -66,16 +66,12 @@ fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()
                         DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                             DropdownMenuItem(onClick = {
                                 topViewModel.openTutorial()
-                                // TutorialActivity.showForcibly(activity)
                                 showMenu = false
                             }) {
                                 Text(text = stringResource(id = R.string.action_settings))
                             }
                             DropdownMenuItem(onClick = {
                                 topViewModel.openPrivacyPolicy()
-                                // val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
-                                // val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
-                                // startActivity(activity, intentToPolicy, null)
                                 showMenu = false
                             }) {
                                 Text(text = stringResource(id = R.string.action_policy))
@@ -115,7 +111,6 @@ fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()
                 FloatingActionButton(
                     onClick = {
                         topViewModel.openCreateRecipeScreen()
-                        // CreateRecipeActivity.start(activity)
                     },
                     backgroundColor = colorResource(id = R.color.colorAccent),
                     contentColor = Color.White,
@@ -134,10 +129,7 @@ private fun ListCard(recipe: Recipe, topViewModel: TopViewModel) {
         modifier = Modifier.fillMaxWidth(),
         elevation = 4.dp,
         onClick = {
-            topViewModel.openRecipeDetailScreen()
-            // val intentToResult = Intent(activity, RecipeResultActivity::class.java)
-            // intentToResult.putExtra("key", recipe.recipeId.id)
-            // activity.startActivity(intentToResult)
+            topViewModel.openRecipeDetailScreen(recipe)
         }
     ) {
         Row(
