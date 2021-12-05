@@ -3,7 +3,6 @@ package com.hammer.app.subwaysimulator.common.util
 import android.text.Spanned
 import android.text.InputFilter
 
-
 class MinMaxFilter(minValue: String, maxValue: String) : InputFilter {
 
     private var mIntMin: Int = 0

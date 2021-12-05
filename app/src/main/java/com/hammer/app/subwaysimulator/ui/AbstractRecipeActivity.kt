@@ -72,8 +72,10 @@ abstract class AbstractRecipeActivity : AppCompatActivity() {
         }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>, view: View,
-                posi: Int, id: Long
+                parent: AdapterView<*>,
+                view: View,
+                posi: Int,
+                id: Long
             ) {
                 val spinner2 = parent as Spinner
                 val item = spinner2.selectedItem as String
@@ -163,8 +165,10 @@ abstract class AbstractRecipeActivity : AppCompatActivity() {
         // スピナーのアイテムが選択された時に呼び出されるコールバックリスナーを登録
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>, view: View,
-                posi: Int, id: Long
+                parent: AdapterView<*>,
+                view: View,
+                posi: Int,
+                id: Long
             ) {
             }
 
@@ -184,8 +188,10 @@ abstract class AbstractRecipeActivity : AppCompatActivity() {
         }
         spinnerDressingAmount.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
-                parent: AdapterView<*>, view: View,
-                posi: Int, id: Long
+                parent: AdapterView<*>,
+                view: View,
+                posi: Int,
+                id: Long
             ) {
             }
 
@@ -304,8 +310,10 @@ abstract class AbstractRecipeActivity : AppCompatActivity() {
             spinnerDressing2.setSelection(0)
             spinnerDressing2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>, view: View,
-                    posi: Int, id: Long
+                    parent: AdapterView<*>,
+                    view: View,
+                    posi: Int,
+                    id: Long
                 ) {
                 }
 
@@ -318,8 +326,10 @@ abstract class AbstractRecipeActivity : AppCompatActivity() {
             spinnerDressingAmount2.setSelection(1)
             spinnerDressingAmount2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
-                    parent: AdapterView<*>, view: View,
-                    posi: Int, id: Long
+                    parent: AdapterView<*>,
+                    view: View,
+                    posi: Int,
+                    id: Long
                 ) {
                 }
 
@@ -358,7 +368,6 @@ abstract class AbstractRecipeActivity : AppCompatActivity() {
                     removeDressingText.visibility = View.VISIBLE
                 }
             }
-
         }
     }
 
@@ -387,4 +396,3 @@ abstract class AbstractRecipeActivity : AppCompatActivity() {
             .show()
     }
 }
-
