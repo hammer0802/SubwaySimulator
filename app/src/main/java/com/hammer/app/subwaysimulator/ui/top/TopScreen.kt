@@ -1,8 +1,5 @@
 package com.hammer.app.subwaysimulator.ui.top
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,19 +37,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
-import com.hammer.app.subwaysimulator.ui.CreateRecipeActivity
-import com.hammer.app.subwaysimulator.ui.RecipeResultActivity
-import com.hammer.app.subwaysimulator.ui.TutorialActivity
 
 @ExperimentalMaterialApi
 @Composable
-fun TopScreen(recipeList: List<Recipe>, activity: Activity) {
+fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()) {
     var showMenu by remember { mutableStateOf(false) }
 
     MaterialTheme {
@@ -71,15 +65,13 @@ fun TopScreen(recipeList: List<Recipe>, activity: Activity) {
                         }
                         DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                             DropdownMenuItem(onClick = {
-                                TutorialActivity.showForcibly(activity)
+                                topViewModel.openTutorial()
                                 showMenu = false
                             }) {
                                 Text(text = stringResource(id = R.string.action_settings))
                             }
                             DropdownMenuItem(onClick = {
-                                val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
-                                val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
-                                startActivity(activity, intentToPolicy, null)
+                                topViewModel.openPrivacyPolicy()
                                 showMenu = false
                             }) {
                                 Text(text = stringResource(id = R.string.action_policy))
@@ -98,7 +90,7 @@ fun TopScreen(recipeList: List<Recipe>, activity: Activity) {
                         contentPadding = PaddingValues(all = 8.dp)
                     ) {
                         items(items = recipeList) { recipe ->
-                            ListCard(recipe = recipe, activity = activity)
+                            ListCard(recipe = recipe, topViewModel = topViewModel)
                         }
                     }
                     AndroidView(
@@ -117,7 +109,9 @@ fun TopScreen(recipeList: List<Recipe>, activity: Activity) {
             floatingActionButtonPosition = FabPosition.End,
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = { CreateRecipeActivity.start(activity) },
+                    onClick = {
+                        topViewModel.openCreateRecipeScreen()
+                    },
                     backgroundColor = colorResource(id = R.color.colorAccent),
                     contentColor = Color.White,
                 ) {
@@ -130,14 +124,12 @@ fun TopScreen(recipeList: List<Recipe>, activity: Activity) {
 
 @ExperimentalMaterialApi
 @Composable
-private fun ListCard(recipe: Recipe, activity: Activity) {
+private fun ListCard(recipe: Recipe, topViewModel: TopViewModel) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = 4.dp,
         onClick = {
-            val intentToResult = Intent(activity, RecipeResultActivity::class.java)
-            intentToResult.putExtra("key", recipe.recipeId.id)
-            activity.startActivity(intentToResult)
+            topViewModel.openRecipeDetailScreen(recipe)
         }
     ) {
         Row(
