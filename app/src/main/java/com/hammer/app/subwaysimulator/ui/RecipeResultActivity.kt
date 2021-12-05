@@ -53,10 +53,10 @@ class RecipeResultActivity : AppCompatActivity() {
         setRecipeText(recipe)
 
         if (BuildConfig.DEBUG) {
-            //テスト用アプリID
+            // テスト用アプリID
             MobileAds.initialize(applicationContext, "ca-app-pub-3940256099942544~3347511713")
         } else {
-            //本番アプリID
+            // 本番アプリID
             MobileAds.initialize(applicationContext, "ca-app-pub-9742059950156424~8280793083")
         }
 
@@ -80,7 +80,7 @@ class RecipeResultActivity : AppCompatActivity() {
                 val isDressing1Enabled = recipe.dressing[1].type == Dressings.NONE || Dressings.values()
                     .single { it == recipe.dressing[1].type }.isEnabled
 
-                if (!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) { //販売終了判定
+                if (!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) { // 販売終了判定
                     val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
                         .setMessage("このレシピは販売終了メニューを含みます" + "\n" + "編集した場合、元のレシピに戻せません" + "\n" + "編集しますか？")
                         .setPositiveButton("はい") { _, _ ->

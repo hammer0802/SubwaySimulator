@@ -70,7 +70,7 @@ class EditRecipeActivity : AbstractRecipeActivity() {
             else spinnerSand.setSelection(0)
             checkBoxToast.isChecked = bread.isToasted
             toppingList.forEach {
-                when(it.type) {
+                when (it.type) {
                     Toppings.NATURAL_CHEESE -> {
                         checkBoxcheese.isChecked = true
                         countercheese.visibility = View.VISIBLE
@@ -90,7 +90,6 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                         checkBoxegg.isChecked = true
                         counteregg.visibility = View.VISIBLE
                         valueegg.text = it.amount.toString()
-
                     }
                     Toppings.BACON -> {
                         checkBoxbacon.isChecked = true
@@ -151,8 +150,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 spinnerDressing2.adapter = adapterDressing
                 spinnerDressing2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
-                        parent: AdapterView<*>, view: View,
-                        posi: Int, id: Long
+                        parent: AdapterView<*>,
+                        view: View,
+                        posi: Int,
+                        id: Long
                     ) {
                     }
 
@@ -165,8 +166,10 @@ class EditRecipeActivity : AbstractRecipeActivity() {
                 spinnerDressingAmount2.adapter = adapterDressingAmount
                 spinnerDressingAmount2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
-                        parent: AdapterView<*>, view: View,
-                        posi: Int, id: Long
+                        parent: AdapterView<*>,
+                        view: View,
+                        posi: Int,
+                        id: Long
                     ) {
                     }
 

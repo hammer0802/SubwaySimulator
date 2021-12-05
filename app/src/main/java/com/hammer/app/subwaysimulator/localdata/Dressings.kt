@@ -14,7 +14,7 @@ enum class Dressings(val dressingName: String, val isEnabled: Boolean = true) {
     PEPPER("こしょう"),
     NONE("無し"),
 
-    //期間終了
+    // 期間終了
     WAFU("特製和風ソース(期間限定)", false),
     RANCH("ランチドレッシング(期間限定)", false);
 

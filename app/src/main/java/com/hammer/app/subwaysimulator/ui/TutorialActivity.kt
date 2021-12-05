@@ -29,26 +29,37 @@ class TutorialActivity : WelcomeActivity() {
      */
     override fun configuration(): WelcomeConfiguration {
         return WelcomeConfiguration.Builder(this)
-                .defaultBackgroundColor(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary)))
-                .page(TitlePage(R.drawable.icon, "SUBWAYシミュレーターへ"+ "\n" +"ようこそ！"))
-                .page(BasicPage(
+            .defaultBackgroundColor(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary)))
+            .page(TitlePage(R.drawable.icon, "SUBWAYシミュレーターへ" + "\n" + "ようこそ！"))
+            .page(
+                BasicPage(
                     R.drawable.capture1,
-                        "お気に入りを忘れないように", "このアプリではSUBWAYのサンドウィッチ・レシピを作成・保存することができます")
-                        .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
-                .page(BasicPage(
+                    "お気に入りを忘れないように", "このアプリではSUBWAYのサンドウィッチ・レシピを作成・保存することができます"
+                )
+                    .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary)))
+            )
+            .page(
+                BasicPage(
                     R.drawable.capture2,
-                        "あなただけのレシピを作りましょう","SUBWAYの裏技完全対応！タップするだけでオリジナルレシピが作れます")
-                        .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
-                .page(BasicPage(
+                    "あなただけのレシピを作りましょう", "SUBWAYの裏技完全対応！タップするだけでオリジナルレシピが作れます"
+                )
+                    .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary)))
+            )
+            .page(
+                BasicPage(
                     R.drawable.capture3,
-                        "レシピを作ったら","作ったレシピは編集したり、画像として保存や友達へ共有もできます")
-                        .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
-                .page(BasicPage(
+                    "レシピを作ったら", "作ったレシピは編集したり、画像として保存や友達へ共有もできます"
+                )
+                    .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary)))
+            )
+            .page(
+                BasicPage(
                     R.drawable.capture4,
-                        "レシピを削除したい場合は","レシピリストを長押しすることで削除できます")
-                        .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))))
-                .swipeToDismiss(true)
-                .build()
+                    "レシピを削除したい場合は", "レシピリストを長押しすることで削除できます"
+                )
+                    .background(BackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary)))
+            )
+            .swipeToDismiss(true)
+            .build()
     }
-
 }
