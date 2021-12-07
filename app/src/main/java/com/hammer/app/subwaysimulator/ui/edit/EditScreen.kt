@@ -48,7 +48,10 @@ fun EditScreen() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(focusedBorderColor = colorResource(id = R.color.colorAccent))
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    cursorColor = colorResource(id = R.color.colorPrimary),
+                    focusedBorderColor = colorResource(id = R.color.colorAccent)
+                )
             )
             // TODO: TypedArrayで使ってるところを消したらtoListを消す
             // sandwiches
