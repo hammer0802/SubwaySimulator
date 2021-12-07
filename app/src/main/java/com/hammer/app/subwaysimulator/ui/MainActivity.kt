@@ -14,7 +14,8 @@ import com.hammer.app.subwaysimulator.model.Recipe
 import com.hammer.app.subwaysimulator.ui.top.TopScreen
 import com.hammer.app.subwaysimulator.ui.top.TopViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.json.Json
 
 @ExperimentalMaterialApi
@@ -36,25 +37,23 @@ class MainActivity : AppCompatActivity() {
             TopScreen(recipeList, topViewModel)
         }
 
-        lifecycleScope.launchWhenStarted {
-            topViewModel.navigationEvent.collect { ev ->
-                when (ev) {
-                    TopViewModel.Nav.OpenCreateRecipeScreen -> {
-                        CreateRecipeActivity.start(this@MainActivity)
-                    }
-                    TopViewModel.Nav.OpenPrivacyPolicy -> {
-                        val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
-                        val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
-                        startActivity(intentToPolicy)
-                    }
-                    is TopViewModel.Nav.OpenRecipeDetailScreen -> {
-                        val intentToResult = Intent(this@MainActivity, RecipeResultActivity::class.java)
-                        intentToResult.putExtra("key", ev.recipe.recipeId.id)
-                        startActivity(intentToResult)
-                    }
-                    TopViewModel.Nav.OpenTutorial -> TutorialActivity.showForcibly(this@MainActivity)
+        topViewModel.navigationEvent.onEach { ev ->
+            when (ev) {
+                TopViewModel.Nav.OpenCreateRecipeScreen -> {
+                    CreateRecipeActivity.start(this@MainActivity)
                 }
+                TopViewModel.Nav.OpenPrivacyPolicy -> {
+                    val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
+                    val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intentToPolicy)
+                }
+                is TopViewModel.Nav.OpenRecipeDetailScreen -> {
+                    val intentToResult = Intent(this@MainActivity, RecipeResultActivity::class.java)
+                    intentToResult.putExtra("key", ev.recipe.recipeId.id)
+                    startActivity(intentToResult)
+                }
+                TopViewModel.Nav.OpenTutorial -> TutorialActivity.showForcibly(this@MainActivity)
             }
-        }
+        }.launchIn(lifecycleScope)
     }
 }
