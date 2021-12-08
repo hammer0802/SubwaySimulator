@@ -9,14 +9,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSizeIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -32,6 +36,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hammer.app.subwaysimulator.R
@@ -43,9 +48,13 @@ import com.hammer.app.subwaysimulator.localdata.toppings
 fun EditScreen() {
     var recipeName by remember { mutableStateOf("") }
     MaterialTheme {
-        Column(modifier = Modifier.background(color = Color.White)) {
+        Column(
+            modifier = Modifier
+                .background(color = Color.White)
+                .verticalScroll(rememberScrollState())
+        ) {
             Title(text = stringResource(id = R.string.name_edit))
-            OutlinedTextField(
+            TextField(
                 value = recipeName,
                 onValueChange = { recipeName = it },
                 modifier = Modifier
@@ -68,7 +77,9 @@ fun EditScreen() {
             LabelledCheckbox(stringResource(id = R.string.toast))
             // toppings
             Title(text = stringResource(id = R.string.step3))
-            Spinner(list = toppings.toList())
+            toppings.forEach {
+                LabelledEditText(it)
+            }
             Title(text = stringResource(id = R.string.step4))
             Title(text = stringResource(id = R.string.step5))
             Title(text = stringResource(id = R.string.step5_2))
@@ -132,6 +143,37 @@ private fun LabelledCheckbox(label: String) {
             colors = CheckboxDefaults.colors(colorResource(id = R.color.colorAccent))
         )
         Text(text = label)
+    }
+}
+
+@Composable
+private fun LabelledEditText(label: String) {
+    var input by remember { mutableStateOf(0) }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        TextField(
+            value = input.toString(),
+            onValueChange = { input = if (it.isEmpty()) 0 else extractOneLengthNumber(it).toInt() },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                cursorColor = colorResource(id = R.color.colorPrimary),
+                focusedBorderColor = colorResource(id = R.color.colorAccent)
+            ),
+            modifier = Modifier.width(45.dp)
+        )
+        Text(text = " x $label", modifier = Modifier.padding(start = 4.dp))
+    }
+}
+
+private fun extractOneLengthNumber(input: String): String {
+    return when (input.length) {
+        1 -> input.substring(0, 1)
+        2 -> if (input.substring(1, 2) == "0") input.substring(0, 1) else input.substring(1, 2)
+        else -> input
     }
 }
 
