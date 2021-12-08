@@ -40,7 +40,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.localdata.amounts
+import com.hammer.app.subwaysimulator.localdata.amountsDressing
 import com.hammer.app.subwaysimulator.localdata.breads
+import com.hammer.app.subwaysimulator.localdata.dressings
+import com.hammer.app.subwaysimulator.localdata.dressingsWoNothing
 import com.hammer.app.subwaysimulator.localdata.sandwiches
 import com.hammer.app.subwaysimulator.localdata.toppings
 
@@ -68,21 +72,52 @@ fun EditScreen() {
             // TODO: TypedArrayで使ってるところを消したらtoListを消す
             // sandwiches
             Title(text = stringResource(id = R.string.step1))
-            Spinner(list = sandwiches.toList())
+            Spinner(list = sandwiches.toList(), selectedItemAtFirst = sandwiches.first())
             LabelledCheckbox(stringResource(id = R.string.recommend))
             LabelledCheckbox(stringResource(id = R.string.foot_long))
             // breads
             Title(text = stringResource(id = R.string.step2))
-            Spinner(list = breads.toList())
+            Spinner(list = breads.toList(), selectedItemAtFirst = breads.first())
             LabelledCheckbox(stringResource(id = R.string.toast))
             // toppings
             Title(text = stringResource(id = R.string.step3))
             toppings.forEach {
                 LabelledEditText(it)
             }
+            // vegetables
             Title(text = stringResource(id = R.string.step4))
+            val vegetableTitleList = listOf(
+                stringResource(id = R.string.lettuce),
+                stringResource(id = R.string.tomato),
+                stringResource(id = R.string.green_pepper),
+                stringResource(id = R.string.red_onion),
+                stringResource(id = R.string.carrot)
+            )
+            vegetableTitleList.forEach { title ->
+                SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts[2], title = title)
+            }
+            Text(
+                modifier = Modifier.padding(8.dp),
+                text = stringResource(id = R.string.free_topping),
+                color = colorResource(id = R.color.colorPrimary),
+                style = TextStyle(fontWeight = FontWeight.Bold)
+            )
+            val toppingTitleList = listOf(
+                stringResource(id = R.string.olive),
+                stringResource(id = R.string.pickles),
+                stringResource(id = R.string.hot_pepper)
+            )
+
+            toppingTitleList.forEach { title ->
+                SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts.first(), title = title)
+            }
+            // dressings
             Title(text = stringResource(id = R.string.step5))
+            SpinnerWithSmallTitle(list = dressings.toList(), selectedItemAtFirst = dressings.first(), title = stringResource(id = R.string.type))
+            SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
             Title(text = stringResource(id = R.string.step5_2))
+            SpinnerWithSmallTitle(list = dressingsWoNothing.toList(), selectedItemAtFirst = dressingsWoNothing.first(), title = stringResource(id = R.string.type))
+            SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
         }
     }
 }
@@ -100,8 +135,8 @@ private fun Title(text: String) {
 }
 
 @Composable
-private fun Spinner(list: List<String>) {
-    var selectedItemName by remember { mutableStateOf(list.first()) }
+private fun Spinner(list: List<String>, selectedItemAtFirst: String) {
+    var selectedItemName by remember { mutableStateOf(selectedItemAtFirst) }
     var showMenu by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier
@@ -166,6 +201,14 @@ private fun LabelledEditText(label: String) {
             modifier = Modifier.width(45.dp)
         )
         Text(text = " x $label", modifier = Modifier.padding(start = 4.dp))
+    }
+}
+
+@Composable
+private fun SpinnerWithSmallTitle(list: List<String>, selectedItemAtFirst: String, title: String) {
+    Column {
+        Text(text = title, modifier = Modifier.padding(8.dp), color = Color.DarkGray)
+        Spinner(list = list, selectedItemAtFirst = selectedItemAtFirst)
     }
 }
 
