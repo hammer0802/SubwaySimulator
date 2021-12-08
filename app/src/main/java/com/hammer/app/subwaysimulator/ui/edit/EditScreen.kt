@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -97,7 +98,7 @@ private fun Spinner(list: List<String>) {
         Text(modifier = Modifier.padding(4.dp), text = selectedItemName)
         Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "ArrowDropDown")
     }
-    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }, modifier = Modifier.requiredSizeIn(maxHeight = 400.dp)) {
         list.forEach {
             DropdownMenuItem(onClick = {
                 selectedItemName = it
