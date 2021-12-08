@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSizeIn
+import androidx.compose.material.Checkbox
+import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
@@ -58,9 +60,12 @@ fun EditScreen() {
             // sandwiches
             Title(text = stringResource(id = R.string.step1))
             Spinner(list = sandwiches.toList())
+            LabelledCheckbox(stringResource(id = R.string.recommend))
+            LabelledCheckbox(stringResource(id = R.string.foot_long))
             // breads
             Title(text = stringResource(id = R.string.step2))
             Spinner(list = breads.toList())
+            LabelledCheckbox(stringResource(id = R.string.toast))
             // toppings
             Title(text = stringResource(id = R.string.step3))
             Spinner(list = toppings.toList())
@@ -107,6 +112,26 @@ private fun Spinner(list: List<String>) {
                 Text(text = it)
             }
         }
+    }
+}
+
+@Composable
+private fun LabelledCheckbox(label: String) {
+    var isChecked by remember { mutableStateOf(false) }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp)
+            .clickable { isChecked = !isChecked },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Checkbox(
+            checked = isChecked,
+            onCheckedChange = { isChecked = it },
+            enabled = true,
+            colors = CheckboxDefaults.colors(colorResource(id = R.color.colorAccent))
+        )
+        Text(text = label)
     }
 }
 
