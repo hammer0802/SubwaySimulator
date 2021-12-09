@@ -1,7 +1,12 @@
 package com.hammer.app.subwaysimulator.ui.edit
 
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,13 +36,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.localdata.amounts
@@ -138,18 +147,42 @@ private fun Title(text: String) {
 private fun Spinner(list: List<String>, selectedItemAtFirst: String) {
     var selectedItemName by remember { mutableStateOf(selectedItemAtFirst) }
     var showMenu by remember { mutableStateOf(false) }
+    var dropdownOffset by remember { mutableStateOf(Offset.Zero) }
+    val interactionSource = remember { MutableInteractionSource() }
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { showMenu = true },
+            .indication(interactionSource, LocalIndication.current)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = { offset ->
+                        val press = PressInteraction.Press(offset)
+                        interactionSource.emit(press)
+
+                        tryAwaitRelease()
+
+                        interactionSource.emit(PressInteraction.Release(press))
+                        dropdownOffset = offset
+                        showMenu = true
+                    }
+                )
+            },
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(modifier = Modifier.padding(4.dp), text = selectedItemName)
         Icon(imageVector = Icons.Filled.ArrowDropDown, contentDescription = "ArrowDropDown")
     }
-    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }, modifier = Modifier.requiredSizeIn(maxHeight = 400.dp)) {
+    DropdownMenu(
+        expanded = showMenu,
+        onDismissRequest = { showMenu = false },
+        modifier = Modifier
+            .requiredSizeIn(maxHeight = 400.dp),
+        offset = LocalDensity.current.run {
+            DpOffset(dropdownOffset.x.toDp(), 0.dp)
+        }
+    ) {
         list.forEach {
             DropdownMenuItem(onClick = {
                 selectedItemName = it
