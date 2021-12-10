@@ -1,7 +1,9 @@
 package com.hammer.app.subwaysimulator.ui.edit
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.indication
@@ -15,9 +17,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.DropdownMenu
@@ -25,6 +29,7 @@ import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
@@ -48,6 +53,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.localdata.amounts
 import com.hammer.app.subwaysimulator.localdata.amountsDressing
@@ -61,72 +67,75 @@ import com.hammer.app.subwaysimulator.localdata.toppings
 fun EditScreen() {
     var recipeName by remember { mutableStateOf("") }
     MaterialTheme {
-        Column(
-            modifier = Modifier
-                .background(color = Color.White)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Title(text = stringResource(id = R.string.name_edit))
-            TextField(
-                value = recipeName,
-                onValueChange = { recipeName = it },
+        Column(modifier = Modifier.background(color = Color.White)) {
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    cursorColor = colorResource(id = R.color.colorPrimary),
-                    focusedBorderColor = colorResource(id = R.color.colorAccent)
+                    .weight(1F)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Title(text = stringResource(id = R.string.name_edit))
+                TextField(
+                    value = recipeName,
+                    onValueChange = { recipeName = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        cursorColor = colorResource(id = R.color.colorPrimary),
+                        focusedBorderColor = colorResource(id = R.color.colorAccent)
+                    )
                 )
-            )
-            // TODO: TypedArrayで使ってるところを消したらtoListを消す
-            // sandwiches
-            Title(text = stringResource(id = R.string.step1))
-            Spinner(list = sandwiches.toList(), selectedItemAtFirst = sandwiches.first())
-            LabelledCheckbox(stringResource(id = R.string.recommend))
-            LabelledCheckbox(stringResource(id = R.string.foot_long))
-            // breads
-            Title(text = stringResource(id = R.string.step2))
-            Spinner(list = breads.toList(), selectedItemAtFirst = breads.first())
-            LabelledCheckbox(stringResource(id = R.string.toast))
-            // toppings
-            Title(text = stringResource(id = R.string.step3))
-            toppings.forEach {
-                LabelledEditText(it)
-            }
-            // vegetables
-            Title(text = stringResource(id = R.string.step4))
-            val vegetableTitleList = listOf(
-                stringResource(id = R.string.lettuce),
-                stringResource(id = R.string.tomato),
-                stringResource(id = R.string.green_pepper),
-                stringResource(id = R.string.red_onion),
-                stringResource(id = R.string.carrot)
-            )
-            vegetableTitleList.forEach { title ->
-                SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts[2], title = title)
-            }
-            Text(
-                modifier = Modifier.padding(8.dp),
-                text = stringResource(id = R.string.free_topping),
-                color = colorResource(id = R.color.colorPrimary),
-                style = TextStyle(fontWeight = FontWeight.Bold)
-            )
-            val toppingTitleList = listOf(
-                stringResource(id = R.string.olive),
-                stringResource(id = R.string.pickles),
-                stringResource(id = R.string.hot_pepper)
-            )
+                // TODO: TypedArrayで使ってるところを消したらtoListを消す
+                // sandwiches
+                Title(text = stringResource(id = R.string.step1))
+                Spinner(list = sandwiches.toList(), selectedItemAtFirst = sandwiches.first())
+                LabelledCheckbox(stringResource(id = R.string.recommend))
+                LabelledCheckbox(stringResource(id = R.string.foot_long))
+                // breads
+                Title(text = stringResource(id = R.string.step2))
+                Spinner(list = breads.toList(), selectedItemAtFirst = breads.first())
+                LabelledCheckbox(stringResource(id = R.string.toast))
+                // toppings
+                Title(text = stringResource(id = R.string.step3))
+                toppings.forEach {
+                    LabelledEditText(it)
+                }
+                // vegetables
+                Title(text = stringResource(id = R.string.step4))
+                val vegetableTitleList = listOf(
+                    stringResource(id = R.string.lettuce),
+                    stringResource(id = R.string.tomato),
+                    stringResource(id = R.string.green_pepper),
+                    stringResource(id = R.string.red_onion),
+                    stringResource(id = R.string.carrot)
+                )
+                vegetableTitleList.forEach { title ->
+                    SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts[2], title = title)
+                }
+                Text(
+                    modifier = Modifier.padding(8.dp),
+                    text = stringResource(id = R.string.free_topping),
+                    color = colorResource(id = R.color.colorPrimary),
+                    style = TextStyle(fontWeight = FontWeight.Bold)
+                )
+                val toppingTitleList = listOf(
+                    stringResource(id = R.string.olive),
+                    stringResource(id = R.string.pickles),
+                    stringResource(id = R.string.hot_pepper)
+                )
 
-            toppingTitleList.forEach { title ->
-                SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts.first(), title = title)
+                toppingTitleList.forEach { title ->
+                    SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts.first(), title = title)
+                }
+                // dressings
+                Title(text = stringResource(id = R.string.step5))
+                SpinnerWithSmallTitle(list = dressings.toList(), selectedItemAtFirst = dressings.first(), title = stringResource(id = R.string.type))
+                SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
+                Title(text = stringResource(id = R.string.step5_2))
+                SpinnerWithSmallTitle(list = dressingsWoNothing.toList(), selectedItemAtFirst = dressingsWoNothing.first(), title = stringResource(id = R.string.type))
+                SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
             }
-            // dressings
-            Title(text = stringResource(id = R.string.step5))
-            SpinnerWithSmallTitle(list = dressings.toList(), selectedItemAtFirst = dressings.first(), title = stringResource(id = R.string.type))
-            SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
-            Title(text = stringResource(id = R.string.step5_2))
-            SpinnerWithSmallTitle(list = dressingsWoNothing.toList(), selectedItemAtFirst = dressingsWoNothing.first(), title = stringResource(id = R.string.type))
-            SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
+            BottomContainer()
         }
     }
 }
@@ -242,6 +251,35 @@ private fun SpinnerWithSmallTitle(list: List<String>, selectedItemAtFirst: Strin
     Column {
         Text(text = title, modifier = Modifier.padding(8.dp), color = Color.DarkGray)
         Spinner(list = list, selectedItemAtFirst = selectedItemAtFirst)
+    }
+}
+
+@Composable
+private fun BottomContainer() {
+    Row(
+        modifier = Modifier
+            .background(Color.White)
+            .border(BorderStroke(1.dp, Color.LightGray))
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        horizontalArrangement = Arrangement.SpaceEvenly,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "合計xx円",
+            modifier = Modifier.padding(vertical = 16.dp),
+            fontWeight = FontWeight.Bold,
+            fontSize = 17.sp,
+        )
+        TextButton(
+            onClick = { },
+            colors = ButtonDefaults.textButtonColors(
+                backgroundColor = colorResource(id = R.color.colorAccent),
+                contentColor = Color.White,
+            )
+        ) {
+            Text(text = stringResource(id = R.string.complete), color = Color.White)
+        }
     }
 }
 
