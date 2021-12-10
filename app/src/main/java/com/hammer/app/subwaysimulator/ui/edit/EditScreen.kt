@@ -19,7 +19,10 @@ import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
+import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Checkbox
@@ -35,20 +38,27 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
@@ -65,7 +75,8 @@ import com.hammer.app.subwaysimulator.localdata.toppings
 
 @Composable
 fun EditScreen() {
-    var recipeName by remember { mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
+    val focusManager = LocalFocusManager.current
     MaterialTheme {
         Column(modifier = Modifier.background(color = Color.White)) {
             Column(
@@ -74,17 +85,8 @@ fun EditScreen() {
                     .verticalScroll(rememberScrollState())
             ) {
                 Title(text = stringResource(id = R.string.name_edit))
-                TextField(
-                    value = recipeName,
-                    onValueChange = { recipeName = it },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        cursorColor = colorResource(id = R.color.colorPrimary),
-                        focusedBorderColor = colorResource(id = R.color.colorAccent)
-                    )
-                )
+                RecipeNameTextField(focusRequester = focusRequester, focusManager = focusManager)
+
                 // TODO: TypedArrayで使ってるところを消したらtoListを消す
                 // sandwiches
                 Title(text = stringResource(id = R.string.step1))
@@ -98,7 +100,7 @@ fun EditScreen() {
                 // toppings
                 Title(text = stringResource(id = R.string.step3))
                 toppings.forEach {
-                    LabelledEditText(it)
+                    LabelledEditText(it, focusManager = focusManager)
                 }
                 // vegetables
                 Title(text = stringResource(id = R.string.step4))
@@ -138,6 +140,10 @@ fun EditScreen() {
             BottomContainer()
         }
     }
+    DisposableEffect(Unit) {
+        focusRequester.requestFocus()
+        onDispose { }
+    }
 }
 
 @Composable
@@ -149,6 +155,33 @@ private fun Title(text: String) {
             .background(color = colorResource(id = R.color.colorPrimary))
     ) {
         Text(modifier = Modifier.padding(4.dp), text = text, color = Color.White, style = TextStyle(fontWeight = FontWeight.Bold))
+    }
+}
+
+@Composable
+private fun RecipeNameTextField(focusRequester: FocusRequester, focusManager: FocusManager) {
+    var recipeName by remember { mutableStateOf("") }
+    val customTextSelectionColors = TextSelectionColors(
+        handleColor = colorResource(id = R.color.colorPrimary),
+        backgroundColor = colorResource(id = R.color.colorPrimary).copy(alpha = 0.4f)
+    )
+    CompositionLocalProvider(LocalTextSelectionColors provides customTextSelectionColors) {
+        TextField(
+            value = recipeName,
+            onValueChange = { recipeName = it },
+            maxLines = 1,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .focusRequester(focusRequester),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = colorResource(id = R.color.colorAccent),
+                backgroundColor = Color.White,
+                cursorColor = colorResource(id = R.color.colorPrimary),
+            )
+        )
     }
 }
 
@@ -224,24 +257,31 @@ private fun LabelledCheckbox(label: String) {
 }
 
 @Composable
-private fun LabelledEditText(label: String) {
+private fun LabelledEditText(label: String, focusManager: FocusManager) {
     var input by remember { mutableStateOf(0) }
+    val customTextSelectionColors = TextSelectionColors(
+        handleColor = colorResource(id = R.color.colorPrimary),
+        backgroundColor = colorResource(id = R.color.colorPrimary).copy(alpha = 0.4f)
+    )
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        TextField(
-            value = input.toString(),
-            onValueChange = { input = if (it.isEmpty()) 0 else extractOneLengthNumber(it).toInt() },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
-                cursorColor = colorResource(id = R.color.colorPrimary),
-                focusedBorderColor = colorResource(id = R.color.colorAccent)
-            ),
-            modifier = Modifier.width(45.dp)
-        )
+        CompositionLocalProvider(LocalTextSelectionColors provides customTextSelectionColors) {
+            TextField(
+                value = input.toString(),
+                onValueChange = { input = if (it.isEmpty()) 0 else extractOneLengthNumber(it).toInt() },
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    cursorColor = colorResource(id = R.color.colorPrimary),
+                    focusedBorderColor = colorResource(id = R.color.colorAccent)
+                ),
+                modifier = Modifier.width(45.dp)
+            )
+        }
         Text(text = " x $label", modifier = Modifier.padding(start = 4.dp))
     }
 }
