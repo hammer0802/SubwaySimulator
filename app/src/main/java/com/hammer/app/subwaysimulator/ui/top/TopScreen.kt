@@ -1,7 +1,6 @@
 package com.hammer.app.subwaysimulator.ui.top
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -47,11 +46,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
 import com.hammer.app.subwaysimulator.ui.common.AdView
-import com.hammer.app.subwaysimulator.ui.detail.RecipeResultActivity
 import com.hammer.app.subwaysimulator.ui.tutorial.TutorialActivity
 
 @Composable
-fun TopScreen(topViewModel: TopViewModel = viewModel(), navigateCreateRecipeScreen: () -> Unit) {
+fun TopScreen(
+    topViewModel: TopViewModel = viewModel(),
+    navigateCreateRecipeScreen: () -> Unit,
+    navigateRecipeDetailScreen: () -> Unit
+) {
     val activity = LocalContext.current as Activity
     var showMenu by remember { mutableStateOf(false) }
 
@@ -98,7 +100,7 @@ fun TopScreen(topViewModel: TopViewModel = viewModel(), navigateCreateRecipeScre
                         contentPadding = PaddingValues(all = 8.dp)
                     ) {
                         items(items = topViewModel.recipeList) { recipe ->
-                            ListCard(recipe = recipe)
+                            ListCard(recipe = recipe, onClick = navigateRecipeDetailScreen)
                         }
                     }
                     AdView()
@@ -120,15 +122,11 @@ fun TopScreen(topViewModel: TopViewModel = viewModel(), navigateCreateRecipeScre
 }
 
 @Composable
-private fun ListCard(recipe: Recipe, context: Context = LocalContext.current) {
+private fun ListCard(recipe: Recipe, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable {
-                val intentToResult = Intent(context, RecipeResultActivity::class.java)
-                intentToResult.putExtra("key", recipe.recipeId.id)
-                context.startActivity(intentToResult)
-            },
+            .clickable(onClick = onClick),
         elevation = 4.dp
     ) {
         Row(
@@ -148,5 +146,5 @@ private fun ListCard(recipe: Recipe, context: Context = LocalContext.current) {
 @Composable
 @Preview
 fun PreviewTopScreen() {
-    TopScreen(navigateCreateRecipeScreen = { })
+    TopScreen(navigateCreateRecipeScreen = { }, navigateRecipeDetailScreen = { })
 }

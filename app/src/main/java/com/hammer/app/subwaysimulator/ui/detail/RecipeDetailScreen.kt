@@ -95,8 +95,7 @@ fun RecipeDetailScreen() {
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(IntrinsicSize.Min)
-                                .padding(horizontal = 16.dp)
-                                .padding(top = 8.dp)
+                                .padding(horizontal = 16.dp, vertical = 8.dp)
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.oldpaper),

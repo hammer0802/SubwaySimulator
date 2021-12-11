@@ -5,6 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.hammer.app.subwaysimulator.ui.detail.RecipeDetailScreen
 import com.hammer.app.subwaysimulator.ui.edit.EditScreen
 import com.hammer.app.subwaysimulator.ui.top.TopScreen
 import com.hammer.app.subwaysimulator.ui.top.TopViewModel
@@ -21,11 +22,17 @@ fun MyAppNavHost(navHostController: NavHostController) {
                 topViewModel = topViewModel,
                 navigateCreateRecipeScreen = {
                     navHostController.navigate(MyAppDestination.EDIT_RECIPE.name)
+                },
+                navigateRecipeDetailScreen = {
+                    navHostController.navigate(MyAppDestination.RECIPE_DETAIL.name)
                 }
             )
         }
         composable(route = MyAppDestination.EDIT_RECIPE.name) {
             EditScreen()
+        }
+        composable(route = MyAppDestination.RECIPE_DETAIL.name) {
+            RecipeDetailScreen()
         }
     }
 }
