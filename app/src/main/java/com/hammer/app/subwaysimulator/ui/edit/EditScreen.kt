@@ -10,7 +10,6 @@ import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -56,7 +55,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -72,6 +70,8 @@ import com.hammer.app.subwaysimulator.localdata.dressings
 import com.hammer.app.subwaysimulator.localdata.dressingsWoNothing
 import com.hammer.app.subwaysimulator.localdata.sandwiches
 import com.hammer.app.subwaysimulator.localdata.toppings
+import com.hammer.app.subwaysimulator.ui.common.TextInColoredBox
+import com.hammer.app.subwaysimulator.ui.common.ToppingText
 
 @Composable
 fun EditScreen() {
@@ -82,28 +82,29 @@ fun EditScreen() {
             Column(
                 modifier = Modifier
                     .weight(1F)
+                    .padding(horizontal = 8.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-                Title(text = stringResource(id = R.string.name_edit))
+                TextInColoredBox(text = stringResource(id = R.string.name_edit))
                 RecipeNameTextField(focusRequester = focusRequester, focusManager = focusManager)
 
                 // TODO: TypedArrayで使ってるところを消したらtoListを消す
                 // sandwiches
-                Title(text = stringResource(id = R.string.step1))
+                TextInColoredBox(text = stringResource(id = R.string.step1))
                 Spinner(list = sandwiches.toList(), selectedItemAtFirst = sandwiches.first())
                 LabelledCheckbox(stringResource(id = R.string.recommend))
                 LabelledCheckbox(stringResource(id = R.string.foot_long))
                 // breads
-                Title(text = stringResource(id = R.string.step2))
+                TextInColoredBox(text = stringResource(id = R.string.step2))
                 Spinner(list = breads.toList(), selectedItemAtFirst = breads.first())
                 LabelledCheckbox(stringResource(id = R.string.toast))
                 // toppings
-                Title(text = stringResource(id = R.string.step3))
+                TextInColoredBox(text = stringResource(id = R.string.step3))
                 toppings.forEach {
                     LabelledEditText(it, focusManager = focusManager)
                 }
                 // vegetables
-                Title(text = stringResource(id = R.string.step4))
+                TextInColoredBox(text = stringResource(id = R.string.step4))
                 val vegetableTitleList = listOf(
                     stringResource(id = R.string.lettuce),
                     stringResource(id = R.string.tomato),
@@ -114,12 +115,7 @@ fun EditScreen() {
                 vegetableTitleList.forEach { title ->
                     SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts[2], title = title)
                 }
-                Text(
-                    modifier = Modifier.padding(8.dp),
-                    text = stringResource(id = R.string.free_topping),
-                    color = colorResource(id = R.color.colorPrimary),
-                    style = TextStyle(fontWeight = FontWeight.Bold)
-                )
+                ToppingText()
                 val toppingTitleList = listOf(
                     stringResource(id = R.string.olive),
                     stringResource(id = R.string.pickles),
@@ -130,10 +126,10 @@ fun EditScreen() {
                     SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts.first(), title = title)
                 }
                 // dressings
-                Title(text = stringResource(id = R.string.step5))
+                TextInColoredBox(text = stringResource(id = R.string.step5))
                 SpinnerWithSmallTitle(list = dressings.toList(), selectedItemAtFirst = dressings.first(), title = stringResource(id = R.string.type))
                 SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
-                Title(text = stringResource(id = R.string.step5_2))
+                TextInColoredBox(text = stringResource(id = R.string.step5_2))
                 SpinnerWithSmallTitle(list = dressingsWoNothing.toList(), selectedItemAtFirst = dressingsWoNothing.first(), title = stringResource(id = R.string.type))
                 SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
             }
@@ -143,18 +139,6 @@ fun EditScreen() {
     DisposableEffect(Unit) {
         focusRequester.requestFocus()
         onDispose { }
-    }
-}
-
-@Composable
-private fun Title(text: String) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .background(color = colorResource(id = R.color.colorPrimary))
-    ) {
-        Text(modifier = Modifier.padding(4.dp), text = text, color = Color.White, style = TextStyle(fontWeight = FontWeight.Bold))
     }
 }
 
@@ -172,7 +156,7 @@ private fun RecipeNameTextField(focusRequester: FocusRequester, focusManager: Fo
             maxLines = 1,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(8.dp)
+                .padding(vertical = 8.dp)
                 .focusRequester(focusRequester),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -194,7 +178,7 @@ private fun Spinner(list: List<String>, selectedItemAtFirst: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(vertical = 8.dp)
             .indication(interactionSource, LocalIndication.current)
             .pointerInput(Unit) {
                 detectTapGestures(
@@ -242,7 +226,6 @@ private fun LabelledCheckbox(label: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp)
             .clickable { isChecked = !isChecked },
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -265,8 +248,7 @@ private fun LabelledEditText(label: String, focusManager: FocusManager) {
     )
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 8.dp),
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         CompositionLocalProvider(LocalTextSelectionColors provides customTextSelectionColors) {
@@ -289,7 +271,7 @@ private fun LabelledEditText(label: String, focusManager: FocusManager) {
 @Composable
 private fun SpinnerWithSmallTitle(list: List<String>, selectedItemAtFirst: String, title: String) {
     Column {
-        Text(text = title, modifier = Modifier.padding(8.dp), color = Color.DarkGray)
+        Text(text = title, modifier = Modifier.padding(vertical = 8.dp), color = Color.DarkGray)
         Spinner(list = list, selectedItemAtFirst = selectedItemAtFirst)
     }
 }
