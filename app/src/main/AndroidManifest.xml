@@ -38,12 +38,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.CreateRecipeActivity"
-            android:screenOrientation="portrait"
-            android:label="レシピ作成"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
-        <activity
             android:name=".ui.RecipeResultActivity"
             android:screenOrientation="portrait"
             android:label="レシピ詳細"
@@ -52,12 +46,6 @@
         <activity
             android:name=".ui.TutorialActivity"
             android:theme="@style/WelcomeScreenTheme"
-            />
-        <activity
-            android:name=".ui.EditRecipeActivity"
-            android:screenOrientation="portrait"
-            android:label="レシピ編集"
-            android:theme="@style/AppTheme.NoActionBar"
             />
 
         <provider

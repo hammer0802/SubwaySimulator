@@ -1,7 +1,10 @@
 package com.hammer.app.subwaysimulator.ui
 
 import android.app.AlertDialog
-import android.content.*
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -24,7 +27,6 @@ import com.hammer.app.subwaysimulator.localdata.AccentVegetables
 import com.hammer.app.subwaysimulator.localdata.Amounts
 import com.hammer.app.subwaysimulator.localdata.Breads
 import com.hammer.app.subwaysimulator.localdata.Dressings
-import com.hammer.app.subwaysimulator.localdata.Sandwiches
 import com.hammer.app.subwaysimulator.localdata.Toppings
 import com.hammer.app.subwaysimulator.localdata.Vegetables
 import com.hammer.app.subwaysimulator.model.Recipe
@@ -72,30 +74,8 @@ class RecipeResultActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_edit -> {
-                val intent = Intent(this, EditRecipeActivity::class.java)
-                val isSandwichEnabled = Sandwiches.values().single { it.sandName == recipe.sandwich.type.sandName }.isEnabled
-                val isBreadEnabled = Breads.values().single { it.breadName == recipe.bread.type.breadName }.isEnabled
-                val isDressing0Enabled = Dressings.values().single { it == recipe.dressing[0].type }.isEnabled
-                val isDressing1Enabled = recipe.dressing[1].type == Dressings.NONE || Dressings.values()
-                    .single { it == recipe.dressing[1].type }.isEnabled
-
-                if (!isSandwichEnabled || !isBreadEnabled || !isDressing0Enabled || !isDressing1Enabled) { // 販売終了判定
-                    val alertDialog = AlertDialog.Builder(this, R.style.MyAlertDialogStyle)
-                        .setMessage("このレシピは販売終了メニューを含みます" + "\n" + "編集した場合、元のレシピに戻せません" + "\n" + "編集しますか？")
-                        .setPositiveButton("はい") { _, _ ->
-                            intent.putExtra("key", key)
-                            startActivityForResult(intent, RESULT_EDIT)
-                        }
-                        .setNegativeButton("キャンセル", null)
-                        .show()
-                    true
-                } else {
-                    intent.putExtra("key", key)
-                    startActivityForResult(intent, RESULT_EDIT)
-                    true
-                }
-            }
+            // TODO: EditRecipeScreenへの繋ぎこみ
+            R.id.action_edit -> true
             R.id.action_sns -> {
                 val bmp = Bitmap.createBitmap(recipeLayout.width, recipeLayout.height, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(bmp)
