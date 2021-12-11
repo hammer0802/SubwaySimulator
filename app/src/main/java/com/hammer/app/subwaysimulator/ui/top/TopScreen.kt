@@ -1,6 +1,7 @@
 package com.hammer.app.subwaysimulator.ui.top
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,7 +15,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -46,9 +46,8 @@ import com.google.android.gms.ads.AdView
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
 
-@ExperimentalMaterialApi
 @Composable
-fun TopScreen(topViewModel: TopViewModel = viewModel()) {
+fun TopScreen(topViewModel: TopViewModel = viewModel(), navigateCreateRecipeScreen: () -> Unit) {
     var showMenu by remember { mutableStateOf(false) }
 
     MaterialTheme {
@@ -111,9 +110,7 @@ fun TopScreen(topViewModel: TopViewModel = viewModel()) {
             floatingActionButtonPosition = FabPosition.End,
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {
-                        topViewModel.openCreateRecipeScreen()
-                    },
+                    onClick = navigateCreateRecipeScreen,
                     modifier = Modifier.offset(y = (-50).dp),
                     backgroundColor = colorResource(id = R.color.colorAccent),
                     contentColor = Color.White,
@@ -125,15 +122,13 @@ fun TopScreen(topViewModel: TopViewModel = viewModel()) {
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 private fun ListCard(recipe: Recipe, topViewModel: TopViewModel) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = 4.dp,
-        onClick = {
-            topViewModel.openRecipeDetailScreen(recipe)
-        }
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { topViewModel.openRecipeDetailScreen(recipe) },
+        elevation = 4.dp
     ) {
         Row(
             modifier = Modifier.padding(4.dp),
@@ -149,9 +144,8 @@ private fun ListCard(recipe: Recipe, topViewModel: TopViewModel) {
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
 @Preview
 fun PreviewTopScreen() {
-    TopScreen()
+    TopScreen(navigateCreateRecipeScreen = { })
 }
