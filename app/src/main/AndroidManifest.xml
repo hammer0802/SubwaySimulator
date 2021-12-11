@@ -44,7 +44,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             />
         <activity
-            android:name=".ui.TutorialActivity"
+            android:name=".ui.tutorial.TutorialActivity"
             android:theme="@style/WelcomeScreenTheme"
             />
 

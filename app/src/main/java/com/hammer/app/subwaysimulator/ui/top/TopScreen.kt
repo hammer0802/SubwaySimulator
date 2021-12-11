@@ -50,8 +50,8 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
-import com.hammer.app.subwaysimulator.ui.RecipeResultActivity
-import com.hammer.app.subwaysimulator.ui.TutorialActivity
+import com.hammer.app.subwaysimulator.ui.detail.RecipeResultActivity
+import com.hammer.app.subwaysimulator.ui.tutorial.TutorialActivity
 
 @Composable
 fun TopScreen(topViewModel: TopViewModel = viewModel(), navigateCreateRecipeScreen: () -> Unit) {

@@ -1,10 +1,15 @@
-package com.hammer.app.subwaysimulator.ui
+package com.hammer.app.subwaysimulator.ui.tutorial
 
 import android.app.Activity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.hammer.app.subwaysimulator.R
-import com.stephentuso.welcome.*
+import com.stephentuso.welcome.BackgroundColor
+import com.stephentuso.welcome.BasicPage
+import com.stephentuso.welcome.TitlePage
+import com.stephentuso.welcome.WelcomeActivity
+import com.stephentuso.welcome.WelcomeConfiguration
+import com.stephentuso.welcome.WelcomeHelper
 
 class TutorialActivity : WelcomeActivity() {
     companion object {

@@ -1,4 +1,4 @@
-package com.hammer.app.subwaysimulator.ui
+package com.hammer.app.subwaysimulator.ui.detail
 
 import android.app.AlertDialog
 import android.content.ContentValues
