@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hammer.app.subwaysimulator.core.navigation.NavigationEvent
 import com.hammer.app.subwaysimulator.model.Recipe
+import com.hammer.app.subwaysimulator.repository.RecipeStorage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -11,9 +12,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TopViewModel @Inject constructor() : ViewModel() {
+class TopViewModel @Inject constructor(
+    recipeStorage: RecipeStorage
+) : ViewModel() {
     private val _navigationEvent = Channel<NavigationEvent>()
     val navigationEvent = _navigationEvent.receiveAsFlow()
+
+    val recipeList = recipeStorage.getSortedRecipeList()
 
     fun openTutorial() {
         sendEvent(Nav.OpenTutorial)

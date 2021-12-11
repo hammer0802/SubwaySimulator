@@ -48,7 +48,7 @@ import com.hammer.app.subwaysimulator.model.Recipe
 
 @ExperimentalMaterialApi
 @Composable
-fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()) {
+fun TopScreen(topViewModel: TopViewModel = viewModel()) {
     var showMenu by remember { mutableStateOf(false) }
 
     MaterialTheme {
@@ -91,7 +91,7 @@ fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()
                         modifier = Modifier.weight(1F),
                         contentPadding = PaddingValues(all = 8.dp)
                     ) {
-                        items(items = recipeList) { recipe ->
+                        items(items = topViewModel.recipeList) { recipe ->
                             ListCard(recipe = recipe, topViewModel = topViewModel)
                         }
                     }
@@ -153,5 +153,5 @@ private fun ListCard(recipe: Recipe, topViewModel: TopViewModel) {
 @Composable
 @Preview
 fun PreviewTopScreen() {
-    TopScreen(recipeList = emptyList())
+    TopScreen()
 }
