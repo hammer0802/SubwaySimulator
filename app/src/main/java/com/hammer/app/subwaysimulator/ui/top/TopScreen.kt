@@ -43,13 +43,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.AdView
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
+import com.hammer.app.subwaysimulator.ui.common.AdView
 import com.hammer.app.subwaysimulator.ui.detail.RecipeResultActivity
 import com.hammer.app.subwaysimulator.ui.tutorial.TutorialActivity
 
@@ -104,17 +101,7 @@ fun TopScreen(topViewModel: TopViewModel = viewModel(), navigateCreateRecipeScre
                             ListCard(recipe = recipe)
                         }
                     }
-                    AndroidView(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        factory = { context ->
-                            val adView = AdView(context)
-                            adView.adSize = AdSize.BANNER
-                            adView.adUnitId = context.getString(R.string.ad_unit_id)
-                            adView.loadAd(AdRequest.Builder().build())
-                            adView
-                        },
-                    )
+                    AdView()
                 }
             },
             floatingActionButtonPosition = FabPosition.End,

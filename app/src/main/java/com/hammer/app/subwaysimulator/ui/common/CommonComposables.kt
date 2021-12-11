@@ -13,6 +13,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.hammer.app.subwaysimulator.R
 
 @Composable
@@ -34,5 +38,20 @@ fun ToppingText() {
         text = stringResource(id = R.string.free_topping),
         color = colorResource(id = R.color.colorPrimary),
         style = TextStyle(fontWeight = FontWeight.Bold)
+    )
+}
+
+@Composable
+fun AdView() {
+    AndroidView(
+        modifier = Modifier
+            .fillMaxWidth(),
+        factory = { context ->
+            val adView = AdView(context)
+            adView.adSize = AdSize.BANNER
+            adView.adUnitId = context.getString(R.string.ad_unit_id)
+            adView.loadAd(AdRequest.Builder().build())
+            adView
+        },
     )
 }

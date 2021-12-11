@@ -38,6 +38,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hammer.app.subwaysimulator.R
+import com.hammer.app.subwaysimulator.ui.common.AdView
 import com.hammer.app.subwaysimulator.ui.common.TextInColoredBox
 import com.hammer.app.subwaysimulator.ui.common.ToppingText
 
@@ -83,65 +84,73 @@ fun RecipeDetailScreen() {
                 )
             },
             content = {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(IntrinsicSize.Min)
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 8.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.oldpaper),
-                        contentDescription = "background",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .fillMaxSize()
-                    )
+                Column {
                     Column(
                         modifier = Modifier
+                            .weight(1F)
                             .fillMaxWidth()
-                            .padding(horizontal = 8.dp)
                             .verticalScroll(rememberScrollState())
-
                     ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            contentAlignment = Alignment.Center
+                                .height(IntrinsicSize.Min)
+                                .padding(horizontal = 16.dp)
+                                .padding(top = 8.dp)
                         ) {
-                            Text(
-                                text = "レシピ名",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 17.sp,
+                            Image(
+                                painter = painterResource(id = R.drawable.oldpaper),
+                                contentDescription = "background",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxSize()
                             )
-                        }
-                        TextInColoredBox(text = stringResource(id = R.string.step1))
-                        Text(text = "サンドウィッチ")
-                        TextInColoredBox(text = stringResource(id = R.string.step2))
-                        Text(text = "パン")
-                        TextInColoredBox(text = stringResource(id = R.string.step3))
-                        Text(text = "トッピング")
-                        TextInColoredBox(text = stringResource(id = R.string.step4))
-                        Text(text = "野菜")
-                        ToppingText()
-                        Text(text = "アクセント野菜")
-                        TextInColoredBox(text = stringResource(id = R.string.step5))
-                        Text(text = "ドレッシング")
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 8.dp, top = 32.dp),
-                            contentAlignment = Alignment.CenterEnd
-                        ) {
-                            Text(
-                                text = "金額",
-                                modifier = Modifier.padding(horizontal = 24.dp),
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 17.sp,
-                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 8.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 4.dp),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "レシピ名",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 17.sp,
+                                    )
+                                }
+                                TextInColoredBox(text = stringResource(id = R.string.step1))
+                                Text(text = "サンドウィッチ")
+                                TextInColoredBox(text = stringResource(id = R.string.step2))
+                                Text(text = "パン")
+                                TextInColoredBox(text = stringResource(id = R.string.step3))
+                                Text(text = "トッピング")
+                                TextInColoredBox(text = stringResource(id = R.string.step4))
+                                Text(text = "野菜")
+                                ToppingText()
+                                Text(text = "アクセント野菜")
+                                TextInColoredBox(text = stringResource(id = R.string.step5))
+                                Text(text = "ドレッシング")
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(bottom = 8.dp, top = 32.dp),
+                                    contentAlignment = Alignment.CenterEnd
+                                ) {
+                                    Text(
+                                        text = "金額",
+                                        modifier = Modifier.padding(horizontal = 24.dp),
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 17.sp,
+                                    )
+                                }
+                            }
                         }
                     }
+                    AdView()
                 }
             },
         )
