@@ -1,19 +1,24 @@
 package com.hammer.app.subwaysimulator.ui.top
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Card
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -33,8 +38,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -43,10 +50,12 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.hammer.app.subwaysimulator.R
 import com.hammer.app.subwaysimulator.model.Recipe
+import com.hammer.app.subwaysimulator.ui.detail.RecipeResultActivity
+import com.hammer.app.subwaysimulator.ui.tutorial.TutorialActivity
 
-@ExperimentalMaterialApi
 @Composable
-fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()) {
+fun TopScreen(topViewModel: TopViewModel = viewModel(), navigateCreateRecipeScreen: () -> Unit) {
+    val activity = LocalContext.current as Activity
     var showMenu by remember { mutableStateOf(false) }
 
     MaterialTheme {
@@ -65,13 +74,15 @@ fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()
                         }
                         DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                             DropdownMenuItem(onClick = {
-                                topViewModel.openTutorial()
+                                TutorialActivity.showForcibly(activity)
                                 showMenu = false
                             }) {
                                 Text(text = stringResource(id = R.string.action_settings))
                             }
                             DropdownMenuItem(onClick = {
-                                topViewModel.openPrivacyPolicy()
+                                val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
+                                val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
+                                activity.startActivity(intentToPolicy)
                                 showMenu = false
                             }) {
                                 Text(text = stringResource(id = R.string.action_policy))
@@ -89,8 +100,8 @@ fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()
                         modifier = Modifier.weight(1F),
                         contentPadding = PaddingValues(all = 8.dp)
                     ) {
-                        items(items = recipeList) { recipe ->
-                            ListCard(recipe = recipe, topViewModel = topViewModel)
+                        items(items = topViewModel.recipeList) { recipe ->
+                            ListCard(recipe = recipe)
                         }
                     }
                     AndroidView(
@@ -109,9 +120,8 @@ fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()
             floatingActionButtonPosition = FabPosition.End,
             floatingActionButton = {
                 FloatingActionButton(
-                    onClick = {
-                        topViewModel.openCreateRecipeScreen()
-                    },
+                    onClick = navigateCreateRecipeScreen,
+                    modifier = Modifier.offset(y = (-50).dp),
                     backgroundColor = colorResource(id = R.color.colorAccent),
                     contentColor = Color.White,
                 ) {
@@ -122,15 +132,17 @@ fun TopScreen(recipeList: List<Recipe>, topViewModel: TopViewModel = viewModel()
     }
 }
 
-@ExperimentalMaterialApi
 @Composable
-private fun ListCard(recipe: Recipe, topViewModel: TopViewModel) {
+private fun ListCard(recipe: Recipe, context: Context = LocalContext.current) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = 4.dp,
-        onClick = {
-            topViewModel.openRecipeDetailScreen(recipe)
-        }
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                val intentToResult = Intent(context, RecipeResultActivity::class.java)
+                intentToResult.putExtra("key", recipe.recipeId.id)
+                context.startActivity(intentToResult)
+            },
+        elevation = 4.dp
     ) {
         Row(
             modifier = Modifier.padding(4.dp),
@@ -144,4 +156,10 @@ private fun ListCard(recipe: Recipe, topViewModel: TopViewModel) {
             Text(text = "￥${recipe.price}")
         }
     }
+}
+
+@Composable
+@Preview
+fun PreviewTopScreen() {
+    TopScreen(navigateCreateRecipeScreen = { })
 }
