@@ -22,7 +22,6 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -57,68 +56,66 @@ fun TopScreen(
     val activity = LocalContext.current as Activity
     var showMenu by remember { mutableStateOf(false) }
 
-    MaterialTheme {
-        Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color.White),
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(text = stringResource(id = R.string.app_name))
-                    },
-                    actions = {
-                        IconButton(onClick = { showMenu = true }) {
-                            Icon(Icons.Filled.Menu, "menu")
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White),
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.app_name))
+                },
+                actions = {
+                    IconButton(onClick = { showMenu = true }) {
+                        Icon(Icons.Filled.Menu, "menu")
+                    }
+                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                        DropdownMenuItem(onClick = {
+                            TutorialActivity.showForcibly(activity)
+                            showMenu = false
+                        }) {
+                            Text(text = stringResource(id = R.string.action_settings))
                         }
-                        DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                            DropdownMenuItem(onClick = {
-                                TutorialActivity.showForcibly(activity)
-                                showMenu = false
-                            }) {
-                                Text(text = stringResource(id = R.string.action_settings))
-                            }
-                            DropdownMenuItem(onClick = {
-                                val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
-                                val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
-                                activity.startActivity(intentToPolicy)
-                                showMenu = false
-                            }) {
-                                Text(text = stringResource(id = R.string.action_policy))
-                            }
-                        }
-                    },
-                    backgroundColor = colorResource(id = R.color.colorPrimary),
-                    contentColor = Color.White,
-                    elevation = 12.dp
-                )
-            },
-            content = {
-                Column {
-                    LazyColumn(
-                        modifier = Modifier.weight(1F),
-                        contentPadding = PaddingValues(all = 8.dp)
-                    ) {
-                        items(items = topViewModel.recipeList) { recipe ->
-                            ListCard(recipe = recipe, onClick = navigateRecipeDetailScreen)
+                        DropdownMenuItem(onClick = {
+                            val uri = Uri.parse("https://hammer-appli.hatenablog.com/entry/2018/11/24/131136")
+                            val intentToPolicy = Intent(Intent.ACTION_VIEW, uri)
+                            activity.startActivity(intentToPolicy)
+                            showMenu = false
+                        }) {
+                            Text(text = stringResource(id = R.string.action_policy))
                         }
                     }
-                    AdView()
-                }
-            },
-            floatingActionButtonPosition = FabPosition.End,
-            floatingActionButton = {
-                FloatingActionButton(
-                    onClick = navigateCreateRecipeScreen,
-                    modifier = Modifier.offset(y = (-50).dp),
-                    backgroundColor = colorResource(id = R.color.colorAccent),
-                    contentColor = Color.White,
+                },
+                backgroundColor = colorResource(id = R.color.colorPrimary),
+                contentColor = Color.White,
+                elevation = 12.dp
+            )
+        },
+        content = {
+            Column {
+                LazyColumn(
+                    modifier = Modifier.weight(1F),
+                    contentPadding = PaddingValues(all = 8.dp)
                 ) {
-                    Icon(Icons.Filled.Add, "create recipe")
+                    items(items = topViewModel.recipeList) { recipe ->
+                        ListCard(recipe = recipe, onClick = navigateRecipeDetailScreen)
+                    }
                 }
+                AdView()
             }
-        )
-    }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateCreateRecipeScreen,
+                modifier = Modifier.offset(y = (-50).dp),
+                backgroundColor = colorResource(id = R.color.colorAccent),
+                contentColor = Color.White,
+            ) {
+                Icon(Icons.Filled.Add, "create recipe")
+            }
+        }
+    )
 }
 
 @Composable

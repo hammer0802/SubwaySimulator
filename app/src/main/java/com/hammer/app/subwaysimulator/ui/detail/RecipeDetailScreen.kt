@@ -15,7 +15,6 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -46,114 +45,112 @@ import com.hammer.app.subwaysimulator.ui.common.ToppingText
 fun RecipeDetailScreen() {
     var showMenu by remember { mutableStateOf(false) }
 
-    MaterialTheme {
-        Scaffold(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = Color.White),
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text(text = stringResource(id = R.string.recipe_detail))
-                    },
-                    actions = {
-                        IconButton(onClick = { showMenu = true }) {
-                            Icon(Icons.Filled.Menu, "menu")
+    Scaffold(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.White),
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = stringResource(id = R.string.recipe_detail))
+                },
+                actions = {
+                    IconButton(onClick = { showMenu = true }) {
+                        Icon(Icons.Filled.Menu, "menu")
+                    }
+                    DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
+                        DropdownMenuItem(onClick = {
+                            showMenu = false
+                        }) {
+                            Text(text = stringResource(id = R.string.action_edit))
                         }
-                        DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
-                            DropdownMenuItem(onClick = {
-                                showMenu = false
-                            }) {
-                                Text(text = stringResource(id = R.string.action_edit))
-                            }
-                            DropdownMenuItem(onClick = {
-                                showMenu = false
-                            }) {
-                                Text(text = stringResource(id = R.string.action_sns))
-                            }
-                            DropdownMenuItem(onClick = {
-                                showMenu = false
-                            }) {
-                                Text(text = stringResource(id = R.string.action_save_image))
-                            }
+                        DropdownMenuItem(onClick = {
+                            showMenu = false
+                        }) {
+                            Text(text = stringResource(id = R.string.action_sns))
                         }
-                    },
-                    backgroundColor = colorResource(id = R.color.colorPrimary),
-                    contentColor = Color.White,
-                    elevation = 12.dp
-                )
-            },
-            content = {
-                Column {
-                    Column(
+                        DropdownMenuItem(onClick = {
+                            showMenu = false
+                        }) {
+                            Text(text = stringResource(id = R.string.action_save_image))
+                        }
+                    }
+                },
+                backgroundColor = colorResource(id = R.color.colorPrimary),
+                contentColor = Color.White,
+                elevation = 12.dp
+            )
+        },
+        content = {
+            Column {
+                Column(
+                    modifier = Modifier
+                        .weight(1F)
+                        .fillMaxWidth()
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    Box(
                         modifier = Modifier
-                            .weight(1F)
                             .fillMaxWidth()
-                            .verticalScroll(rememberScrollState())
+                            .height(IntrinsicSize.Min)
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Box(
+                        Image(
+                            painter = painterResource(id = R.drawable.oldpaper),
+                            contentDescription = "background",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxSize()
+                        )
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(IntrinsicSize.Min)
-                                .padding(horizontal = 16.dp, vertical = 8.dp)
+                                .padding(horizontal = 8.dp)
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.oldpaper),
-                                contentDescription = "background",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                            )
-                            Column(
+                            Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .padding(horizontal = 8.dp)
+                                    .padding(vertical = 4.dp),
+                                contentAlignment = Alignment.Center
                             ) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 4.dp),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Text(
-                                        text = "レシピ名",
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 17.sp,
-                                    )
-                                }
-                                TextInColoredBox(text = stringResource(id = R.string.step1))
-                                Text(text = "サンドウィッチ")
-                                TextInColoredBox(text = stringResource(id = R.string.step2))
-                                Text(text = "パン")
-                                TextInColoredBox(text = stringResource(id = R.string.step3))
-                                Text(text = "トッピング")
-                                TextInColoredBox(text = stringResource(id = R.string.step4))
-                                Text(text = "野菜")
-                                ToppingText()
-                                Text(text = "アクセント野菜")
-                                TextInColoredBox(text = stringResource(id = R.string.step5))
-                                Text(text = "ドレッシング")
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(bottom = 8.dp, top = 32.dp),
-                                    contentAlignment = Alignment.CenterEnd
-                                ) {
-                                    Text(
-                                        text = "金額",
-                                        modifier = Modifier.padding(horizontal = 24.dp),
-                                        fontWeight = FontWeight.Bold,
-                                        fontSize = 17.sp,
-                                    )
-                                }
+                                Text(
+                                    text = "レシピ名",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 17.sp,
+                                )
+                            }
+                            TextInColoredBox(text = stringResource(id = R.string.step1))
+                            Text(text = "サンドウィッチ")
+                            TextInColoredBox(text = stringResource(id = R.string.step2))
+                            Text(text = "パン")
+                            TextInColoredBox(text = stringResource(id = R.string.step3))
+                            Text(text = "トッピング")
+                            TextInColoredBox(text = stringResource(id = R.string.step4))
+                            Text(text = "野菜")
+                            ToppingText()
+                            Text(text = "アクセント野菜")
+                            TextInColoredBox(text = stringResource(id = R.string.step5))
+                            Text(text = "ドレッシング")
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 8.dp, top = 32.dp),
+                                contentAlignment = Alignment.CenterEnd
+                            ) {
+                                Text(
+                                    text = "金額",
+                                    modifier = Modifier.padding(horizontal = 24.dp),
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 17.sp,
+                                )
                             }
                         }
                     }
-                    AdView()
                 }
-            },
-        )
-    }
+                AdView()
+            }
+        },
+    )
 }
 
 @Preview

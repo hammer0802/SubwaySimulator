@@ -29,7 +29,6 @@ import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
@@ -77,64 +76,63 @@ import com.hammer.app.subwaysimulator.ui.common.ToppingText
 fun EditScreen() {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
-    MaterialTheme {
-        Column(modifier = Modifier.background(color = Color.White)) {
-            Column(
-                modifier = Modifier
-                    .weight(1F)
-                    .padding(horizontal = 8.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                TextInColoredBox(text = stringResource(id = R.string.name_edit))
-                RecipeNameTextField(focusRequester = focusRequester, focusManager = focusManager)
 
-                // TODO: TypedArrayで使ってるところを消したらtoListを消す
-                // sandwiches
-                TextInColoredBox(text = stringResource(id = R.string.step1))
-                Spinner(list = sandwiches.toList(), selectedItemAtFirst = sandwiches.first())
-                LabelledCheckbox(stringResource(id = R.string.recommend))
-                LabelledCheckbox(stringResource(id = R.string.foot_long))
-                // breads
-                TextInColoredBox(text = stringResource(id = R.string.step2))
-                Spinner(list = breads.toList(), selectedItemAtFirst = breads.first())
-                LabelledCheckbox(stringResource(id = R.string.toast))
-                // toppings
-                TextInColoredBox(text = stringResource(id = R.string.step3))
-                toppings.forEach {
-                    LabelledEditText(it, focusManager = focusManager)
-                }
-                // vegetables
-                TextInColoredBox(text = stringResource(id = R.string.step4))
-                val vegetableTitleList = listOf(
-                    stringResource(id = R.string.lettuce),
-                    stringResource(id = R.string.tomato),
-                    stringResource(id = R.string.green_pepper),
-                    stringResource(id = R.string.red_onion),
-                    stringResource(id = R.string.carrot)
-                )
-                vegetableTitleList.forEach { title ->
-                    SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts[2], title = title)
-                }
-                ToppingText()
-                val toppingTitleList = listOf(
-                    stringResource(id = R.string.olive),
-                    stringResource(id = R.string.pickles),
-                    stringResource(id = R.string.hot_pepper)
-                )
+    Column(modifier = Modifier.background(color = Color.White)) {
+        Column(
+            modifier = Modifier
+                .weight(1F)
+                .padding(horizontal = 8.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            TextInColoredBox(text = stringResource(id = R.string.name_edit))
+            RecipeNameTextField(focusRequester = focusRequester, focusManager = focusManager)
 
-                toppingTitleList.forEach { title ->
-                    SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts.first(), title = title)
-                }
-                // dressings
-                TextInColoredBox(text = stringResource(id = R.string.step5))
-                SpinnerWithSmallTitle(list = dressings.toList(), selectedItemAtFirst = dressings.first(), title = stringResource(id = R.string.type))
-                SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
-                TextInColoredBox(text = stringResource(id = R.string.step5_2))
-                SpinnerWithSmallTitle(list = dressingsWoNothing.toList(), selectedItemAtFirst = dressingsWoNothing.first(), title = stringResource(id = R.string.type))
-                SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
+            // TODO: TypedArrayで使ってるところを消したらtoListを消す
+            // sandwiches
+            TextInColoredBox(text = stringResource(id = R.string.step1))
+            Spinner(list = sandwiches.toList(), selectedItemAtFirst = sandwiches.first())
+            LabelledCheckbox(stringResource(id = R.string.recommend))
+            LabelledCheckbox(stringResource(id = R.string.foot_long))
+            // breads
+            TextInColoredBox(text = stringResource(id = R.string.step2))
+            Spinner(list = breads.toList(), selectedItemAtFirst = breads.first())
+            LabelledCheckbox(stringResource(id = R.string.toast))
+            // toppings
+            TextInColoredBox(text = stringResource(id = R.string.step3))
+            toppings.forEach {
+                LabelledEditText(it, focusManager = focusManager)
             }
-            BottomContainer()
+            // vegetables
+            TextInColoredBox(text = stringResource(id = R.string.step4))
+            val vegetableTitleList = listOf(
+                stringResource(id = R.string.lettuce),
+                stringResource(id = R.string.tomato),
+                stringResource(id = R.string.green_pepper),
+                stringResource(id = R.string.red_onion),
+                stringResource(id = R.string.carrot)
+            )
+            vegetableTitleList.forEach { title ->
+                SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts[2], title = title)
+            }
+            ToppingText()
+            val toppingTitleList = listOf(
+                stringResource(id = R.string.olive),
+                stringResource(id = R.string.pickles),
+                stringResource(id = R.string.hot_pepper)
+            )
+
+            toppingTitleList.forEach { title ->
+                SpinnerWithSmallTitle(list = amounts.toList(), selectedItemAtFirst = amounts.first(), title = title)
+            }
+            // dressings
+            TextInColoredBox(text = stringResource(id = R.string.step5))
+            SpinnerWithSmallTitle(list = dressings.toList(), selectedItemAtFirst = dressings.first(), title = stringResource(id = R.string.type))
+            SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
+            TextInColoredBox(text = stringResource(id = R.string.step5_2))
+            SpinnerWithSmallTitle(list = dressingsWoNothing.toList(), selectedItemAtFirst = dressingsWoNothing.first(), title = stringResource(id = R.string.type))
+            SpinnerWithSmallTitle(list = amountsDressing.toList(), selectedItemAtFirst = amountsDressing[1], title = stringResource(id = R.string.amount))
         }
+        BottomContainer()
     }
     DisposableEffect(Unit) {
         focusRequester.requestFocus()

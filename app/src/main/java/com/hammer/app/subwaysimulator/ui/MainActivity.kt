@@ -3,6 +3,7 @@ package com.hammer.app.subwaysimulator.ui
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material.MaterialTheme
 import androidx.navigation.compose.rememberNavController
 import com.hammer.app.subwaysimulator.ui.tutorial.TutorialActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -16,8 +17,10 @@ class MainActivity : AppCompatActivity() {
         TutorialActivity.showIfNeeded(this, savedInstanceState)
 
         setContent {
-            val navController = rememberNavController()
-            MyAppNavHost(navHostController = navController)
+            MaterialTheme {
+                val navController = rememberNavController()
+                MyAppNavHost(navHostController = navController)
+            }
         }
     }
 }

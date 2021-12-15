@@ -3,35 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../layout/compose-model-1638367443548.xml" value="0.25" />
-        <entry key="../../../../layout/compose-model-1638369439271.xml" value="0.5" />
-        <entry key="../../../../layout/compose-model-1638494673977.xml" value="0.165" />
-        <entry key="../../../../layout/compose-model-1638621007018.xml" value="0.17812272556533448" />
-        <entry key="../../../../layout/compose-model-1638713838604.xml" value="0.23903190939890423" />
-        <entry key="../../../../layout/compose-model-1638880175134.xml" value="0.33" />
-        <entry key="../../../../layout/compose-model-1638881620261.xml" value="0.521182007880735" />
-        <entry key="../../../../layout/compose-model-1638884670283.xml" value="0.5694444444444444" />
-        <entry key="../../../../layout/compose-model-1638922072662.xml" value="0.5675925925925925" />
-        <entry key="../../../../layout/compose-model-1638970560508.xml" value="0.5" />
-        <entry key="../../../../layout/compose-model-1638971461568.xml" value="0.33" />
-        <entry key="../../../../layout/compose-model-1639032738644.xml" value="0.30405405405405406" />
-        <entry key="../../../../layout/compose-model-1639210385859.xml" value="0.2968178531668193" />
-        <entry key="../../../../layout/compose-model-1639210537128.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.23270440251572327" />
-        <entry key="app/src/main/res/layout/activity_recipe_result.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.23270440251572327" />
-        <entry key="app/src/main/res/layout/content_recipe_result.xml" value="0.2525597269624573" />
-        <entry key="app/src/main/res/layout/create_recipe.xml" value="0.42135416666666664" />
-        <entry key="app/src/main/res/layout/edit_recipe.xml" value="0.5875" />
-        <entry key="app/src/main/res/layout/list_recipe.xml" value="0.5875" />
-        <entry key="app/src/main/res/layout/select_dressing_item.xml" value="0.29438405797101447" />
-        <entry key="app/src/main/res/layout/top_fragment.xml" value="0.3541666666666667" />
-        <entry key="app/src/main/res/menu/menu_main.xml" value="0.384375" />
-        <entry key="app/src/main/res/menu/menu_recipe.xml" value="0.384375" />
+        <entry key="../../../../layout/compose-model-1639546645098.xml" value="0.869989643280879" />
+        <entry key="../../../../layout/compose-model-1639571728765.xml" value="0.33611111111111114" />
+        <entry key="../../../../layout/compose-model-1639571793101.xml" value="0.33611111111111114" />
+        <entry key="app/src/main/res/layout/list_recipe.xml" value="0.11388888888888889" />
       </map>
     </option>
   </component>
-  <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
