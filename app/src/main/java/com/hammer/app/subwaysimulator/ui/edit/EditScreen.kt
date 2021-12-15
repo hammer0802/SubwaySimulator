@@ -76,6 +76,7 @@ import com.hammer.app.subwaysimulator.ui.common.ToppingText
 fun EditScreen() {
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
+    var recipeName by remember { mutableStateOf("") }
 
     Column(modifier = Modifier.background(color = Color.White)) {
         Column(
@@ -85,7 +86,7 @@ fun EditScreen() {
                 .verticalScroll(rememberScrollState())
         ) {
             TextInColoredBox(text = stringResource(id = R.string.name_edit))
-            RecipeNameTextField(focusRequester = focusRequester, focusManager = focusManager)
+            RecipeNameTextField(focusRequester = focusRequester, focusManager = focusManager, recipeName = recipeName, onNameChange = { recipeName = it })
 
             // TODO: TypedArrayで使ってるところを消したらtoListを消す
             // sandwiches
@@ -141,8 +142,7 @@ fun EditScreen() {
 }
 
 @Composable
-private fun RecipeNameTextField(focusRequester: FocusRequester, focusManager: FocusManager) {
-    var recipeName by remember { mutableStateOf("") }
+private fun RecipeNameTextField(focusRequester: FocusRequester, focusManager: FocusManager, recipeName: String, onNameChange: (String) -> Unit) {
     val customTextSelectionColors = TextSelectionColors(
         handleColor = colorResource(id = R.color.colorPrimary),
         backgroundColor = colorResource(id = R.color.colorPrimary).copy(alpha = 0.4f)
@@ -150,7 +150,7 @@ private fun RecipeNameTextField(focusRequester: FocusRequester, focusManager: Fo
     CompositionLocalProvider(LocalTextSelectionColors provides customTextSelectionColors) {
         TextField(
             value = recipeName,
-            onValueChange = { recipeName = it },
+            onValueChange = onNameChange,
             maxLines = 1,
             modifier = Modifier
                 .fillMaxWidth()
@@ -305,9 +305,8 @@ private fun BottomContainer() {
 
 private fun extractOneLengthNumber(input: String): String {
     return when (input.length) {
-        1 -> input.substring(0, 1)
         2 -> if (input.substring(1, 2) == "0") input.substring(0, 1) else input.substring(1, 2)
-        else -> input
+        else -> input.substring(0, 1)
     }
 }
 
